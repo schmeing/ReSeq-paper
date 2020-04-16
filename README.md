@@ -1,9 +1,9 @@
 # ReSeq-paper
-Snakemake file to reproduce figures and tables in the ReSequenceR paper
+Snakemake file to reproduce figures and tables in the ReSeq paper
 
-This included the pipeline used to compare ReSequenceR, pIRS, NEAT and ART on 8 datasets, a bwa bowtie2 comparison with simulated data using ReSequenceR and various small things.
+This included the pipeline used to compare ReSeq, pIRS, NEAT and ART on 8 datasets, a bwa bowtie2 comparison with simulated data using ReSeq and various small things.
 
-Only scripts not included in any software, screenshots and csv files that were created with modified ReSequenceR code are provided. The datasets, references and software has to be downloaded from their original source.
+Only scripts not included in any software, screenshots and csv files that were created with modified ReSeq code are provided. The datasets, references and software has to be downloaded from their original source.
 
 The files not included, but necessary to reproduce the figures in the paper are:
 ```

@@ -1,4 +1,4 @@
-# ReSequenceR-paper
+# ReSeq-paper
 Snakemake file to reproduce figures and tables in the ReSequenceR paper
 
 This included the pipeline used to compare ReSequenceR, pIRS, NEAT and ART on 8 datasets, a bwa bowtie2 comparison with simulated data using ReSequenceR and various small things.

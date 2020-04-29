@@ -59,7 +59,7 @@ LIBREPS['S5L001'] = ['S6L001','S7L001']
 SAMPLES['S6L001'] = {'fq1':"Ecoli2_L001_S6_L001_R1_001.fastq.gz", 'fq2':"Ecoli2_L001_S6_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli"}
 SAMPLES['S7L001'] = {'fq1':"Ecoli3_L001_S7_L001_R1_001.fastq.gz", 'fq2':"Ecoli3_L001_S7_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli"}
 
-SIMULATORS = ['reseq','ART','pIRS','NEAT']
+SIMULATORS = ['ReSeq','ART','pIRS','NEAT']
 # BEAR: Second read is only reversed, not complemented
 # SInC: No errors simulated
 
@@ -69,13 +69,13 @@ def simulatorOutputFile(template_segment, wildcards):
     sim = wildcards.simulator.split('_')[0]
     if 'ART' == sim:
         return "art{}.fq.gz".format(template_segment)
-    #if 'BEAR' == sim:
-    #    return "bear-R{}.fq.gz".format(template_segment)
+    if 'BEAR' == sim:
+        return "bear-R{}.fq.gz".format(template_segment)
     if 'NEAT' == sim:
         return "neat_read{}.fq.gz".format(template_segment)
     if 'pIRS' == sim:
         return "pirs_{}.fq.gz".format(template_segment)
-    if 'reseq' == sim:
+    if 'ReSeq' == sim:
         return "reseq-R{}.fq.gz".format(template_segment)
     #if 'SInC' == sim:
     #    return "sinc-R{}.fq.gz".format(template_segment)
@@ -87,17 +87,25 @@ max_mem_mb = 419840
 
 rule all:
     input:
-        "storage/paper/figures/figure_gcbias_consistency.pdf",
-        "storage/paper/figures/figure_nobias.pdf",
-        "storage/paper/figures/figure_covfit.pdf",
-        "storage/paper/figures/figure_coverage.pdf",
         "storage/paper/tables/table_covcorrelation.txt",
-        "storage/paper/figures/figure_covcorrelation.pdf",
-        "storage/paper/figures/figure_syserror.pdf",
+        "storage/paper/figures/figure_comp_resources.pdf",
+        "storage/paper/figures/figure_coverage.pdf",
+        "storage/paper/figures/figure_covfit.pdf",
         "storage/paper/figures/figure_kmer.pdf",
         "storage/paper/figures/figure_kmer_cross.pdf",
+        "storage/paper/figures/figure_mapper_comp.pdf",
         "storage/paper/figures/figure_preqc.pdf",
-        "storage/paper/tables/table_map_stats.txt",
+        "storage/paper/figures/figure_syserror.pdf",
+        "storage/paper/additional_figures/figure_covcorrelation.pdf",
+        "storage/paper/additional_figures/figure_dispersion_pars_overview.pdf"
+        "storage/paper/additional_figures/figure_error_rate.pdf"
+        "storage/paper/additional_figures/figure_gcbias_consistency.pdf",
+        "storage/paper/additional_figures/figure_kmer_cross_mouse_human_seqbias.pdf",
+        "storage/paper/additional_figures/figure_kmer_SRR3191692_assembly_cov.pdf",
+        "storage/paper/additional_figures/figure_nobias.pdf",
+        "storage/paper/additional_figures/figure_preqc_SRR3191692_assembly_cov.pdf",
+        "storage/paper/additional_figures/figure_quality_values.pdf"
+        "storage/paper/additional_figures/figure_start_end_surrounding.pdf",
         expand("storage/summary/reseq-plots/{sample}.pdf", sample=MAINSAMPLES),
         ["storage/{0}/{1}/real/mapping-bowtie2-s-insert-length.pdf".format(SAMPLES[sample]['species'], sample) for sample in MAINSAMPLES]
 
@@ -109,7 +117,7 @@ rule figure_surbias:
         "input/paper/csv/S1L001_sum_maxlike_fit.csv",
         "input/paper/csv/S9L001_sum_maxlike_fit.csv"
     output:
-        "storage/paper/figures/figure_surbias.pdf"
+        "storage/paper/subfigures/figure_surbias.pdf"
     params:
         loaddir="input/paper/csv/"
     shell:
@@ -121,7 +129,7 @@ rule figure_gcbias:
     input:
         "input/paper/csv/SRR490124_sum_maxlike_fit.csv"
     output:
-        "storage/paper/figures/figure_gcbias.pdf"
+        "storage/paper/subfigures/figure_gcbias.pdf"
     params:
         loaddir="input/paper/csv/"
     shell:
@@ -135,7 +143,7 @@ rule figure_gcbias_consistency:
         "input/paper/csv/S1L001_sum_maxlike_fit.csv",
         "input/paper/csv/S9L001_sum_maxlike_fit.csv"
     output:
-        "storage/paper/figures/figure_gcbias_consistency.pdf"
+        "storage/paper/additional_figures/figure_gcbias_consistency.pdf"
     params:
         loaddir="input/paper/csv/"
     shell:
@@ -145,9 +153,9 @@ rule figure_gcbias_consistency:
 
 rule figure_nobias:
     input:
-        "storage/ecoli/S5L001/reseq/nobias/stats.pdf"
+        "storage/ecoli/S5L001/ReSeq/nobias/stats.pdf"
     output:
-        "storage/paper/figures/figure_nobias.pdf"
+        "storage/paper/additional_figures/figure_nobias.pdf"
     params:
         workdir="work/paper/figures/figure_nobias"
     shell:
@@ -168,7 +176,7 @@ rule figure_samplemean:
         "input/paper/csv/S5L001_sum_dispersion_fit.csv",
         "input/paper/csv/S5L001_mult_dispersion_fit.csv"
     output:
-        "storage/paper/figures/figure_samplemean.pdf"
+        "storage/paper/subfigures/figure_samplemean.pdf"
     params:
         loaddir="input/paper/csv/"
     shell:
@@ -181,8 +189,8 @@ rule figure_dispersion:
         "input/paper/csv/SRR490124_sum_dispersion_fit.csv",
         "input/paper/csv/S5L001_sum_dispersion_fit.csv"
     output:
-        "storage/paper/figures/figure_dispersion_a.pdf",
-        "storage/paper/figures/figure_dispersion_b.pdf"
+        "storage/paper/subfigures/figure_dispersion_a.pdf",
+        "storage/paper/subfigures/figure_dispersion_b.pdf"
     params:
         loaddir="input/paper/csv/"
     shell:
@@ -192,11 +200,11 @@ rule figure_dispersion:
         
 rule figure_covfit:
     input:
-        surbias="storage/paper/figures/figure_surbias.pdf",
-        gcbias="storage/paper/figures/figure_gcbias.pdf",
-        samplemean="storage/paper/figures/figure_samplemean.pdf",
-        dispa="storage/paper/figures/figure_dispersion_a.pdf",
-        dispb="storage/paper/figures/figure_dispersion_b.pdf"
+        surbias="storage/paper/subfigures/figure_surbias.pdf",
+        gcbias="storage/paper/subfigures/figure_gcbias.pdf",
+        samplemean="storage/paper/subfigures/figure_samplemean.pdf",
+        dispa="storage/paper/subfigures/figure_dispersion_a.pdf",
+        dispb="storage/paper/subfigures/figure_dispersion_b.pdf"
     output:
         "storage/paper/figures/figure_covfit.pdf"
     params:
@@ -204,7 +212,7 @@ rule figure_covfit:
     shell:
         """
         mkdir -p {params.workdir}
-        pdfcrop {input.surbias} {params.workdir}/surbias.pdf 1>/dev/null
+        pdfcrop --margins '0 0 1 0' {input.surbias} {params.workdir}/surbias.pdf 1>/dev/null
         pdfcrop {input.gcbias} {params.workdir}/gcbias.pdf 1>/dev/null
         pdfcrop {input.samplemean} {params.workdir}/samplemean.pdf 1>/dev/null
         pdfcrop {input.dispa} {params.workdir}/dispa.pdf 1>/dev/null
@@ -267,7 +275,7 @@ rule figure_covcorrelation_summary:
         simreal=expand("storage/ecoli/S5L001/{simulator}/correlation/pearson-coverage-real.pdf",simulator=SIMULATORS),
         simself=expand("storage/ecoli/S5L001/{simulator}/correlation/pearson-coverage-simreps.pdf",simulator=SIMULATORS)
     output:
-        "storage/paper/figures/figure_covcorrelation.pdf"
+        "storage/paper/additional_figures/figure_covcorrelation.pdf"
     params:
         workdir="work/paper/figures/figure_covcorrelation",
         simulator=SIMULATORS
@@ -354,7 +362,7 @@ rule figure_kmer_cov:
     input:
         "storage/summary/kmer/SRR3191692_assembly_cov.pdf"
     output:
-        "storage/paper/figures/figure_kmer_SRR3191692_assembly_cov.pdf"
+        "storage/paper/additional_figures/figure_kmer_SRR3191692_assembly_cov.pdf"
     shell:
         "pdfcrop {input} {output} 1>/dev/null"
 
@@ -362,7 +370,7 @@ rule figure_kmer_cross_seqbias:
     input:
         "storage/summary/kmer_cross/mouse_ERR3085830_human_ERR1955542_seqbias.pdf"
     output:
-        "storage/paper/figures/figure_kmer_cross_mouse_human_seqbias.pdf"
+        "storage/paper/additional_figures/figure_kmer_cross_mouse_human_seqbias.pdf"
     shell:
         "pdfcrop {input} {output} 1>/dev/null"
 
@@ -390,7 +398,7 @@ rule figure_preqc_cov:
     input:
         "storage/summary/preqc/SRR3191692_assembly_cov.pdf"
     output:
-        "storage/paper/figures/figure_preqc_SRR3191692_assembly_cov.pdf"
+        "storage/paper/additional_figures/figure_preqc_SRR3191692_assembly_cov.pdf"
     params:
         workdir="work/paper/figures/figure_preqc_cov"
     shell:
@@ -435,11 +443,11 @@ rule figure_map_stats:
 rule figure_map_stats_prepare:
     input:
         real_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_real_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bt2_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bwa_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_bwa_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bt2_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bwa_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_bwa_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
         real_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_real_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bt2_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bwa_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_bwa_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"])
+        bt2_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bwa_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_bwa_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"])
     output:
         "work/paper/figures/figure_map_stats/map_stats.csv"
     shell:
@@ -448,65 +456,65 @@ rule figure_map_stats_prepare:
         printf "Unmapped pairs, real" >> {output}
         for f in {input.real_map}; do printf ", %d" $(awk '(1==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Unmapped pairs, reseq-bowtie2" >> {output}
+        printf "Unmapped pairs, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf ", %d" $(awk '(1==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Unmapped pairs, reseq-bwa" >> {output}
+        printf "Unmapped pairs, ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf ", %d" $(awk '(1==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
         printf "Single reads, real" >> {output}
         for f in {input.real_map}; do printf ", %d" $(awk '(2==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Single reads, reseq-bowtie2" >> {output}
+        printf "Single reads, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf ", %d" $(awk '(2==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Single reads, reseq-bwa" >> {output}
+        printf "Single reads, ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf ", %d" $(awk '(2==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
         printf "Mapped pairs, real" >> {output}
         for f in {input.real_map}; do printf ", %d" $(awk '(3==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Mapped pairs, reseq-bowtie2" >> {output}
+        printf "Mapped pairs, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf ", %d" $(awk '(3==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Mapped pairs, reseq-bwa" >> {output}
+        printf "Mapped pairs, ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf ", %d" $(awk '(3==NR){{print $1}}' $f) >> {output}; done
         echo >> {output}
         
         printf "Matches, real" >> {output}
         for f in {input.real_cigar}; do printf ", %d" $(awk '{{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Matches, reseq-bowtie2" >> {output}
+        printf "Matches, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf ", %d" $(awk '{{print $1}}' $f) >> {output}; done
         echo >> {output}
-        printf "Matches, reseq-bwa" >> {output}
+        printf "Matches, ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf ", %d" $(awk '{{print $1}}' $f) >> {output}; done
         echo >> {output}
         printf "Soft trimmed, real" >> {output}
         for f in {input.real_cigar}; do printf ", %d" $(awk '{{print $2}}' $f) >> {output}; done
         echo >> {output}
-        printf "Soft trimmed, reseq-bowtie2" >> {output}
+        printf "Soft trimmed, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf ", %d" $(awk '{{print $2}}' $f) >> {output}; done
         echo >> {output}
-        printf "Soft trimmed, reseq-bwa" >> {output}
+        printf "Soft trimmed, ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf ", %d" $(awk '{{print $2}}' $f) >> {output}; done
         echo >> {output}
         printf "Insertions, real" >> {output}
         for f in {input.real_cigar}; do printf ", %d" $(awk '{{print $3}}' $f) >> {output}; done
         echo >> {output}
-        printf "Insertions, reseq-bowtie2" >> {output}
+        printf "Insertions, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf ", %d" $(awk '{{print $3}}' $f) >> {output}; done
         echo >> {output}
-        printf "Insertions, reseq-bwa" >> {output}
+        printf "Insertions, ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf ", %d" $(awk '{{print $3}}' $f) >> {output}; done
         echo >> {output}
         printf "Deletions, real" >> {output}
         for f in {input.real_cigar}; do printf ", %d" $(awk '{{print $4}}' $f) >> {output}; done
         echo >> {output}
-        printf "Deletions, reseq-bowtie2" >> {output}
+        printf "Deletions, ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf ", %d" $(awk '{{print $4}}' $f) >> {output}; done
         echo >> {output}
-        printf "Deletions, reseq-bwa" >> {output}
+        printf "Deletions, ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf ", %d" $(awk '{{print $4}}' $f) >> {output}; done
         echo >> {output}
         """ 
@@ -514,11 +522,11 @@ rule figure_map_stats_prepare:
 rule table_map_stats:
     input:
         real_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_real_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bt2_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bwa_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_bwa_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bt2_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bwa_map=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_bwa_eval_mapping-{mapper}-s.bam.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
         real_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_real_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bt2_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
-        bwa_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_reseq_bwa_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"])
+        bt2_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"]),
+        bwa_cigar=expand(expand("work/paper/tables/table_map_stats/storage_ecoli_{{sample}}_ReSeq_bwa_eval_mapping-{mapper}-s.bam_cigar.txt", mapper=["bowtie2","bwa"]), sample=["SRR490124","SRR3191692","S5L001"])
     output:
         "storage/paper/tables/table_map_stats.txt"
     shell:
@@ -531,28 +539,28 @@ rule table_map_stats:
         printf "  Unmapped pairs & real" >> {output}
         for f in {input.real_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(1==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(1==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(1==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "  Single reads & real" >> {output}
         for f in {input.real_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(2==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(2==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(2==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "  Mapped pairs & real" >> {output}
         for f in {input.real_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(3==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(3==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_map}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{sum+=$1;if(3==NR){{val=$1}}}}END{{print val, val*100/sum}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         
@@ -560,34 +568,34 @@ rule table_map_stats:
         printf "  Matches & real" >> {output}
         for f in {input.real_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $1, $1*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $1, $1*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $1, $1*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "  Soft trimmed & real" >> {output}
         for f in {input.real_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $2, $2*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $2, $2*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $2, $2*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "  Insertion & real" >> {output}
         for f in {input.real_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $3, $3*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $3, $3*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bwa" >> {output}
+        printf "   & ReSeq-bwa" >> {output}
         for f in {input.bwa_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $3, $3*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "  Deletion & real" >> {output}
         for f in {input.real_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $4, $4*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
-        printf "   & reseq-bowtie2" >> {output}
+        printf "   & ReSeq-bowtie2" >> {output}
         for f in {input.bt2_cigar}; do printf "%.2e}} (%.0f\\\\%%)" $(awk '{{print $4, $4*100/($1+$2+$3+$4)}}' $f) | awk '{{gsub("e[+]0"," \\\\cdot 10^{{", $0); printf " & $%s$", $0}}' >> {output}; done
         echo " \\\\\\\\" >> {output}
         printf "   & reseq-bwa" >> {output}
@@ -662,10 +670,10 @@ rule figure_mapper_comp_summary:
 
 rule figure_mapper_comp:
     input:
-        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_reseq_eval_mapping-bowtie2-s_mapping_correctness.csv",
-        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_reseq_eval_mapping-bwa-s_mapping_correctness.csv",
-        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_reseq_bwa_eval_mapping-bowtie2-s_mapping_correctness.csv",
-        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_reseq_bwa_eval_mapping-bwa-s_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bwa-s_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_bwa_eval_mapping-bowtie2-s_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_bwa_eval_mapping-bwa-s_mapping_correctness.csv",
         "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bowtie2-s_mapping_qualities.csv",
         "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bwa-s_mapping_qualities.csv"
     output:
@@ -690,9 +698,9 @@ rule figure_mapper_comp_prepare2:
 
 rule figure_mapper_comp_prepare:
     input:
-        "storage/{species}/{sample}/reseq{mapper2}/eval/mapping-{mapper}-s.bam"
+        "storage/{species}/{sample}/ReSeq{mapper2}/eval/mapping-{mapper}-s.bam"
     output:
-        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_reseq{mapper2,|_bwa}_eval_mapping-{mapper}-s_mapping_correctness.csv"
+        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_ReSeq{mapper2,|_bwa}_eval_mapping-{mapper}-s_mapping_correctness.csv"
     shell:
         """
         echo "mapq, correctness, unmapped, negative, count" > {output}
@@ -804,6 +812,133 @@ rule figure_mapper_comp_prepare:
         }}' | sort -k1,1nr -k2,2nr -k3,3n -k4,4n | uniq -c | awk '{{print $2 ", " $3 ", " $4 ", " $5 ", " $1}}' >> {output}
         """
 
+rule figure_start_end_surrounding:
+    input:
+        "storage/ecoli/SRR490124/real/surrounding.pdf",
+        "storage/ecoli/S5L001/real/surrounding.pdf"
+    output:
+        "storage/paper/additional_figures/figure_start_end_surrounding.pdf"
+    params:
+        workdir="work/paper/figures/figure_start_end_surrounding"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp4.R {params.workdir}/figure_start_end_surrounding.pdf {params.workdir}/figure[1-4].pdf
+        pdfcrop {params.workdir}/figure_start_end_surrounding.pdf {output} 1>/dev/null
+        """
+        
+rule figure_dispersion_pars:
+    input:
+        "input/paper/csv/SRR490124_sum_maxlike_fit.csv",
+        "input/paper/csv/SRR3191692_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_sum_maxlike_fit.csv",
+        "input/paper/csv/S1L001_sum_maxlike_fit.csv",
+        "input/paper/csv/S9L001_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR2017816_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR3085830_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR1955542_sum_maxlike_fit.csv"
+    output:
+        "storage/paper/subfigures/figure_dispersion_pars.pdf"
+    params:
+        loaddir="input/paper/csv/"
+    shell:
+        """
+        Rscript bin/figure_dispersion_pars.R {params.loaddir} {output}
+        """
+
+rule figure_dispersion_start_pars:
+    input:
+        "input/paper/csv/S5L001_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_b0.5_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_b0.75_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_b2.0_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_b10.0_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a10.0_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.5_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.2_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.1_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.01_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.5_b0.5_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.1_b0.5_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_a0.314_b1.24_sum_maxlike_fit.csv"
+    output:
+        "storage/paper/subfigures/figure_dispersion_start_pars1.pdf",
+        "storage/paper/subfigures/figure_dispersion_start_pars2.pdf",
+        "storage/paper/subfigures/figure_dispersion_start_pars3.pdf"
+    params:
+        loaddir="input/paper/csv/"
+    shell:
+        """
+        Rscript bin/figure_dispersion_start_pars.R {params.loaddir} {output}
+        """
+
+rule figure_dispersion_pars_overview:
+    input:
+        "storage/paper/subfigures/figure_dispersion_pars.pdf",
+        "storage/paper/subfigures/figure_dispersion_start_pars1.pdf",
+        "storage/paper/subfigures/figure_dispersion_start_pars2.pdf",
+        "storage/paper/subfigures/figure_dispersion_start_pars3.pdf"
+    output:
+        "storage/paper/additional_figures/figure_dispersion_pars_overview.pdf"
+    params:
+        workdir="work/paper/figures/figure_dispersion_pars_overview"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp4.R {params.workdir}/figure_dispersion_pars_overview.pdf {params.workdir}/figure[1-4].pdf
+        pdfcrop {params.workdir}/figure_dispersion_pars_overview.pdf {output} 1>/dev/null
+        """
+
+rule figure_error_rate:
+    input:
+        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+    output:
+        "storage/paper/additional_figures/figure_error_rate.pdf"
+    params:
+        workdir="work/paper/figures/figure_error_rate"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdftk $fi cat 5 output {params.workdir}/figure${{i}}-full.pdf
+            pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp9.R {params.workdir}/figure_error_rate.pdf {params.workdir}/figure[1-9].pdf
+        pdfcrop {params.workdir}/figure_error_rate.pdf {output} 1>/dev/null
+        """
+        
+rule figure_quality_values:
+    input:
+        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+    output:
+        "storage/paper/additional_figures/figure_quality_values.pdf"
+    params:
+        workdir="work/paper/figures/figure_quality_values"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdftk $fi cat 10 output {params.workdir}/figure${{i}}-full.pdf
+            pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp9.R {params.workdir}/figure_quality_values.pdf {params.workdir}/figure[1-9].pdf
+        pdfcrop {params.workdir}/figure_quality_values.pdf {output} 1>/dev/null
+        """
+
 ###-Create summary plots---------------------------------------------------------------------------------------------------------------------------------------------------------------
 rule comp_res_summary:
     input:
@@ -823,8 +958,8 @@ rule comp_res_summary:
 rule cross_kmer_plot_summary_seqbias:
     input:
        "work/summary/kmer/{sample}/real.histo",
-       "work/summary/kmer_cross_seqbias/{species}_{sample}_{crossspecies}_{crosssample}/reseq.histo",
-       lambda wildcards: expand("work/summary/kmer_cross/{0}_{1}_{2}_{3}/{{simulator}}.histo".format(wildcards.species, wildcards.sample, wildcards.crossspecies, wildcards.crosssample), simulator=[sim for sim in SIMULATORS if sim != "reseq"] )
+       "work/summary/kmer_cross_seqbias/{species}_{sample}_{crossspecies}_{crosssample}/ReSeq.histo",
+       lambda wildcards: expand("work/summary/kmer_cross/{0}_{1}_{2}_{3}/{{simulator}}.histo".format(wildcards.species, wildcards.sample, wildcards.crossspecies, wildcards.crosssample), simulator=[sim for sim in SIMULATORS if sim != "ReSeq"] )
     output:
         "storage/summary/kmer_cross/{species}_{sample}_{crossspecies}_{crosssample}_seqbias.pdf"
     params:
@@ -923,7 +1058,7 @@ rule plot_eval_with_reseq_summary:
         
 rule plot_eval_with_reseq_summary_prep:
     input:
-        lambda wildcards: "storage/{0}/{1}/reseq/original.reseq".format(SAMPLES[wildcards.sample]['species'],wildcards.sample)
+        lambda wildcards: "storage/{0}/{1}/ReSeq/original.reseq".format(SAMPLES[wildcards.sample]['species'],wildcards.sample)
     output:
         "work/summary/reseq-plots/{sample}/real.reseq"
     shell:
@@ -1109,7 +1244,7 @@ rule bwa_map:
 
 rule plot_eval_with_reseq_nobias:
     input:
-        "storage/{species}/{sample}/reseq/original.reseq",
+        "storage/{species}/{sample}/ReSeq/original.reseq",
         "storage/{species}/{sample}/{simulator}/nobias/nobias.reseq"
     output:
         "storage/{species}/{sample}/{simulator}/nobias/stats.pdf"
@@ -1120,7 +1255,7 @@ rule plot_eval_with_reseq_nobias:
         
 rule plot_eval_with_reseq:
     input:
-        "storage/{species}/{sample}/reseq/original.reseq",
+        "storage/{species}/{sample}/ReSeq/original.reseq",
         "storage/{species}/{sample}/{simulator}/eval/mapping-bowtie2-s.bam.reseq"
     output:
         "storage/{species}/{sample}/{simulator}/eval/stats.pdf"
@@ -1148,7 +1283,7 @@ rule eval_with_reseq:
     output:
         "storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/{simulator}/eval/mapping-bowtie2-s.bam.reseq"
     params:
-        adapter=lambda wildcards: "" if wildcards.simulator == "reseq" else "--adapterFile TruSeq_single"
+        adapter=lambda wildcards: "" if wildcards.simulator == "ReSeq" else "--adapterFile TruSeq_single"
     log:
         "logs/eval_with_reseq/{species}/{sample}{asm}/{simulator}.log"
     threads: max_threads
@@ -1331,7 +1466,58 @@ rule kmer:
         fi
         """
 
-###-ReSequenceR------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+rule surrounding_pdf:
+    input:
+        expand("storage/{{species}}/{{sample}}/real/surrounding_{strand}_{segment}.csv", strand=["forward","reverse"], segment=["first","second"])
+    output:
+        "storage/{species}/{sample}/real/surrounding.pdf"
+    params:
+        workdir="storage/{species}/{sample}/real/"
+    shell:
+        "Rscript bin/figure_surrounding.R {params.workdir}"
+
+def SurroundingCsvFlags(strand, segment):
+    if "forward" == strand:
+        if "first" == segment:
+            return "-f 99 -F 3868"
+        elif "second" == segment:
+            return "-f 163 -F 3868"
+        else:
+            raise KeyError("Unknown segment specified: {0}".format(segment))
+    elif "reverse" == strand:
+        if "first" == segment:
+            return "-f 83 -F 3884"
+        elif "second" == segment:
+            return "-f 147 -F 3884"
+        else:
+            raise KeyError("Unknown segment specified: {0}".format(segment))
+    else:
+        raise KeyError("Unknown strand specified: {0}".format(strand))
+
+rule surrounding_csv_forward:
+    input:
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        bam="storage/{species}/{sample}/real/mapping-bowtie2-s.bam"
+    output:
+        "storage/{species}/{sample}/real/surrounding_forward_{segment}.csv"
+    params:
+        flags=lambda wildcards: SurroundingCsvFlags("forward", wildcards.segment)
+    shell:
+        "echo 'base,pos,count' > {output}; samtools faidx -r <(samtools view -q 10 {params.flags} {input.bam} | awk '($4>50){{print $3 \":\" $4-5 \"-\" $4+9}}') {input.ref} | awk -F '' '(NR%2==0){{ for(p=1; p <= NF; p++){{ stor[$p][p] += 1 }} }}END{{ for(base in stor){{ for(p in stor[base]){{ print base \",\" p-6 \",\" stor[base][p]}}}} }}' >> {output}"
+        
+
+rule surrounding_csv_reverse:
+    input:
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        bam="storage/{species}/{sample}/real/mapping-bowtie2-s.bam"
+    output:
+        "storage/{species}/{sample}/real/surrounding_reverse_{segment}.csv"
+    params:
+        flags=lambda wildcards: SurroundingCsvFlags("reverse", wildcards.segment)
+    shell:
+        "echo 'base,pos,count' > {output}; samtools faidx --reverse-complement -r <(samtools view -q 10 {params.flags} {input.bam} | awk '($8>50){{end=$8-$9-1; print $3 \":\" end-9 \"-\" end+50}}') {input.ref} 2>/dev/null | awk -F '' '((NR%2==0) && (60 == length($0))){{ for(p=46; p <= NF; p++){{ stor[$p][p-45] += 1 }} }}END{{ for(base in stor){{ for(p in stor[base]){{ print base \",\" p-6 \",\" stor[base][p]}}}} }}' >> {output}"
+
+###-ReSeq------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 rule gzip:
     input:
@@ -1344,12 +1530,12 @@ rule gzip:
 rule reseq_simulate_nobias:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}/reseq{mapper}/original.reseq",
-        ipf="storage/{species}/{sample}/reseq{mapper}/original.reseq.ipf",
+        stats="storage/{species}/{sample}/ReSeq{mapper}/original.reseq",
+        ipf="storage/{species}/{sample}/ReSeq{mapper}/original.reseq.ipf",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        fq1="storage/{species}/{sample}/reseq{mapper,|_bwa}/nobias/reseq-R1.fq",
-        fq2="storage/{species}/{sample}/reseq{mapper,|_bwa}/nobias/reseq-R2.fq"
+        fq1="storage/{species}/{sample}/ReSeq{mapper,|_bwa}/nobias/reseq-R1.fq",
+        fq2="storage/{species}/{sample}/ReSeq{mapper,|_bwa}/nobias/reseq-R2.fq"
     params:
         diploid=lambda wildcards: "-V " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1361,16 +1547,16 @@ rule reseq_simulate_nobias:
 rule reseq_cross_simulate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{crossspecies}/{crosssample}/reseq/original.reseq",
-        ipf="storage/{crossspecies}/{crosssample}/reseq/original.reseq.ipf",
-        seqbias=lambda wildcards: [] if "" == wildcards.seqbias else "work/{0}/{1}/reseq/original_seqbias.tsv".format(wildcards.species, wildcards.sample)
+        stats="storage/{crossspecies}/{crosssample}/ReSeq/original.reseq",
+        ipf="storage/{crossspecies}/{crosssample}/ReSeq/original.reseq.ipf",
+        seqbias=lambda wildcards: [] if "" == wildcards.seqbias else "work/{0}/{1}/ReSeq/original_seqbias.tsv".format(wildcards.species, wildcards.sample)
     output:
-        fq1="storage/{species}/{sample}/reseq_{crossspecies}_{crosssample}/reseq{seqbias,|_seqbias}-R1.fq",
-        fq2="storage/{species}/{sample}/reseq_{crossspecies}_{crosssample}/reseq{seqbias,|_seqbias}-R2.fq",
-        timelog="storage/{species}/{sample}/reseq_{crossspecies}_{crosssample}/benchmark/reseq_simulate{seqbias,|_seqbias}.log"
+        fq1="storage/{species}/{sample}/ReSeq_{crossspecies}_{crosssample}/reseq{seqbias,|_seqbias}-R1.fq",
+        fq2="storage/{species}/{sample}/ReSeq_{crossspecies}_{crosssample}/reseq{seqbias,|_seqbias}-R2.fq",
+        timelog="storage/{species}/{sample}/ReSeq_{crossspecies}_{crosssample}/benchmark/reseq_simulate{seqbias,|_seqbias}.log"
     params:
         coverage=lambda wildcards: SAMPLES[wildcards.sample]['coverage'],
-        seqbias=lambda wildcards: "no" if "" == wildcards.seqbias else "file --refBiasFile work/{0}/{1}/reseq/original_seqbias.tsv".format(wildcards.species, wildcards.sample)
+        seqbias=lambda wildcards: "no" if "" == wildcards.seqbias else "file --refBiasFile work/{0}/{1}/ReSeq/original_seqbias.tsv".format(wildcards.species, wildcards.sample)
     log:
         "logs/reseq/{species}/{sample}_reseq_{crossspecies}_{crosssample}_simulate{seqbias}.log"
     threads: max_threads
@@ -1380,22 +1566,22 @@ rule reseq_cross_simulate:
 rule reseq_extract_seqbias:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}/reseq/original.reseq"
+        stats="storage/{species}/{sample}/ReSeq/original.reseq"
     output:
-        "work/{species}/{sample}/reseq/original_seqbias.tsv"
+        "work/{species}/{sample}/ReSeq/original_seqbias.tsv"
     shell:
         "reseq getRefSeqBias -o {output} -r {input.ref} -s {input.stats}"
     
 rule reseq_simulate_syserror_replicate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}/reseq/original.reseq",
-        ipf="storage/{species}/{sample}/reseq/original.reseq.ipf",
+        stats="storage/{species}/{sample}/ReSeq/original.reseq",
+        ipf="storage/{species}/{sample}/ReSeq/original.reseq.ipf",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else [],
-        syserr="storage/{species}/{sample}/reseq/syserror-replicates/syserror.fq"
+        syserr="storage/{species}/{sample}/ReSeq/syserror-replicates/syserror.fq"
     output:
-        fq1="storage/{species}/{sample}/reseq/syserror-replicates/sim{simnum,(?!1).*}/reseq-R1.fq",
-        fq2="storage/{species}/{sample}/reseq/syserror-replicates/sim{simnum,(?!1).*}/reseq-R2.fq"
+        fq1="storage/{species}/{sample}/ReSeq/syserror-replicates/sim{simnum,(?!1).*}/reseq-R1.fq",
+        fq2="storage/{species}/{sample}/ReSeq/syserror-replicates/sim{simnum,(?!1).*}/reseq-R2.fq"
     params:
         diploid=lambda wildcards: "-V " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1407,13 +1593,13 @@ rule reseq_simulate_syserror_replicate:
 rule reseq_simulate_syserror:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}/reseq/original.reseq",
-        ipf="storage/{species}/{sample}/reseq/original.reseq.ipf",
+        stats="storage/{species}/{sample}/ReSeq/original.reseq",
+        ipf="storage/{species}/{sample}/ReSeq/original.reseq.ipf",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        syserr="storage/{species}/{sample}/reseq/syserror-replicates/syserror.fq",
-        fq1="storage/{species}/{sample}/reseq/syserror-replicates/sim1/reseq-R1.fq",
-        fq2="storage/{species}/{sample}/reseq/syserror-replicates/sim1/reseq-R2.fq"
+        syserr="storage/{species}/{sample}/ReSeq/syserror-replicates/syserror.fq",
+        fq1="storage/{species}/{sample}/ReSeq/syserror-replicates/sim1/reseq-R1.fq",
+        fq2="storage/{species}/{sample}/ReSeq/syserror-replicates/sim1/reseq-R2.fq"
     params:
         diploid=lambda wildcards: "-V " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1425,12 +1611,12 @@ rule reseq_simulate_syserror:
 rule reseq_simulate_replicate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}/reseq/original.reseq",
-        ipf="storage/{species}/{sample}/reseq/original.reseq.ipf",
+        stats="storage/{species}/{sample}/ReSeq/original.reseq",
+        ipf="storage/{species}/{sample}/ReSeq/original.reseq.ipf",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        fq1="storage/{species}/{sample}/reseq/replicates/sim{simnum}/reseq-R1.fq",
-        fq2="storage/{species}/{sample}/reseq/replicates/sim{simnum}/reseq-R2.fq"
+        fq1="storage/{species}/{sample}/ReSeq/replicates/sim{simnum}/reseq-R1.fq",
+        fq2="storage/{species}/{sample}/ReSeq/replicates/sim{simnum}/reseq-R2.fq"
     params:
         diploid=lambda wildcards: "-V " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1442,13 +1628,13 @@ rule reseq_simulate_replicate:
 rule reseq_simulate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
-        stats="storage/{species}/{sample}{asm}/reseq{mapper}/original.reseq",
-        ipf="storage/{species}/{sample}{asm}/reseq{mapper}/original.reseq.ipf",
+        stats="storage/{species}/{sample}{asm}/ReSeq{mapper}/original.reseq",
+        ipf="storage/{species}/{sample}{asm}/ReSeq{mapper}/original.reseq.ipf",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        fq1="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/reseq{mapper,|_bwa}/reseq{cov,|_cov}-R1.fq",
-        fq2="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/reseq{mapper,|_bwa}/reseq{cov,|_cov}-R2.fq",
-        timelog="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/reseq{mapper,|_bwa}/benchmark/reseq_simulate{cov,|_cov}.log"
+        fq1="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/ReSeq{mapper,|_bwa}/reseq{cov,|_cov}-R1.fq",
+        fq2="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/ReSeq{mapper,|_bwa}/reseq{cov,|_cov}-R2.fq",
+        timelog="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/ReSeq{mapper,|_bwa}/benchmark/reseq_simulate{cov,|_cov}.log"
     params:
         diploid=lambda wildcards: "-V " if REFERENCES[wildcards.species]['diploid'] else "",
         coverage=lambda wildcards: "" if "" == wildcards.asm or "" == wildcards.cov else "-c {}".format(SAMPLES[wildcards.sample]['coverage'])
@@ -1460,10 +1646,10 @@ rule reseq_simulate:
 
 rule reseq_iterative_proportional_fitting:
     input:
-        stats="storage/{species}/{sample}/reseq{mapper}/original.reseq"
+        stats="storage/{species}/{sample}/ReSeq{mapper}/original.reseq"
     output:
-        ipf="storage/{species}/{sample}/reseq{mapper,|_bwa}/original.reseq.ipf",
-        timelog="storage/{species}/{sample}/reseq{mapper,|_bwa}/benchmark/reseq_iterative_proportional_fitting.log"
+        ipf="storage/{species}/{sample}/ReSeq{mapper,|_bwa}/original.reseq.ipf",
+        timelog="storage/{species}/{sample}/ReSeq{mapper,|_bwa}/benchmark/reseq_iterative_proportional_fitting.log"
     log:
         "logs/reseq{mapper}/{species}/{sample}_reseq_iterative_proportional_fitting.log"
     threads: max_threads
@@ -1478,8 +1664,8 @@ rule reseq_create_profile_bwa:
         bam="storage/{species}/{sample}/real/mapping-bwa-s.bam",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        stats="storage/{species}/{sample}/reseq_bwa/original.reseq",
-        timelog="storage/{species}/{sample}/reseq_bwa/benchmark/reseq_create_profile.log"
+        stats="storage/{species}/{sample}/ReSeq_bwa/original.reseq",
+        timelog="storage/{species}/{sample}/ReSeq_bwa/benchmark/reseq_create_profile.log"
     params:
         diploid=lambda wildcards: "-v " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1494,8 +1680,8 @@ rule reseq_create_profile:
         bam="storage/{species}/{sample}{asm}/real/mapping-bowtie2-s.bam",
         vcf=lambda wildcards: "storage/{0}/reference/{1}/{2}".format(wildcards.species, wildcards.sample, "sga-contigs.vcf" if wildcards.asm != "" else "pilon-corrected.vcf") if REFERENCES[wildcards.species]['diploid'] else []
     output:
-        stats="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/reseq/original.reseq",
-        timelog="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/reseq/benchmark/reseq_create_profile.log"
+        stats="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/ReSeq/original.reseq",
+        timelog="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/ReSeq/benchmark/reseq_create_profile.log"
     params:
         diploid=lambda wildcards: "-v " if REFERENCES[wildcards.species]['diploid'] else ""
     log:
@@ -1763,7 +1949,7 @@ rule bear_simulate:
         cd bin/BEAR/
         gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
         gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
-        env time -v -o ../../{output.uniformtl} ./generate_reads.py -r ../../{input.ref} -a ../../{input.abundance} -o ../../{params.workdir}/uniform-reads -t $(($(wc -l ../../{params.workdir}/reads1.fastq | awk '{{print $1}}')/4)) -l {params.readlength} -i {params.insertlength} -s {params.insertsd}
+        env time -v -o ../../{output.uniformtl} ./generate_reads.py -d -r ../../{input.ref} -a ../../{input.abundance} -o ../../{params.workdir}/uniform-reads -t $(($(wc -l ../../{params.workdir}/reads1.fastq | awk '{{print $1}}')/4)) -l {params.readlength} -i {params.insertlength} -s {params.insertsd}
         env time -v -o ../../{output.trim1tl} ./trim_reads.pl -i ../../{params.workdir}/reads1.fastq -f ../../{params.workdir}/uniform-reads.1.fasta -o ../../{params.workdir}/tmp_bear1.fq -r ../../{input.per1} -q ../../{input.errqual1} -m ../../{input.errmat1} 1>../../{log.r1} 2>&1
         env time -v -o ../../{output.trim2tl} ./trim_reads.pl -i ../../{params.workdir}/reads2.fastq -f ../../{params.workdir}/uniform-reads.2.fasta -o ../../{params.workdir}/tmp_bear2.fq -r ../../{input.per2} -q ../../{input.errqual2} -m ../../{input.errmat2} 1>../../{log.r2} 2>&1
         cat ../../{params.workdir}/tmp_bear1.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}' > ../../{output.fq1}
@@ -1801,7 +1987,7 @@ rule bear_profile:
     shell:
         """
         cd bin/BEAR/
-        env time -v -o {output.abundancetl} ./parametric_abundance.pl ../../{input.ref} low > ../../{output.abundance}
+        env time -v -o ../../{output.abundancetl} ./parametric_abundance.pl ../../{input.ref} low > ../../{output.abundance}
         gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
         gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
         env time -v -o ../../{output.drisee1tl} python2 drisee.py -p {threads} -t fastq -l ../../{log.drisee1} --percent ../../{params.workdir}/reads1.fastq ../../{params.workdir}/dri_read1.txt

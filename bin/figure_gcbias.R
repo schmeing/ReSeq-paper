@@ -30,6 +30,7 @@ Untermedian <- function(x){
   sort(x)[[length(x)/2]]
 }
 
+# In the real method the medians are weighted, this is an approximation for the plot here, but with the values all from the same reference sequence this should be a very good one
 medians <-  maxlike_fit %>%
   filter(Fit == "normalized") %>%
   group_by(Fit, GC) %>%

@@ -19,8 +19,8 @@ dispersion_fit_product_truseq_csv <- read_csv(paste0(input_path,"SRR490124_mult_
 dispersion_fit_sum_nextera_csv <- read_csv(paste0(input_path,"S5L001_sum_dispersion_fit.csv"), col_types = cols())
 dispersion_fit_product_nextera_csv <- read_csv(paste0(input_path,"S5L001_mult_dispersion_fit.csv"), col_types = cols())
 
-text_size <- 20
-tick_text_size <- 16
+text_size <- 24
+tick_text_size <- 20
 dispersion_fit_sum_truseq_csv %>% mutate(Type="Sum", Adapter="TruSeq") %>%
   rbind( dispersion_fit_product_truseq_csv %>% mutate(Type="Product", Adapter="TruSeq") ) %>%
   rbind( dispersion_fit_sum_nextera_csv %>% mutate(Type="Sum", Adapter="Nextera") ) %>%
@@ -30,7 +30,7 @@ dispersion_fit_sum_truseq_csv %>% mutate(Type="Sum", Adapter="TruSeq") %>%
   select( FragmentLength, MeanPrediction, SampleMean, Type, Adapter) %>%
   mutate(Adapter = ordered(Adapter, levels=c("TruSeq", "Nextera"))) %>%
   ggplot(aes(x=SampleMean, y=MeanPrediction, color=FragmentLength)) +
-    geom_point() +
+    geom_point(size=3) +
     geom_abline(slope=1, intercept=0) +
     scale_x_continuous(limits=c(0,0.032), expand = c(0.0005,0.0005)) +
     scale_y_continuous(limits=c(0,0.032), expand = c(0.0005,0.0005)) +
@@ -48,7 +48,7 @@ dispersion_fit_sum_truseq_csv %>% mutate(Type="Sum", Adapter="TruSeq") %>%
           legend.text=element_text(size=tick_text_size),
           legend.position = c(.01, .99),
           legend.justification = c("left", "top"),
-          legend.box.background = element_rect(fill="transparent"),
+          legend.background = element_rect(fill="transparent", color=NA),
           panel.grid.minor = element_blank())
 
 ggsave(args[2], width=297, height=210, units="mm")

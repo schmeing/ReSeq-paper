@@ -18,7 +18,7 @@ comp_res <- comp_res_csv %>%
   mutate(dataset = recode(dataset, "SRR490124"="SRR490124\n(4.6Mb, 449x)", "SRR3191692"="SRR3191692\n(4.6Mb, 1011x)",
                           "S5L001"="S5L001\n(4.6Mb, 508x)", "S1L001"="S1L001\n(5.2Mb, 1528x)", "S9L001"="S9L001\n(4.6Mb, 2901x)",
                           "ERR2017816"="ERR2017816\n(120Mb, 31x)", "ERR3085830"="ERR3085830\n(2.8Gb, 43x)", "ERR1955542"="ERR1955542\n(3.3Gb, 40x)")) %>%
-  mutate(simulator = ordered(simulator, levels=c("reseq","ART","pIRS","NEAT"))) %>%
+  mutate(simulator = ordered(simulator, levels=c("ReSeq","ART","pIRS","NEAT"))) %>%
   rename("Simulator" = "simulator")
 
 training_prep <- function(df){

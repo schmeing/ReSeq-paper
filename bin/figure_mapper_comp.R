@@ -15,10 +15,10 @@ if(length(args)<3){
 input_path = args[1]
 sample = args[2]
 
-input_csv <- read_csv(paste0(input_path,"/storage_ecoli_",sample,"_reseq_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="reseq-bowtie2", mapper="bowtie2")
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_reseq_bwa_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="reseq-bwa", mapper="bowtie2"))
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_reseq_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="reseq-bowtie2", mapper="bwa"))
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_reseq_bwa_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="reseq-bwa", mapper="bwa"))
+input_csv <- read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bowtie2")
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bowtie2"))
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bwa"))
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bwa"))
 
 text_size <- 20
 tick_text_size <- 16

@@ -33,10 +33,11 @@ maxlike_fit_csv %>%
   mutate(Base=substr(Surrounding,3,3)) %>%
   filter(-3<=Position,Position<=11) %>%
   mutate( Position = as.factor(Position) ) %>%
-  ggplot(aes(x=Position, y=Bias, color=Base, fill=Data)) +
-    geom_boxplot() +
+  ggplot(aes(x=Position, y=Bias, fill=Data, color=Base)) +
+    geom_boxplot( position = position_dodge(width=0.8, preserve="single"), width=3 ) +
     geom_vline(xintercept=seq(0.5, 30.5, 1), color="lightgrey") +
     scale_x_discrete(expand = c(0.03,0.03)) +
+    scale_color_manual(values=c('#E6642C','#488BC2','#781C81','#B5BD4C')) +
     scale_fill_manual(values=c("white", "grey", "black")) +
     theme_bw() +
     theme(axis.text.x = element_text( size = tick_text_size),

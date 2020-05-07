@@ -87,7 +87,7 @@ max_mem_mb = 419840
 
 rule all:
     input:
-        "storage/paper/tables/table_covcorrelation.txt",
+        "storage/paper/tables/table_covcorrelation_spearman.txt",
         "storage/paper/figures/figure_comp_resources.pdf",
         "storage/paper/figures/figure_coverage.pdf",
         "storage/paper/figures/figure_covfit.pdf",
@@ -100,6 +100,7 @@ rule all:
         "storage/paper/additional_figures/figure_dispersion_pars_overview.pdf"
         "storage/paper/additional_figures/figure_error_rate.pdf"
         "storage/paper/additional_figures/figure_gcbias_consistency.pdf",
+        "storage/paper/additional_figures/figure_gc_logit_vs_log.pdf",
         "storage/paper/additional_figures/figure_kmer_cross_mouse_human_seqbias.pdf",
         "storage/paper/additional_figures/figure_kmer_SRR3191692_assembly_cov.pdf",
         "storage/paper/additional_figures/figure_nobias.pdf",
@@ -246,12 +247,12 @@ rule figure_coverage:
         
 rule table_covcorrelation:
     input:
-        lane="storage/ecoli/S5L001/real/correlation/pearson-coverage-lanereps.txt",
-        library="storage/ecoli/S5L001/real/correlation/pearson-coverage-libreps.txt",
-        simreal=expand("storage/ecoli/S5L001/{simulator}/correlation/pearson-coverage-real.txt",simulator=SIMULATORS),
-        simself=expand("storage/ecoli/S5L001/{simulator}/correlation/pearson-coverage-simreps.txt",simulator=SIMULATORS)
+        lane="storage/ecoli/S5L001/real/correlation/{method}-coverage-lanereps.txt",
+        library="storage/ecoli/S5L001/real/correlation/{method}-coverage-libreps.txt",
+        simreal=expand("storage/ecoli/S5L001/{simulator}/correlation/{{method}}-coverage-real.txt",simulator=SIMULATORS),
+        simself=expand("storage/ecoli/S5L001/{simulator}/correlation/{{method}}-coverage-simreps.txt",simulator=SIMULATORS)
     output:
-        "storage/paper/tables/table_covcorrelation.txt"
+        "storage/paper/tables/table_covcorrelation_{method}.txt"
     params:
         simulator=SIMULATORS
     shell:
@@ -262,8 +263,8 @@ rule table_covcorrelation:
         cat {input.lane} | awk 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf "Real & $%.2f$", sum/count}}' >> {output}
         cat {input.library} | awk 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf " & $%.2f$ & - & -\\\\\\\\", sum/count; print ""}}' >> {output}
         for SIM in {params.simulator}; do
-            cat storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-real.txt | awk -v sim=$SIM 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf "%s & - & - & $%.2f$", sim, sum/count}}' >> {output}
-            cat storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-simreps.txt | awk 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf " & $%.2f$\\\\\\\\", sum/count; print ""}}' >> {output}
+            cat storage/ecoli/S5L001/$SIM/correlation/{wildcards.method}-coverage-real.txt | awk -v sim=$SIM 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf "%s & - & - & $%.2f$", sim, sum/count}}' >> {output}
+            cat storage/ecoli/S5L001/$SIM/correlation/{wildcards.method}-coverage-simreps.txt | awk 'BEGIN{{sum=0;count=0}}{{sum+=$3;count+=1}}END{{printf " & $%.2f$\\\\\\\\", sum/count; print ""}}' >> {output}
         done
         echo "\\end{{tabular}}" >> {output}
         """
@@ -862,7 +863,6 @@ rule figure_dispersion_start_pars:
         "input/paper/csv/S5L001_a0.5_sum_maxlike_fit.csv",
         "input/paper/csv/S5L001_a0.2_sum_maxlike_fit.csv",
         "input/paper/csv/S5L001_a0.1_sum_maxlike_fit.csv",
-        "input/paper/csv/S5L001_a0.01_sum_maxlike_fit.csv",
         "input/paper/csv/S5L001_a0.5_b0.5_sum_maxlike_fit.csv",
         "input/paper/csv/S5L001_a0.1_b0.5_sum_maxlike_fit.csv",
         "input/paper/csv/S5L001_a0.314_b1.24_sum_maxlike_fit.csv"
@@ -897,6 +897,33 @@ rule figure_dispersion_pars_overview:
         done
         Rscript bin/figure_comp4.R {params.workdir}/figure_dispersion_pars_overview.pdf {params.workdir}/figure[1-4].pdf
         pdfcrop {params.workdir}/figure_dispersion_pars_overview.pdf {output} 1>/dev/null
+        """
+
+rule figure_gc_logit_vs_log:
+    input:
+        "input/paper/csv/SRR490124_logit_maxlike_fit.csv",
+        "input/paper/csv/SRR490124_sum_maxlike_fit.csv",
+        "input/paper/csv/SRR3191692_logit_maxlike_fit.csv",
+        "input/paper/csv/SRR3191692_sum_maxlike_fit.csv",
+        "input/paper/csv/S5L001_logit_maxlike_fit.csv",
+        "input/paper/csv/S5L001_sum_maxlike_fit.csv",
+        "input/paper/csv/S1L001_logit_maxlike_fit.csv",
+        "input/paper/csv/S1L001_sum_maxlike_fit.csv",
+        "input/paper/csv/S9L001_logit_maxlike_fit.csv",
+        "input/paper/csv/S9L001_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR2017816_logit_maxlike_fit.csv",
+        "input/paper/csv/ERR2017816_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR3085830_logit_maxlike_fit.csv",
+        "input/paper/csv/ERR3085830_sum_maxlike_fit.csv",
+        "input/paper/csv/ERR1955542_logit_maxlike_fit.csv",
+        "input/paper/csv/ERR1955542_sum_maxlike_fit.csv"
+    output:
+        "storage/paper/additional_figures/figure_gc_logit_vs_log.pdf"
+    params:
+        loaddir="input/paper/csv/"
+    shell:
+        """
+        Rscript bin/figure_gc_logit_vs_log.R {params.loaddir} {output}
         """
 
 rule figure_error_rate:
@@ -1086,6 +1113,17 @@ rule coverage_correlation_sim_real_plot:
     shell:
         "Rscript bin/figure_covcorrelation.R {input.real} {input.sim} '{params.name1}' '{params.name2}' {output} {params.legendpos}"
 
+rule coverage_correlation_sim_real_spearman:
+    input:
+        real="work/{species}/{sample}/real/correlation/{sample}_q0.depth",
+        sim=lambda wildcards: expand("work/{0}/{1}/{2}/replicates/sim{{simnum}}_q0.depth".format(wildcards.species, wildcards.sample, wildcards.simulation), simnum=["1","2","3"])
+    output:
+        "storage/{species}/{sample}/{simulation}/correlation/spearman-coverage-real.txt"
+    shell:
+        """
+        Rscript bin/coverage_spearman.R {input.real} {input.sim} {output}
+        """
+
 rule coverage_correlation_sim_real:
     input:
         real="work/{species}/{sample}/real/correlation/{sample}_q0.depth",
@@ -1115,6 +1153,16 @@ rule coverage_correlation_sim_plot:
         name2="Coverage {simulation} sim 2"
     shell:
         "Rscript bin/figure_covcorrelation.R {input} '{params.name1}' '{params.name2}' {output} ul"
+
+rule coverage_correlation_sim_spearman:
+    input:
+        lambda wildcards: expand("work/{0}/{1}/{2}/replicates/sim{{simnum}}_q0.depth".format(wildcards.species, wildcards.sample, wildcards.simulation), simnum=["1","2","3"])
+    output:
+        "storage/{species}/{sample}/{simulation}/correlation/spearman-coverage-simreps.txt"
+    shell:
+        """
+        Rscript bin/coverage_spearman.R {input} {output}
+        """
 
 rule coverage_correlation_sim:
     input:
@@ -1149,6 +1197,17 @@ rule coverage_correlation_plot:
         name2=lambda wildcards: "Coverage {0} replicate".format("lane" if "lane" == wildcards.type else "library")
     shell:
         "Rscript bin/figure_covcorrelation.R {input} '{params.name1}' '{params.name2}' {output} ul"
+
+rule coverage_correlation_spearman:
+    input:
+        lambda wildcards: "work/{0}/{1}/real/correlation/{1}_q0.depth".format(wildcards.species, wildcards.sample),
+        lambda wildcards: expand("work/{0}/{1}/real/correlation/{{sample2}}_q0.depth".format(wildcards.species, wildcards.sample), sample2=LANEREPS[wildcards.sample] if 'lane' == wildcards.type else LIBREPS[wildcards.sample] )
+    output:
+        "storage/{species}/{sample}/real/correlation/spearman-coverage-{type,lane|lib}reps.txt"
+    shell:
+        """
+        Rscript bin/coverage_spearman.R {input} {output}
+        """
 
 rule coverage_correlation:
     input:

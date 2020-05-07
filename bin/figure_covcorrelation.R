@@ -38,14 +38,15 @@ show_correlation <- function(file1, file2, name1, name2, legend_position){
   sample1 <- replace_na(tmp$X3.x, 0)
   sample2 <- replace_na(tmp$X3.y, 0)
   
-  corr <- calc_correlation(sample1, sample2)
+  pear_corr <- calc_correlation(sample1, sample2)
+  spear_corr <- cor(sample1, sample2, method="spearman")
   
   text_size = 20
   tick_text_size <- 16
   data.frame(sample1, sample2) %>%
     ggplot(aes(x=sample1, y=sample2)) +
       geom_bin2d(bins=100) +
-      ggtitle(sprintf("rho = %.2f", corr)) +
+      ggtitle(sprintf("Pearson = %.2f  Spearman = %.2f", pear_corr, spear_corr)) +
       labs(x = name1, y = name2, fill = "# positions") +
       theme_bw() +
       theme(  plot.title = element_text( size = text_size),

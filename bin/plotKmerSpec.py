@@ -8,6 +8,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.collections import PatchCollection
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import LinearSegmentedColormap, LogNorm, Normalize
+from matplotlib.ticker import LogFormatter
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,10 +19,9 @@ import sys
 text_size = 20
 colour_scheme = ["#D92120","#488BC2","#7FB972","#E6642C","#781C81","#D9AD3C","#BBBBBB","#4065B1"]
 
-plot_legend = True;
 line_width = 4
 
-def plot(pdf, xtitle, ytitle, names, hists, xlim=False, ylim=False, log=False, legend='upper right', normalize=False):
+def plot(pdf, xtitle, ytitle, names, hists, xlim=False, ylim=False, log=False, legend='upper right', normalize=False, title=""):
     plt.close()
     
     for (name, hist, col) in izip(names, hists, colour_scheme):
@@ -36,6 +36,8 @@ def plot(pdf, xtitle, ytitle, names, hists, xlim=False, ylim=False, log=False, l
     ax = plt.gca()
     if log:            
         ax.set_yscale('log', nonposy='clip')
+        ax.yaxis.set_major_formatter(LogFormatter())
+        #ax.ticklabel_format(useMathText=False, style='plain')
     else:
         # Set at what range of exponents they are not plotted in exponential format for example (-3,4): [0.001-1000[
         ax.get_yaxis().get_major_formatter().set_powerlimits((-3,4))
@@ -49,7 +51,10 @@ def plot(pdf, xtitle, ytitle, names, hists, xlim=False, ylim=False, log=False, l
     plt.xlabel(xtitle, fontsize=text_size)
     plt.ylabel(ytitle, fontsize=text_size)
     
-    if plot_legend:
+    if title != "":
+        plt.title(title, {'fontsize':text_size})
+    
+    if legend != 'none':
         plt.legend(loc=legend, shadow=True)
         pass
     plt.tight_layout()
@@ -57,9 +62,9 @@ def plot(pdf, xtitle, ytitle, names, hists, xlim=False, ylim=False, log=False, l
 
     return
 
-def plotKmerSpec(specFiles, oFile, k, xlim):
-    names = []
-    for sf in specFiles:
+def plotKmerSpec(specFiles, oFile, k, xlim, title, log, legend):
+    names=[]
+    for i, sf in enumerate(specFiles):
         names.append( sf.rsplit('.',1)[0] )
     
     if not oFile:
@@ -96,8 +101,17 @@ def plotKmerSpec(specFiles, oFile, k, xlim):
             else:
                 max_id = len(x)
                 
-            y_min = min(y_min, min(y[:max_id]))
-            y_max = max(y_max, max(y[:max_id]))
+            if log:
+                y_min = min(y_min, min(y[:max_id]))
+                y_max = max(y_max, max(y[:max_id]))
+            else:
+                y_min = min(y_min, min(y[:max_id]))
+                min_id = 1
+                while min_id < len(y) and y[min_id] > y[min_id + 1]: # Find the maximum of the systematic error peak (which might be already at 1)
+                    min_id += 1
+                while min_id < len(y) and y[min_id] < y[min_id + 1]: # Find the minimum splitting systematic errors and signal peak
+                    min_id += 1
+                y_max = max(y_max, max(y[min_id:max_id]))
             
             specs.append((x,y))
 
@@ -107,7 +121,7 @@ def plotKmerSpec(specFiles, oFile, k, xlim):
         with PdfPages(oFile) as pdf:
             plt.ioff()
 
-            plot( pdf, '-'.join([k, "mer frequency x"]), ''.join(["# unique ",k,"-mers with frequency x"]), names, specs, xlim=xlim, ylim=[y_min, y_max], log=True )
+            plot( pdf, '-'.join([k, "mer frequency x"]), ''.join(["# unique ",k,"-mers with frequency x"]), names, specs, xlim=xlim, ylim=[y_min, y_max], log=log, legend=legend, title=title )
     return
 
 def usage():
@@ -121,7 +135,7 @@ def usage():
 
 def main(argv):
     try:
-        optlist, args = getopt.getopt(argv, 'ho:k:x:', ['help','output=', 'kvalue=', 'xlim='])
+        optlist, args = getopt.getopt(argv, 'hik:ln:o:x:', ['help','nolegend','kvalue=','linear','output=','name=','xlim='])
         pass
     except getopt.GetoptError:
         print "Unknown option\n"
@@ -132,16 +146,28 @@ def main(argv):
     oFile = ''
     k = 'k'
     xlim = False
+    log = True
+    legend = 'upper right'
+    title = ""
     for opt, par in optlist:
         if opt in ("-h", "--help"):
             usage()
             sys.exit()
             pass
-        elif opt in ("-o", "--output"):
-            oFile = par
+        elif opt in ("-i", "--nolegend"):
+            legend = 'none'
             pass
         elif opt in ("-k", "--kvalue"):
             k = par
+            pass
+        elif opt in ("-l", "--linear"):
+            log = False
+            pass
+        elif opt in ("-n", "--name"):
+            title = par
+            pass
+        elif opt in ("-o", "--output"):
+            oFile = par
             pass
         elif opt in ("-x", "--xlim"):
             xlim = int(par)
@@ -154,7 +180,7 @@ def main(argv):
         sys.exit(2)
         pass
 
-    plotKmerSpec(args, oFile, k, xlim)
+    plotKmerSpec(args, oFile, k, xlim, title, log, legend)
     pass
 
 if __name__ == "__main__":

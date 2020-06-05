@@ -16,9 +16,9 @@ input_path = args[1]
 
 #maxlike_fit_csv <- read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"))
 #maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"SRR490124_sum_maxlike_fit.csv")))
-maxlike_fit_csv <- read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S5L001")
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S1L001"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S9L001"))
+maxlike_fit_csv <- read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Ec-Hi4000-Nextera")
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Bc-Hi4000-Nextera"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Rs-Hi4000-Nextera"))
 
 text_size <- 20
 tick_text_size <- 16
@@ -48,6 +48,9 @@ maxlike_fit_csv %>%
           strip.text.y = element_text( size = text_size),
           legend.title=element_text(size=text_size), 
           legend.text=element_text(size=tick_text_size),
+          legend.position = "top",
+          legend.box = "vertical",
+          legend.margin=margin(t = 0, unit='cm'),
           panel.grid.major.x = element_blank(),
           panel.grid.minor = element_blank(),
           panel.grid.major.y = element_line(colour = "lightgrey"))

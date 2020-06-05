@@ -15,15 +15,15 @@ if(length(args)<3){
 input_path = args[1]
 sample = args[2]
 
-input_csv <- read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bowtie2")
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bowtie2"))
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bwa"))
-input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bwa"))
+input_csv <- read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bowtie2-lowerror_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bowtie2")
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bowtie2-lowerror_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bowtie2"))
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bwa-lowerror_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bowtie2", mapper="bwa"))
+input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_bwa_eval_mapping-bwa-lowerror_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq-bwa", mapper="bwa"))
 
 nolegend <- grepl("nolegend", args[3], fixed=TRUE)
 
-text_size <- 28
-tick_text_size <- 24
+text_size <- 24
+tick_text_size <- 20
 input_csv %>%
   group_by(simulator, mapper, negative) %>%
   mutate(maxTP=sum(count)) %>%
@@ -48,7 +48,6 @@ input_csv %>%
   ggplot(aes(x=FP, y=TP, color=Mapper, shape=Simulator, fill=Correctness)) +
   geom_line(size=4) +
   geom_point(size=8, stroke=8) +
-  scale_linetype_manual(values=c("solid", "twodash", "dotted")) +
   scale_shape_manual(values=c(21, 22)) +
   scale_color_manual(values=c("#009E73","#0072B2")) +
   scale_fill_manual(values=c("#000000","#888888","#FFFFFF")) +
@@ -63,13 +62,16 @@ input_csv %>%
         strip.text.y = element_text( size = text_size),
         legend.title=element_text(size=text_size), 
         legend.text=element_text(size=tick_text_size),
-        legend.position = c(0.99, 0.99),
-        legend.justification = c(1, 1),
-        legend.box = "horizontal",
+        legend.position = c(0.99, 0.01),
+        legend.justification = c(1, 0),
+        legend.box = "vertical",
+        legend.direction = "vertical",
         legend.key.size = unit(1.5, "cm"),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  guides(fill = guide_legend(override.aes = list(shape = 21))) +
+  guides(fill = guide_legend(override.aes = list(shape = 21), ncol = 3),
+         color = guide_legend(ncol = 2),
+         shape = guide_legend(ncol = 2)) +
   {if(nolegend)theme(legend.position = "None")}
 
 ggsave(paste0(args[3],"_correctness.pdf"), width=297, height=210, units="mm")
@@ -99,27 +101,28 @@ input_csv %>%
   ungroup() %>%
   rbind(input_real) %>%
   rename(Simulator=simulator,Mapper=mapper) %>%
+  arrange(desc(Mapper)) %>% # Plot bowtie2 over bwa
   ggplot(aes(x=mapq, y=count*100/total, color=Mapper, shape=Simulator)) +
-  geom_line(size=4) +
-  geom_point(size=8) +
-  scale_shape_manual(values=c(17, 19, 15)) +
-  scale_color_manual(values=c("#009E73","#0072B2")) +
-  scale_x_reverse() +
-  xlab("Mapping quality") +
-  ylab("% mapped") +
-  theme_bw() +
-  theme(axis.text.x = element_text( size = tick_text_size),
-        axis.text.y = element_text( size = tick_text_size),
-        axis.title.x = element_text( size = text_size),
-        axis.title.y = element_text( size = text_size),
-        strip.text.x = element_text( size = text_size),
-        strip.text.y = element_text( size = text_size),
-        legend.title=element_text(size=text_size), 
-        legend.text=element_text(size=tick_text_size),
-        legend.position = c(0.99, 0.01),
-        legend.justification = c(1, 0),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-        {if(nolegend)theme(legend.position = "None")}
+    geom_line(size=4) +
+    geom_point(size=8) +
+    scale_shape_manual(values=c(17, 19, 15)) +
+    scale_color_manual(values=c("#009E73","#0072B2")) +
+    scale_x_reverse() +
+    xlab("Mapping quality") +
+    ylab("% mapped") +
+    theme_bw() +
+    theme(axis.text.x = element_text( size = tick_text_size),
+          axis.text.y = element_text( size = tick_text_size),
+          axis.title.x = element_text( size = text_size),
+          axis.title.y = element_text( size = text_size),
+          strip.text.x = element_text( size = text_size),
+          strip.text.y = element_text( size = text_size),
+          legend.title=element_text(size=text_size), 
+          legend.text=element_text(size=tick_text_size),
+          legend.position = c(0.99, 0.01),
+          legend.justification = c(1, 0),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+          {if(nolegend)theme(legend.position = "None")}
 
 ggsave(paste0(args[3],"_mapq.pdf"), width=297, height=210, units="mm")

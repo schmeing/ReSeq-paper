@@ -13,22 +13,22 @@ if(length(args)<2){
 
 input_path = args[1]
 
-maxlike_csv <- read_csv(paste0(input_path,"SRR490124_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data=as.factor("SRR490124"))
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR490124_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="SRR490124") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR3191692_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="SRR3191692") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR3191692_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="SRR3191692") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S5L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="S5L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="S5L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S1L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="S1L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="S1L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S9L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="S9L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="S9L001") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR2017816_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="ERR2017816") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="ERR2017816") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="ERR3085830") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="ERR3085830") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="ERR1955542") )
-maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="ERR1955542") )
+maxlike_csv <- read_csv(paste0(input_path,"SRR490124_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data=as.factor("Ec-Hi2000-TruSeq"))
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR490124_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Ec-Hi2000-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR3191692_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Ec-Hi2500-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"SRR3191692_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Ec-Hi2500-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S5L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Ec-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Ec-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S1L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Bc-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Bc-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S9L001_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Rs-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Rs-Hi4000-Nextera") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR2017816_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="At-HiX-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="At-HiX-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Mm-HiX-Unknown") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Mm-HiX-Unknown") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Hs-HiX-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Hs-HiX-TruSeq") )
 
 maxlike <- maxlike_csv %>%
   select(Fit, Type, Data, RefSeqBin, InsertLength, FunctionCalls, LogLikelihood) %>%
@@ -43,7 +43,7 @@ means <- maxlike %>%
 text_size <- 22
 tick_text_size <- 16
 maxlike %>%
-  mutate(Data = ordered(Data, levels=c("ERR2017816","ERR3085830","ERR1955542","S5L001","S1L001","S9L001","SRR490124","SRR3191692"))) %>%
+  mutate(Data = ordered(Data, levels=c("At-HiX-TruSeq","Mm-HiX-Unknown","Hs-HiX-TruSeq","Ec-Hi4000-Nextera","Bc-Hi4000-Nextera","Rs-Hi4000-Nextera","Ec-Hi2000-TruSeq","Ec-Hi2500-TruSeq"))) %>%
   ggplot(aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type, shape=Converged)) +
     geom_point(size=3) +
     geom_point(data=means, mapping=aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type), size=6, shape=1) +

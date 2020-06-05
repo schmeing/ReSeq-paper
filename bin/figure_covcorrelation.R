@@ -41,8 +41,8 @@ show_correlation <- function(file1, file2, name1, name2, legend_position){
   pear_corr <- calc_correlation(sample1, sample2)
   spear_corr <- cor(sample1, sample2, method="spearman")
   
-  text_size = 20
-  tick_text_size <- 16
+  text_size = 32
+  tick_text_size <- 28
   data.frame(sample1, sample2) %>%
     ggplot(aes(x=sample1, y=sample2)) +
       geom_bin2d(bins=100) +
@@ -62,7 +62,9 @@ show_correlation <- function(file1, file2, name1, name2, legend_position){
               legend.justification = c(ifelse(substr(legend_position,2,2) == "r", "right", "left"), ifelse(substr(legend_position,1,1) == "l", "bottom", "top")),
               legend.box.background = element_rect(fill="transparent"),
               panel.grid.major = element_blank(),
-              panel.grid.minor = element_blank())
+              panel.grid.minor = element_blank()) +
+      guides(fill = guide_colourbar(barheight = 10)) +
+      {if(name2 == "Coverage BEAR sim 2")scale_x_continuous(expand=expand_scale(mult=c(0.05,0.1)))}
 }
 
 show_correlation(args[1], args[2], args[3], args[4], args[6])

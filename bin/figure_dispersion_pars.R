@@ -14,14 +14,14 @@ if(length(args)<2){
 
 input_path = args[1]
 
-maxlike_fit_csv <- read_csv(paste0(input_path,"SRR490124_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="SRR490124")
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"SRR3191692_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="SRR3191692"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S5L001"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S1L001"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S9L001"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="ERR2017816"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="ERR3085830"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="ERR1955542"))
+maxlike_fit_csv <- read_csv(paste0(input_path,"SRR490124_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Ec-Hi2000-TruSeq")
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"SRR3191692_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Ec-Hi2500-TruSeq"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Ec-Hi4000-Nextera"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Bc-Hi4000-Nextera"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Rs-Hi4000-Nextera"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="At-HiX-TruSeq"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Mm-HiX-Unknown"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Hs-HiX-TruSeq"))
 
 disps <- maxlike_fit_csv %>%
   select(Fit, Data, RefSeqBin, InsertLength, DispersionA, DispersionB, FunctionCalls) %>%
@@ -36,9 +36,10 @@ medians <- disps %>%
 text_size <- 20
 tick_text_size <- 16
 disps %>%
+  mutate(Data = factor(Data, levels=unique(Data))) %>%
   ggplot(aes(x=DispersionA, y=DispersionB, color=Data)) +
-    geom_point(size=2) +
-    geom_point(data=medians, size=6, shape=1) +
+    geom_point(size=4) +
+    geom_point(data=medians, size=8, shape=1) +
     scale_color_manual(values=c("#D92120","#488BC2","#7FB972","#E6642C","#781C81","#D9AD3C","#BBBBBB","#4065B1")) +
     xlab("Parameter A") +
     ylab("Parameter B") +
@@ -49,7 +50,7 @@ disps %>%
           axis.title.y = element_text( size = text_size),
           legend.title=element_text(size=text_size), 
           legend.text=element_text(size=tick_text_size),
-          legend.position = c(0.99, 0.99),
-          legend.justification = c(1, 1))
+          legend.position = c(0.99, 0.01),
+          legend.justification = c(1, 0))
 
 ggsave(args[2], width=297, height=210, units="mm")

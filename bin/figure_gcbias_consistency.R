@@ -13,9 +13,9 @@ if(length(args)<2){
 
 input_path = args[1]
 
-maxlike_fit_csv <- read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S5L001")
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S1L001"))
-maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="S9L001"))
+maxlike_fit_csv <- read_csv(paste0(input_path,"S5L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Ec-Hi4000-Nextera")
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S1L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Bc-Hi4000-Nextera"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Rs-Hi4000-Nextera"))
 
 maxlike_fit <- maxlike_fit_csv %>%
   rename(FragmentLength=InsertLength) %>%
@@ -48,8 +48,8 @@ maxlike_fit %>%
           axis.text.y = element_text( size = tick_text_size),
           axis.title.x = element_text( size = text_size),
           axis.title.y = element_text( size = text_size),
-          strip.text.x = element_text( size = text_size),
-          strip.text.y = element_text( size = text_size),
+          strip.text.x = element_text( size = tick_text_size),
+          strip.text.y = element_text( size = tick_text_size),
           legend.title=element_text(size=text_size), 
           legend.text=element_text(size=tick_text_size),
           panel.grid.minor = element_blank())

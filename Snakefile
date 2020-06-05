@@ -33,14 +33,14 @@ REFERENCES['phix'] = {'prefix':"phix", 'diploid':False}
 # samtools view -f 131 -q 10 storage/ecoli/SRR490124/real/mapping-bowtie2-s.bam | awk '{gsub("M","M ", $6);gsub("I","I ", $6);gsub("D","D ", $6);gsub("S","S ", $6);print $6}' | awk '{for(i=1; i<=NF; i++){count[substr($i,length($i),1)] += substr($i,1,length($i)-1)}}END{print "M=" count["M"], "I=" count["I"], "D=" count["D"], "S=" count["S"], "IR2=" count["I"]/(count["M"]+count["D"]), "DR2=" count["D"]/(count["M"]+count["D"])}'
 
 SAMPLES = {}
-SAMPLES['SRR490124'] = {'fq1':"SRR490124_1.fastq.gz", 'fq2':"SRR490124_2.fastq.gz", 'species':"ecoli", 'readlength':100, 'insertlength':164, 'insertsd':30, 'coverage':449, 'insertion_rate1':7.6e-05, 'insertion_rate2':8.0e-05, 'deletion_rate1':1.1e-05, 'deletion_rate2':1.7e-05, 'max_kmer_count_plotted':500}
-SAMPLES['SRR3191692'] = {'fq1':"SRR3191692_1.fastq.gz", 'fq2':"SRR3191692_2.fastq.gz", 'species':"ecoli", 'readlength':126, 'insertlength':408, 'insertsd':83, 'coverage':1011, 'insertion_rate1':2.0e-05, 'insertion_rate2':3.6e-05, 'deletion_rate1':2.8e-05, 'deletion_rate2':2.9e-05, 'max_kmer_count_plotted':1250, 'insertlength_asm':406, 'insertsd_asm':83, 'coverage_asm':13, 'insertion_rate1_asm':3.1e-04, 'insertion_rate2_asm':3.2e-04, 'deletion_rate1_asm':2.6e-05, 'deletion_rate2_asm':2.7e-05}
-SAMPLES['S5L001'] = {'fq1':"Ecoli1_L001_S5_L001_R1_001.fastq.gz", 'fq2':"Ecoli1_L001_S5_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':508, 'insertion_rate1':2.9e-05, 'insertion_rate2':2.8e-05, 'deletion_rate1':8.2e-06, 'deletion_rate2':8.6e-06, 'max_kmer_count_plotted':750}
-SAMPLES['S1L001'] = {'fq1':"Bcereus1_L001_S1_L001_R1_001.fastq.gz", 'fq2':"Bcereus1_L001_S1_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"bcereus", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':1528, 'insertion_rate1':1.5e-04, 'insertion_rate2':1.4e-04, 'deletion_rate1':1.8e-04, 'deletion_rate2':1.7e-04, 'max_kmer_count_plotted':3000}
-SAMPLES['S9L001'] = {'fq1':"Rsphaeroides1_L001_S9_L001_R1_001.fastq.gz", 'fq2':"Rsphaeroides1_L001_S9_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"rsphaeroides", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':2901, 'insertion_rate1':5.8e-04, 'insertion_rate2':5.3e-04, 'deletion_rate1':5.6e-05, 'deletion_rate2':5.7e-05, 'max_kmer_count_plotted':5000}
-SAMPLES['ERR2017816'] = {'fq1':"ERR2017816_1.fastq.gz", 'fq2':"ERR2017816_2.fastq.gz", 'species':"athaliana", 'readlength':150, 'insertlength':319, 'insertsd':59, 'coverage':31, 'insertion_rate1':8.3e-05, 'insertion_rate2':9.0e-05, 'deletion_rate1':4.3e-05, 'deletion_rate2':5.2e-05, 'max_kmer_count_plotted':150}
-SAMPLES['ERR3085830'] = {'fq1':"ERR3085830_1.fastq.gz", 'fq2':"ERR3085830_2.fastq.gz", 'species':"mouse", 'readlength':151, 'insertlength':406, 'insertsd':93, 'coverage':43, 'insertion_rate1':3.5e-04, 'insertion_rate2':3.4e-04, 'deletion_rate1':2.9e-04, 'deletion_rate2':2.8e-04, 'max_kmer_count_plotted':150}
-SAMPLES['ERR1955542'] = {'fq1':"ERR1955542_1.fastq.gz", 'fq2':"ERR1955542_2.fastq.gz", 'species':"human", 'readlength':150, 'insertlength':475, 'insertsd':103, 'coverage':40, 'insertion_rate1':1.5e-04, 'insertion_rate2':1.5e-04, 'deletion_rate1':1.3e-04, 'deletion_rate2':1.2e-04, 'max_kmer_count_plotted':100}
+SAMPLES['SRR490124'] = {'name':"Ec-Hi2000-TruSeq", 'fq1':"SRR490124_1.fastq.gz", 'fq2':"SRR490124_2.fastq.gz", 'species':"ecoli", 'readlength':100, 'insertlength':164, 'insertsd':30, 'coverage':449, 'insertion_rate1':7.6e-05, 'insertion_rate2':8.0e-05, 'deletion_rate1':1.1e-05, 'deletion_rate2':1.7e-05, 'max_kmer_count_plotted':500, 'max_kmer_count_plotted_linear':400}
+SAMPLES['SRR3191692'] = {'name':"Ec-Hi2500-TruSeq", 'fq1':"SRR3191692_1.fastq.gz", 'fq2':"SRR3191692_2.fastq.gz", 'species':"ecoli", 'readlength':126, 'insertlength':408, 'insertsd':83, 'coverage':1011, 'insertion_rate1':2.0e-05, 'insertion_rate2':3.6e-05, 'deletion_rate1':2.8e-05, 'deletion_rate2':2.9e-05, 'max_kmer_count_plotted':1250, 'max_kmer_count_plotted_linear':800, 'insertlength_asm':406, 'insertsd_asm':83, 'coverage_asm':13, 'insertion_rate1_asm':3.1e-04, 'insertion_rate2_asm':3.2e-04, 'deletion_rate1_asm':2.6e-05, 'deletion_rate2_asm':2.7e-05}
+SAMPLES['S5L001'] = {'name':"Ec-Hi4000-Nextera", 'fq1':"Ecoli1_L001_S5_L001_R1_001.fastq.gz", 'fq2':"Ecoli1_L001_S5_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':508, 'insertion_rate1':2.9e-05, 'insertion_rate2':2.8e-05, 'deletion_rate1':8.2e-06, 'deletion_rate2':8.6e-06, 'max_kmer_count_plotted':750, 'max_kmer_count_plotted_linear':600}
+SAMPLES['S1L001'] = {'name':"Bc-Hi4000-Nextera", 'fq1':"Bcereus1_L001_S1_L001_R1_001.fastq.gz", 'fq2':"Bcereus1_L001_S1_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"bcereus", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':1528, 'insertion_rate1':1.5e-04, 'insertion_rate2':1.4e-04, 'deletion_rate1':1.8e-04, 'deletion_rate2':1.7e-04, 'max_kmer_count_plotted':3000, 'max_kmer_count_plotted_linear':2000}
+SAMPLES['S9L001'] = {'name':"Rs-Hi4000-Nextera", 'fq1':"Rsphaeroides1_L001_S9_L001_R1_001.fastq.gz", 'fq2':"Rsphaeroides1_L001_S9_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"rsphaeroides", 'readlength':151, 'insertlength':152, 'insertsd':180, 'coverage':2901, 'insertion_rate1':5.8e-04, 'insertion_rate2':5.3e-04, 'deletion_rate1':5.6e-05, 'deletion_rate2':5.7e-05, 'max_kmer_count_plotted':5000, 'max_kmer_count_plotted_linear':3000}
+SAMPLES['ERR2017816'] = {'name':"At-HiX-TruSeq", 'fq1':"ERR2017816_1.fastq.gz", 'fq2':"ERR2017816_2.fastq.gz", 'species':"athaliana", 'readlength':150, 'insertlength':319, 'insertsd':59, 'coverage':31, 'insertion_rate1':8.3e-05, 'insertion_rate2':9.0e-05, 'deletion_rate1':4.3e-05, 'deletion_rate2':5.2e-05, 'max_kmer_count_plotted':150, 'max_kmer_count_plotted_linear':50}
+SAMPLES['ERR3085830'] = {'name':"Mm-HiX-Unknown", 'fq1':"ERR3085830_1.fastq.gz", 'fq2':"ERR3085830_2.fastq.gz", 'species':"mouse", 'readlength':151, 'insertlength':406, 'insertsd':93, 'coverage':43, 'insertion_rate1':3.5e-04, 'insertion_rate2':3.4e-04, 'deletion_rate1':2.9e-04, 'deletion_rate2':2.8e-04, 'max_kmer_count_plotted':150, 'max_kmer_count_plotted_linear':60}
+SAMPLES['ERR1955542'] = {'name':"Hs-HiX-TruSeq", 'fq1':"ERR1955542_1.fastq.gz", 'fq2':"ERR1955542_2.fastq.gz", 'species':"human", 'readlength':150, 'insertlength':475, 'insertsd':103, 'coverage':40, 'insertion_rate1':1.5e-04, 'insertion_rate2':1.5e-04, 'deletion_rate1':1.3e-04, 'deletion_rate2':1.2e-04, 'max_kmer_count_plotted':100, 'max_kmer_count_plotted_linear':60}
 
 #SAMPLES['fgcz-loh2'] = {'fq1':"20170918.A-loh2_R1.fastq.gz", 'fq2':"20170918.A-loh2_R2.fastq.gz", 'species':"athaliana", 'readlength':151, 'insertlength':673, 'insertsd':163, 'coverage':103, 'insertion_rate1':2.2e-04, 'insertion_rate2':2.5e-04, 'deletion_rate1':2.1e-04, 'deletion_rate2':2.0e-04}
 
@@ -59,8 +59,7 @@ LIBREPS['S5L001'] = ['S6L001','S7L001']
 SAMPLES['S6L001'] = {'fq1':"Ecoli2_L001_S6_L001_R1_001.fastq.gz", 'fq2':"Ecoli2_L001_S6_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli"}
 SAMPLES['S7L001'] = {'fq1':"Ecoli3_L001_S7_L001_R1_001.fastq.gz", 'fq2':"Ecoli3_L001_S7_L001_R2_001.fastq.gz", 'basespace':"Nextera-Repeat-600pM-2x151-DI/Nextera_L1", 'species':"ecoli"}
 
-SIMULATORS = ['ReSeq','ART','pIRS','NEAT']
-# BEAR: Second read is only reversed, not complemented
+SIMULATORS = ['ReSeq','ART','pIRS','NEAT','BEAR']
 # SInC: No errors simulated
 
 MAINSAMPLES = ['SRR490124', 'SRR3191692', 'S5L001', 'S1L001', 'S9L001', 'ERR2017816', 'ERR3085830', 'ERR1955542']
@@ -91,8 +90,8 @@ rule all:
         "storage/paper/figures/figure_comp_resources.pdf",
         "storage/paper/figures/figure_coverage.pdf",
         "storage/paper/figures/figure_covfit.pdf",
-        "storage/paper/figures/figure_kmer.pdf",
-        "storage/paper/figures/figure_kmer_cross.pdf",
+        "storage/paper/figures/figure_kmer_linear.pdf",
+        "storage/paper/figures/figure_kmer_cross_linear.pdf",
         "storage/paper/figures/figure_mapper_comp.pdf",
         "storage/paper/figures/figure_preqc.pdf",
         "storage/paper/figures/figure_syserror.pdf",
@@ -101,11 +100,17 @@ rule all:
         "storage/paper/additional_figures/figure_error_rate.pdf"
         "storage/paper/additional_figures/figure_gcbias_consistency.pdf",
         "storage/paper/additional_figures/figure_gc_logit_vs_log.pdf",
+        "storage/paper/additional_figures/figure_ipf.pdf",
+        "storage/paper/additional_figures/figure_kmer.pdf",
+        "storage/paper/additional_figures/figure_kmer_cross.pdf",
         "storage/paper/additional_figures/figure_kmer_cross_mouse_human_seqbias.pdf",
         "storage/paper/additional_figures/figure_kmer_SRR3191692_assembly_cov.pdf",
+        "storage/paper/additional_figures/figure_lowerror_mapcomp.pdf"
+        "storage/paper/additional_figures/figure_mapper_comp_sim.pdf",
         "storage/paper/additional_figures/figure_nobias.pdf",
         "storage/paper/additional_figures/figure_preqc_SRR3191692_assembly_cov.pdf",
-        "storage/paper/additional_figures/figure_quality_values.pdf"
+        "storage/paper/additional_figures/figure_quality_values.pdf",
+        "storage/paper/additional_figures/figure_quality_values_split.pdf",
         "storage/paper/additional_figures/figure_start_end_surrounding.pdf",
         expand("storage/summary/reseq-plots/{sample}.pdf", sample=MAINSAMPLES),
         ["storage/{0}/{1}/real/mapping-bowtie2-s-insert-length.pdf".format(SAMPLES[sample]['species'], sample) for sample in MAINSAMPLES]
@@ -154,7 +159,8 @@ rule figure_gcbias_consistency:
 
 rule figure_nobias:
     input:
-        "storage/ecoli/S5L001/ReSeq/nobias/stats.pdf"
+        leg="storage/ecoli/S5L001/ReSeq/nobias/stats.pdf",
+        noleg="storage/ecoli/S5L001/ReSeq/nobias/stats_nolegend.pdf"
     output:
         "storage/paper/additional_figures/figure_nobias.pdf"
     params:
@@ -162,9 +168,9 @@ rule figure_nobias:
     shell:
         """
         mkdir -p {params.workdir}
-        pdftk {input} cat 14 output {params.workdir}/surbias_full.pdf
+        pdftk {input.noleg} cat 14 output {params.workdir}/surbias_full.pdf
         pdfcrop {params.workdir}/surbias_full.pdf {params.workdir}/surbias.pdf 1>/dev/null
-        pdftk {input} cat 11 output {params.workdir}/gcbias_full.pdf
+        pdftk {input.leg} cat 11 output {params.workdir}/gcbias_full.pdf
         pdfcrop {params.workdir}/gcbias_full.pdf {params.workdir}/gcbias.pdf 1>/dev/null
         Rscript bin/figure_nobias.R {params.workdir}
         pdfcrop {params.workdir}/figure_nobias.pdf {output} 1>/dev/null
@@ -225,7 +231,8 @@ rule figure_covfit:
 rule figure_coverage:
     input:
         SRR490124="storage/summary/reseq-plots/SRR490124.pdf",
-        S5L001="storage/summary/reseq-plots/S5L001.pdf"
+        SRR490124nl="storage/summary/reseq-plots/SRR490124_nolegend.pdf",
+        S5L001="storage/summary/reseq-plots/S5L001_nolegend.pdf"
     output:
         "storage/paper/figures/figure_coverage.pdf"
     params:
@@ -233,7 +240,7 @@ rule figure_coverage:
     shell:
         """
         mkdir -p {params.workdir}
-        pdftk {input.SRR490124} cat 1 output {params.workdir}/SRR490124-cov-full.pdf
+        pdftk {input.SRR490124nl} cat 1 output {params.workdir}/SRR490124-cov-full.pdf
         pdfcrop {params.workdir}/SRR490124-cov-full.pdf {params.workdir}/SRR490124-cov.pdf 1>/dev/null
         pdftk {input.SRR490124} cat 5 output {params.workdir}/SRR490124-dup-full.pdf
         pdfcrop {params.workdir}/SRR490124-dup-full.pdf {params.workdir}/SRR490124-dup.pdf 1>/dev/null
@@ -287,9 +294,9 @@ rule figure_covcorrelation_summary:
         pdfcrop {input.lib} {params.workdir}/cor2.pdf 1>/dev/null
         i=3
         for SIM in {params.simulator}; do
-            pdfcrop storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-real.pdf {params.workdir}/cor${{i}}.pdf 1>/dev/null
+            pdfcrop --margins '0 0 2 0' storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-real.pdf {params.workdir}/cor${{i}}.pdf 1>/dev/null
             i=$((i + 1))
-            pdfcrop storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-simreps.pdf {params.workdir}/cor${{i}}.pdf 1>/dev/null
+            pdfcrop --margins '0 0 2 0' storage/ecoli/S5L001/$SIM/correlation/pearson-coverage-simreps.pdf {params.workdir}/cor${{i}}.pdf 1>/dev/null
             i=$((i + 1))
         done
         Rscript bin/figure_covcorrelation_summary.R {params.workdir}
@@ -299,7 +306,7 @@ rule figure_covcorrelation_summary:
 rule figure_syserror:
     input:
         SRR490124="storage/summary/reseq-plots/SRR490124.pdf",
-        S5L001="storage/summary/reseq-plots/S5L001.pdf",
+        S5L001="storage/summary/reseq-plots/S5L001_nolegend.pdf",
         SRR490124screen="input/paper/screenshots/SRR490124-NC_000913.3_pilon-1677350-1677450.png",
         S5L001screen="input/paper/screenshots/S5L001-NC_000913.3_pilon-3768350-3768450.png",
         repscreen="input/paper/screenshots/S5L001-S17L002-S29L003-S6L001-S7L001-NC_000913.3_pilon-3768350-3768450-mod.png"
@@ -323,9 +330,9 @@ rule figure_syserror:
         
 rule figure_kmer:
     input:
-        expand("storage/summary/kmer/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+        expand("storage/summary/kmer/{sample}.pdf",sample=["SRR490124_nolegend", "SRR3191692_nolegend", "SRR3191692_assembly", "S5L001_nolegend", "S1L001_nolegend", "S9L001_nolegend","ERR2017816_nolegend","ERR3085830_nolegend","ERR1955542_nolegend"])
     output:
-        "storage/paper/figures/figure_kmer.pdf"
+        "storage/paper/additional_figures/figure_kmer.pdf"
     params:
         workdir="work/paper/figures/figure_kmer"
     shell:
@@ -340,13 +347,51 @@ rule figure_kmer:
         pdfcrop {params.workdir}/figure_kmer.pdf {output} 1>/dev/null
         """
         
+rule figure_kmer_linear:
+    input:
+        expand("storage/summary/kmer/{sample}.pdf",sample=["SRR490124_linear_nolegend", "SRR3191692_linear_nolegend", "SRR3191692_assembly_linear", "S5L001_linear_nolegend", "S1L001_linear_nolegend", "S9L001_linear_nolegend","ERR2017816_linear_nolegend","ERR3085830_linear_nolegend","ERR1955542_linear_nolegend"])
+    output:
+        "storage/paper/figures/figure_kmer_linear.pdf"
+    params:
+        workdir="work/paper/figures/figure_kmer_linear"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp9.R {params.workdir}/figure_kmer.pdf {params.workdir}/figure[1-9].pdf
+        pdfcrop {params.workdir}/figure_kmer.pdf {output} 1>/dev/null
+        """
+        
 rule figure_kmer_cross:
     input:
-        expand("storage/summary/kmer_cross/{sample}.pdf",sample=["ecoli_S5L001_rsphaeroides_S9L001", "bcereus_S1L001_ecoli_S5L001", "rsphaeroides_S9L001_ecoli_S5L001", "athaliana_ERR2017816_mouse_ERR3085830", "mouse_ERR3085830_human_ERR1955542", "human_ERR1955542_mouse_ERR3085830"])
+        expand("storage/summary/kmer_cross/{sample}.pdf",sample=["ecoli_S5L001_rsphaeroides_S9L001_nolegend", "bcereus_S1L001_ecoli_S5L001_nolegend", "rsphaeroides_S9L001_ecoli_S5L001", "athaliana_ERR2017816_mouse_ERR3085830_nolegend", "mouse_ERR3085830_human_ERR1955542_nolegend", "human_ERR1955542_mouse_ERR3085830_nolegend"])
     output:
-        "storage/paper/figures/figure_kmer_cross.pdf"
+        "storage/paper/additional_figures/figure_kmer_cross.pdf"
     params:
         workdir="work/paper/figures/figure_kmer_cross"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp9.R {params.workdir}/figure_kmer_cross.pdf {params.workdir}/figure[1-9].pdf
+        pdfcrop {params.workdir}/figure_kmer_cross.pdf {output} 1>/dev/null
+        """
+        
+rule figure_kmer_cross_linear:
+    input:
+        expand("storage/summary/kmer_cross/{sample}.pdf",sample=["ecoli_S5L001_rsphaeroides_S9L001_linear_nolegend", "bcereus_S1L001_ecoli_S5L001_linear_nolegend", "rsphaeroides_S9L001_ecoli_S5L001_linear", "athaliana_ERR2017816_mouse_ERR3085830_linear_nolegend", "mouse_ERR3085830_human_ERR1955542_linear_nolegend", "human_ERR1955542_mouse_ERR3085830_linear_nolegend"])
+    output:
+        "storage/paper/figures/figure_kmer_cross_linear.pdf"
+    params:
+        workdir="work/paper/figures/figure_kmer_cross_linear"
     shell:
         """
         mkdir -p {params.workdir}
@@ -377,7 +422,7 @@ rule figure_kmer_cross_seqbias:
 
 rule figure_preqc:
     input:
-        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692_nolegend", "SRR3191692_assembly_nolegend", "S5L001_nolegend", "S1L001_nolegend", "S9L001_nolegend","ERR2017816_nolegend","ERR3085830_nolegend","ERR1955542_nolegend"])
     output:
         "storage/paper/figures/figure_preqc.pdf"
     params:
@@ -437,7 +482,7 @@ rule figure_map_stats:
     input:
         "work/paper/figures/figure_map_stats/map_stats.csv"
     output:
-        "storage/summary/mapper_comp/{sample}_stats.pdf"
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_stats.pdf"
     shell:
         "Rscript bin/figure_map_stats.R {input} {wildcards.sample} {output}"
 
@@ -608,9 +653,9 @@ rule table_map_stats:
         
 rule table_map_stats_prepare:
     input:
-        lambda wildcards: "storage/{0}/{1}/{2}/mapping-{3}-s.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.mapper)
+        lambda wildcards: "storage/{0}/{1}/{2}/mapping-{3}-{4}.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.mapper, wildcards.info)
     output:
-        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-{mapper}-s.bam.txt"
+        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-{mapper}-{info,s|lowerror}.bam.txt"
     shell:
         """
         samtools view -c -f 76 -F 2304 {input} > {output}
@@ -620,9 +665,9 @@ rule table_map_stats_prepare:
         
 rule table_map_stats_prepare2:
     input:
-        lambda wildcards: "storage/{0}/{1}/{2}/mapping-{3}-s.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.mapper)
+        lambda wildcards: "storage/{0}/{1}/{2}/mapping-{3}-{4}.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.mapper, wildcards.info)
     output:
-        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-{mapper}-s.bam_cigar.txt"
+        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-{mapper}-{info,s|lowerror}.bam_cigar.txt"
     shell:
         """
         samtools view -F 2308 {input} | awk '{{gsub("M","M ", $6);gsub("I","I ", $6);gsub("D","D ", $6);gsub("S","S ", $6);print $6}}' | awk 'BEGIN{{count["M"]=0;count["S"]=0;count["I"]=0;count["D"]=0}}{{for(i=1; i<=NF; i++){{count[substr($i,length($i),1)] += substr($i,1,length($i)-1)}}}}END{{print count["M"], count["S"], count["I"], count["D"]}}' > {output}
@@ -630,9 +675,9 @@ rule table_map_stats_prepare2:
         
 rule table_map_stats_prepare3_bowtie2:
     input:
-        lambda wildcards: "storage/{0}/{1}/{2}/mapping-bowtie2-s.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)))
+        lambda wildcards: "storage/{0}/{1}/{2}/mapping-bowtie2-{3}.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.info)
     output:
-        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-bowtie2-s.bam_errorrate.txt"
+        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-bowtie2-{info,s|lowerror}.bam_errorrate.txt"
     shell:
         """
         samtools view -F 2308 {input} | awk '{{if("NM:i:" == substr($17, 1, 5)){{errors += substr($17, 6, length($17)); bases += length($10)}}else if("NM:i:" == substr($18, 1, 5)){{errors += substr($18, 6, length($18)); bases += length($10)}}else{{print "failure"}}}}END{{print errors, bases}}' > {output}
@@ -640,19 +685,39 @@ rule table_map_stats_prepare3_bowtie2:
         
 rule table_map_stats_prepare3_bwa:
     input:
-        lambda wildcards: "storage/{0}/{1}/{2}/mapping-bwa-s.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)))
+        lambda wildcards: "storage/{0}/{1}/{2}/mapping-bwa-{3}.bam".format(wildcards.species, wildcards.sample, "/".join(wildcards.simulator.rsplit("_", 1)), wildcards.info)
     output:
-        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-bwa-s.bam_errorrate.txt"
+        "work/paper/tables/table_map_stats/storage_{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{simulator}_mapping-bwa-{info,s|lowerror}.bam_errorrate.txt"
     shell:
         """
         samtools view -F 2308 {input} | awk '{{if("NM:i:" == substr($12, 1, 5)){{errors += substr($12, 6, length($12)); bases += length($10)}}else{{print "failure"}}}}END{{print errors, bases}}' > {output}
         """
 
+rule figure_mapper_comp_summary_sim:
+    input:
+        "storage/summary/mapper_comp/S5L001_sim_mapq.pdf",
+        "storage/summary/mapper_comp/S5L001_sim_correctness.pdf"
+    output:
+        "storage/paper/additional_figures/figure_mapper_comp_sim.pdf"
+    params:
+        workdir="work/paper/figures/figure_mapper_comp_sim"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        i=0
+        for fi in {input}; do
+            i=$(($i+1))
+            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp4.R {params.workdir}/figure_mapper_comp_sim.pdf {params.workdir}/figure[1-9].pdf
+        pdfcrop {params.workdir}/figure_mapper_comp_sim.pdf {output} 1>/dev/null
+        """
+
 rule figure_mapper_comp_summary:
     input:
-        expand("storage/summary/mapper_comp/{sample}_stats.pdf",sample=["SRR490124", "SRR3191692", "S5L001"]),
-        expand("storage/summary/mapper_comp/{sample}_mapq.pdf",sample=["SRR490124", "SRR3191692", "S5L001"]),
-        expand("storage/summary/mapper_comp/{sample}_correctness.pdf",sample=["SRR490124", "SRR3191692", "S5L001"])
+        expand("storage/summary/mapper_comp/{sample}_stats.pdf",sample=["SRR490124", "SRR3191692_nolegend", "S5L001_nolegend"]),
+        expand("storage/summary/mapper_comp/{sample}_mapq.pdf",sample=["SRR490124", "SRR3191692_nolegend", "S5L001_nolegend"]),
+        expand("storage/summary/mapper_comp/{sample}_correctness.pdf",sample=["SRR490124", "SRR3191692_nolegend", "S5L001_nolegend"])
     output:
         "storage/paper/figures/figure_mapper_comp.pdf"
     params:
@@ -669,6 +734,38 @@ rule figure_mapper_comp_summary:
         pdfcrop {params.workdir}/figure_mapper_comp.pdf {output} 1>/dev/null
         """
 
+rule figure_mapper_comp_sim:
+    input:
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ART_eval_bowtie2_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_NEAT_eval_bowtie2_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bowtie2-s_mapping_qualities.csv"
+    output:
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_sim_correctness.pdf",
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_sim_mapq.pdf"
+    params:
+        workdir="work/paper/figures/figure_mapper_comp/",
+        prefix="storage/summary/mapper_comp/{sample}{legend}_sim"
+    shell:
+        "Rscript bin/figure_mapper_comp_sim.R {params.workdir} {wildcards.sample} {params.prefix}"
+
+rule figure_mapper_comp_lowerror:
+    input:
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bowtie2-lowerror_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bwa-lowerror_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_bwa_eval_mapping-bowtie2-lowerror_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_bwa_eval_mapping-bwa-lowerror_mapping_correctness.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bowtie2-s_mapping_qualities.csv",
+        "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bwa-s_mapping_qualities.csv"
+    output:
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_lowerror_correctness.pdf",
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_lowerror_mapq.pdf"
+    params:
+        workdir="work/paper/figures/figure_mapper_comp",
+        prefix="storage/summary/mapper_comp/{sample}{legend}_lowerror"
+    shell:
+        "Rscript bin/figure_mapper_comp_lowerror.R {params.workdir} {wildcards.sample} {params.prefix}"
+
 rule figure_mapper_comp:
     input:
         "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv",
@@ -678,11 +775,11 @@ rule figure_mapper_comp:
         "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bowtie2-s_mapping_qualities.csv",
         "work/paper/figures/figure_mapper_comp/storage_ecoli_{sample}_real_mapping-bwa-s_mapping_qualities.csv"
     output:
-        "storage/summary/mapper_comp/{sample}_correctness.pdf",
-        "storage/summary/mapper_comp/{sample}_mapq.pdf"
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_correctness.pdf",
+        "storage/summary/mapper_comp/{sample,[0-9A-Za-z]*}{legend,|_nolegend}_mapq.pdf"
     params:
         workdir="work/paper/figures/figure_mapper_comp",
-        prefix="storage/summary/mapper_comp/{sample}"
+        prefix="storage/summary/mapper_comp/{sample}{legend}"
     shell:
         "Rscript bin/figure_mapper_comp.R {params.workdir} {wildcards.sample} {params.prefix}"
 
@@ -699,9 +796,9 @@ rule figure_mapper_comp_prepare2:
 
 rule figure_mapper_comp_prepare:
     input:
-        "storage/{species}/{sample}/ReSeq{mapper2}/eval/mapping-{mapper}-s.bam"
+        "storage/{species}/{sample}/ReSeq{mapper2}/eval/mapping-{mapper}-{info}.bam"
     output:
-        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_ReSeq{mapper2,|_bwa}_eval_mapping-{mapper}-s_mapping_correctness.csv"
+        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_ReSeq{mapper2,|_bwa}_eval_mapping-{mapper}-{info,s|lowerror}_mapping_correctness.csv"
     shell:
         """
         echo "mapq, correctness, unmapped, negative, count" > {output}
@@ -812,6 +909,52 @@ rule figure_mapper_comp_prepare:
             }}
         }}' | sort -k1,1nr -k2,2nr -k3,3n -k4,4n | uniq -c | awk '{{print $2 ", " $3 ", " $4 ", " $5 ", " $1}}' >> {output}
         """
+
+# only with 1 thread bowtie2 is returning the reads in the correct order
+rule figure_mapper_comp_prepare_ART_bowtie2:
+    input:
+        aln1="storage/{species}/{sample}/ART/art1.aln.gz",
+        aln2="storage/{species}/{sample}/ART/art2.aln.gz",
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        refind="work/{species}/reference/{sample}/index_bowtie2/pilon-corrected.1.bt2",
+        fq1="storage/{species}/{sample}/ART/art1.fq.gz",
+        fq2="storage/{species}/{sample}/ART/art2.fq.gz"
+    output:
+        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_ART_eval_bowtie2_correctness.csv"
+    params:
+        refind="work/{species}/reference/{sample}/index_bowtie2/pilon-corrected"
+    log:
+        "logs/bowtie2_mapper_comp/{species}/{sample}/ART.log"
+    shell:
+        "echo \"mapq, correctness, unmapped, negative, count\" > {output}; "
+        "paste "
+        " <(paste -d '\\n' <(zcat {input.aln1} | awk '(substr($1,1,1) == \">\")') <(zcat {input.aln2} | awk '(substr($1,1,1) == \">\")') |"
+        "  awk -v tot=$(seqtk seq {input.ref} | awk '(NR == 2){{print length($0)}}') '{{ if(\"+\" == $4){{pos=$3+1}}else{{pos=tot-$3}}; print substr($1,2,length($1)), pos, $4 }}')"
+        " <(bowtie2 -p 1 -X 2000 -x {params.refind} -1 {input.fq1} -2 {input.fq2} 2>{log} | samtools view -F 2304 | cut -f2-6) |"  
+        "awk '{{ if(1==int($4%8/4)){{print $7, 0, 1, 0}}else{{if($1 != $5){{print $7, 0, 0, 0}}else{{soft=0;len=0;s=1;for(i=1; i<=length($8); i++){{if(substr($8, i, 1) ~ /^[A-Z]+$/){{if(substr($8, i, 1) ~ /^[MD]+$/){{len+=substr($8,s,i-s)}}; if(substr($8, i, 1) == \"S\"){{soft=1}}; s=i+1}}}}; rev=int($4%32/16); rev2 = ($3 == \"-\");if(rev){{start=$6+len-1}}else{{start=$6}}; if(start == $2 && rev == rev2){{if(soft){{print $7, 2, 0, 0}}else{{print $7, 3, 0, 0}}}}else{{if(rev2){{if($6 <= $2 && $6+len > $2-len){{print $7, 1, 0, 0}}else{{print $7, 0, 0, 0}}}}else{{if($6 < $2+len && $6+len >= $2){{print $7, 1, 0, 0}}else{{print $7, 0, 0, 0}}}}}} }}}}}}' |"
+        "sort -k1,1nr -k2,2nr -k3,3n -k4,4n | uniq -c | awk '{{print $2 \", \" $3 \", \" $4 \", \" $5 \", \" $1}}' >> {output}"
+        
+rule figure_mapper_comp_prepare_NEAT_bowtie2:
+    input:
+        gbam="storage/{species}/{sample}/NEAT/golden/neat_golden.bam",
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        refind="work/{species}/reference/{sample}/index_bowtie2/pilon-corrected.1.bt2",
+        fq1="storage/{species}/{sample}/NEAT/golden/neat_read1.fq.gz",
+        fq2="storage/{species}/{sample}/NEAT/golden/neat_read2.fq.gz"
+    output:
+        "work/paper/figures/figure_mapper_comp/storage_{species}_{sample}_NEAT_eval_bowtie2_correctness.csv"
+    params:
+        refind="work/{species}/reference/{sample}/index_bowtie2/pilon-corrected"
+    log:
+        "logs/bowtie2_mapper_comp/{species}/{sample}/NEAT.log"
+    threads: max_threads
+    shell:
+        "echo \"mapq, correctness, unmapped, negative, count\" > {output}; "
+        "paste "
+        " <(samtools sort -n -m 10G -T _tmp1_ -l 0 {input.gbam} | samtools view | awk '{{if(int($2%32/16)){{len=0; s=1; for(i=1; i<=length($6); i++){{if(substr($6, i, 1) ~ /^[A-Z]+$/){{if(substr($6, i, 1) ~ /^[MD]+$/){{len+=substr($6,s,i-s)}};}}}}; print $3, $4+len-1, \"-\"}}else{{print $3, $4, \"+\"}}}}')"
+        " <(bowtie2 -p {threads} -X 2000 -x {params.refind} -1 {input.fq1} -2 {input.fq2} 2>{log} | samtools sort -n -m 10G -T _tmp2_ -l 0 | samtools view -F 2304 | cut -f2-6) |"  
+        "awk '{{ if(1==int($4%8/4)){{print $7, 0, 1, 0}}else{{if($1 != $5){{print $7, 0, 0, 0}}else{{soft=0;len=0;s=1;for(i=1; i<=length($8); i++){{if(substr($8, i, 1) ~ /^[A-Z]+$/){{if(substr($8, i, 1) ~ /^[MD]+$/){{len+=substr($8,s,i-s)}}; if(substr($8, i, 1) == \"S\"){{soft=1}}; s=i+1}}}}; rev=int($4%32/16); rev2 = ($3 == \"-\");if(rev){{start=$6+len-1}}else{{start=$6}}; if(start == $2 && rev == rev2){{if(soft){{print $7, 2, 0, 0}}else{{print $7, 3, 0, 0}}}}else{{if(rev2){{if($6 <= $2 && $6+len > $2-len){{print $7, 1, 0, 0}}else{{print $7, 0, 0, 0}}}}else{{if($6 < $2+len && $6+len >= $2){{print $7, 1, 0, 0}}else{{print $7, 0, 0, 0}}}}}} }}}}}}' |"
+        "sort -k1,1nr -k2,2nr -k3,3n -k4,4n | uniq -c | awk '{{print $2 \", \" $3 \", \" $4 \", \" $5 \", \" $1}}' >> {output}"
 
 rule figure_start_end_surrounding:
     input:
@@ -928,7 +1071,7 @@ rule figure_gc_logit_vs_log:
 
 rule figure_error_rate:
     input:
-        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692_nolegend", "SRR3191692_assembly_nolegend", "S5L001_nolegend", "S1L001_nolegend", "S9L001_nolegend","ERR2017816_nolegend","ERR3085830_nolegend","ERR1955542_nolegend"])
     output:
         "storage/paper/additional_figures/figure_error_rate.pdf"
     params:
@@ -948,7 +1091,7 @@ rule figure_error_rate:
         
 rule figure_quality_values:
     input:
-        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692", "SRR3191692_assembly", "S5L001", "S1L001", "S9L001","ERR2017816","ERR3085830","ERR1955542"])
+        expand("storage/summary/preqc/{sample}.pdf",sample=["SRR490124", "SRR3191692_nolegend", "SRR3191692_assembly_nolegend", "S5L001_nolegend", "S1L001_nolegend", "S9L001_nolegend","ERR2017816_nolegend","ERR3085830_nolegend","ERR1955542_nolegend"])
     output:
         "storage/paper/additional_figures/figure_quality_values.pdf"
     params:
@@ -964,6 +1107,98 @@ rule figure_quality_values:
         done
         Rscript bin/figure_comp9.R {params.workdir}/figure_quality_values.pdf {params.workdir}/figure[1-9].pdf
         pdfcrop {params.workdir}/figure_quality_values.pdf {output} 1>/dev/null
+        """
+
+rule figure_quality_values_split:
+    input:
+        S1="storage/summary/reseq-plots/S1L001_nolegend.pdf",
+        S9l="storage/summary/reseq-plots/S9L001.pdf",
+        S9="storage/summary/reseq-plots/S9L001_nolegend.pdf"
+    output:
+        "storage/paper/additional_figures/figure_quality_values_split.pdf"
+    params:
+        workdir="work/paper/figures/figure_quality_values_split"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        pdftk {input.S1} cat 18 output {params.workdir}/figure1-full.pdf
+        pdftk {input.S1} cat 19 output {params.workdir}/figure2-full.pdf
+        pdftk {input.S9l} cat 18 output {params.workdir}/figure3-full.pdf
+        pdftk {input.S9} cat 19 output {params.workdir}/figure4-full.pdf
+        for i in 1 2 3 4; do
+            pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        Rscript bin/figure_comp4.R {params.workdir}/figure_quality_values_split.pdf {params.workdir}/figure[1-4].pdf
+        pdfcrop {params.workdir}/figure_quality_values_split.pdf {output} 1>/dev/null
+        """
+
+rule figure_ipf:
+    input:
+        "input/paper/csv/SRR490124_seg0_a_er0_base_quality_preceding_quality_sequence_quality_position.csv.gz",
+        "input/paper/csv/SRR490124_estimate_seg0_a_er0_base_quality_preceding_quality_sequence_quality_position.csv.gz"
+    output:
+        "storage/paper/subfigures/figure_ipf_samples.pdf",
+        "storage/paper/subfigures/figure_ipf_rel_diff.pdf",
+        "storage/paper/subfigures/figure_ipf_prob_diff.pdf"
+    params:
+        indir="input/paper/csv/"
+    shell:
+        "Rscript bin/figure_ipf.R {params.indir} {output}"
+        
+rule figure_ipf_combined:
+    input:
+        samples="storage/paper/subfigures/figure_ipf_samples.pdf",
+        rel_diff="storage/paper/subfigures/figure_ipf_rel_diff.pdf",
+        abs_diff="storage/paper/subfigures/figure_ipf_prob_diff.pdf"
+    output:
+        "storage/paper/additional_figures/figure_ipf.pdf"
+    params:
+        workdir="work/paper/figures/figure_ipf"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        pdfcrop {input.samples} {params.workdir}/samples.pdf 1>/dev/null
+        pdfcrop {input.rel_diff} {params.workdir}/rel_diff.pdf 1>/dev/null
+        pdfcrop {input.abs_diff} {params.workdir}/abs_diff.pdf 1>/dev/null
+        Rscript bin/figure_ipf_combined.R {params.workdir}/figure_ipf.pdf {params.workdir}/samples.pdf {params.workdir}/rel_diff.pdf {params.workdir}/abs_diff.pdf
+        pdfcrop {params.workdir}/figure_ipf.pdf {output} 1>/dev/null
+        """
+
+rule figure_lowerror_mapcomp:
+    input:
+        reseq="storage/summary/reseq-plots/SRR490124_bowtie2bwa.pdf",
+        mapq="storage/summary/mapper_comp/SRR490124_lowerror_mapq.pdf",
+        correctness="storage/summary/mapper_comp/SRR490124_lowerror_correctness.pdf"
+    output:
+        "storage/paper/additional_figures/figure_lowerror_mapcomp.pdf"
+    params:
+        workdir="work/paper/figures/figure_lowerror_mapcomp"
+    shell:
+        """
+        mkdir -p {params.workdir}
+        pdftk {input.reseq} cat 46 output {params.workdir}/figure1-full.pdf
+        pdftk {input.reseq} cat 47 output {params.workdir}/figure2-full.pdf
+        for i in 1 2; do
+            pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
+        done
+        pdfcrop {input.mapq} {params.workdir}/figure3.pdf 1>/dev/null
+        pdfcrop {input.correctness} {params.workdir}/figure4.pdf 1>/dev/null
+        Rscript bin/figure_comp4.R {params.workdir}/figure_lowerror_mapcomp.pdf {params.workdir}/figure[1-4].pdf
+        pdfcrop {params.workdir}/figure_lowerror_mapcomp.pdf {output} 1>/dev/null
+        """
+
+rule figure_adapter:
+    input:
+        "input/paper/csv/SRR490124_adapter.csv"
+    output:
+        "storage/paper/additional_figures/figure_adapter.pdf"
+    params:
+        workdir="work/paper/figures/figure_adapter"
+    shell:
+        """
+        mkdir -p {params.workdir};
+        Rscript bin/figure_adapter.R {input} {params.workdir}/figure_adapter.pdf
+        pdfcrop {params.workdir}/figure_adapter.pdf {output} 1>/dev/null
         """
 
 ###-Create summary plots---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -991,9 +1226,10 @@ rule cross_kmer_plot_summary_seqbias:
         "storage/summary/kmer_cross/{species}_{sample}_{crossspecies}_{crosssample}_seqbias.pdf"
     params:
         maxcount=lambda wildcards: SAMPLES[wildcards.sample]['max_kmer_count_plotted'],
-        k=jellyfish_k
+        k=jellyfish_k,
+        name=lambda wildcards: '"' + SAMPLES[wildcards.sample]['name'] + " <- " + SAMPLES[wildcards.crosssample]['name'] + '"'
     shell:
-        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} {input}"
+        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} -n {params.name} {input}"
 
 rule cross_kmer_plot_summary_seqbias_prep:
     input:
@@ -1008,12 +1244,15 @@ rule cross_kmer_plot_summary:
        "work/summary/kmer/{sample}/real.histo",
        lambda wildcards: expand("work/summary/kmer_cross/{0}_{1}_{2}_{3}/{{simulator}}.histo".format(wildcards.species, wildcards.sample, wildcards.crossspecies, wildcards.crosssample), simulator=SIMULATORS )
     output:
-        "storage/summary/kmer_cross/{species}_{sample}_{crossspecies}_{crosssample}.pdf"
+        "storage/summary/kmer_cross/{species,[0-9A-Za-z]*}_{sample,[0-9A-Za-z]*}_{crossspecies,[0-9A-Za-z]*}_{crosssample,[0-9A-Za-z]*}{linear,|_linear}{legend,|_nolegend}.pdf"
     params:
-        maxcount=lambda wildcards: SAMPLES[wildcards.sample]['max_kmer_count_plotted'],
-        k=jellyfish_k
+        maxcount=lambda wildcards: SAMPLES[wildcards.sample]['max_kmer_count_plotted_linear'] if "_linear" == wildcards.linear else SAMPLES[wildcards.sample]['max_kmer_count_plotted'],
+        k=jellyfish_k,
+        name=lambda wildcards: '"' + SAMPLES[wildcards.sample]['name'] + " <- " + SAMPLES[wildcards.crosssample]['name'] + '"',
+        linear=lambda wildcards: "--linear" if "_linear" == wildcards.linear else "",
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
     shell:
-        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} {input}"
+        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} -n {params.name} {params.linear} {params.legend} {input}"
 
 rule cross_kmer_plot_summary_prep:
     input:
@@ -1028,12 +1267,15 @@ rule kmer_plot_summary:
        "work/summary/kmer/{sample}/real.histo",
        lambda wildcards: expand("work/summary/kmer/{0}{1}{2}/{{simulator}}.histo".format(wildcards.sample, wildcards.asm, wildcards.cov), simulator=SIMULATORS)
     output:
-        "storage/summary/kmer/{sample,[0-9A-Za-z]*}{asm,|_assembly}{cov,|_cov}.pdf"
+        "storage/summary/kmer/{sample,[0-9A-Za-z]*}{asm,|_assembly}{cov,|_cov}{linear,|_linear}{legend,|_nolegend}.pdf"
     params:
-        maxcount=lambda wildcards: SAMPLES[wildcards.sample]['max_kmer_count_plotted'],
-        k=jellyfish_k
+        maxcount=lambda wildcards: SAMPLES[wildcards.sample]['max_kmer_count_plotted_linear'] if "_linear" == wildcards.linear else SAMPLES[wildcards.sample]['max_kmer_count_plotted'],
+        k=jellyfish_k,
+        name=lambda wildcards: SAMPLES[wildcards.sample]['name'] + ("-asm" if "_assembly" == wildcards.asm else ""),
+        linear=lambda wildcards: "--linear" if "_linear" == wildcards.linear else "",
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
     shell:
-        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} {input}"
+        "./bin/plotKmerSpec.py -k {params.k} -x {params.maxcount} -o {output} -n {params.name} {params.linear} {params.legend} {input}"
 
 rule kmer_plot_summary_prep:
     input:
@@ -1051,16 +1293,41 @@ rule kmer_plot_summary_prep2:
     shell:
         "ln -srf {input} {output}"
 
+rule sga_preqc_plot_bowtie2_bwa:
+    input:
+        "work/summary/preqc/{sample}/real.preqc",
+        "work/summary/preqc/{sample}/ReSeq_bowtie2.preqc",
+        lambda wildcards: "storage/{0}/{1}/ReSeq_bwa/eval/preqc/ReSeq_bwa.preqc".format(SAMPLES[wildcards.sample]['species'], wildcards.sample)
+    output:
+        "storage/summary/preqc/{sample,[0-9A-Za-z]*}_bowtie2_bwa.pdf"
+    params:
+        title=lambda wildcards: SAMPLES[wildcards.sample]['name']
+    log:
+        "logs/sga_preqc_plot_summary/{sample}_bowtie2_bwa.log"
+    shell:
+        "./bin/sga-preqc-report.py -p -t {params.title} -o $(dirname {output})/$(basename {output} .pdf) {input} 1>{log} 2>&1"
+
+rule sga_preqc_plot_bowtie2_bwa_prep:
+    input:
+        lambda wildcards: "storage/{0}/{1}/ReSeq/eval/preqc/ReSeq.preqc".format(SAMPLES[wildcards.sample]['species'], wildcards.sample)
+    output:
+        "work/summary/preqc/{sample}/ReSeq_bowtie2.preqc"
+    shell:
+        "ln -srf {input} {output}"
+
 rule sga_preqc_plot_summary:
     input:
         "work/summary/preqc/{sample}/real.preqc",
         lambda wildcards: expand("storage/{0}/{1}/{{simulator}}/eval/preqc{2}/{{simulator}}.preqc".format(SAMPLES[wildcards.sample]['species'], wildcards.sample+wildcards.asm, wildcards.cov), simulator=SIMULATORS)
     output:
-        "storage/summary/preqc/{sample,[0-9A-Za-z]*}{asm,|_assembly}{cov,|_cov}.pdf"
+        "storage/summary/preqc/{sample,[0-9A-Za-z]*}{asm,|_assembly}{cov,|_cov}{legend,|_nolegend}.pdf"
+    params:
+        title=lambda wildcards: SAMPLES[wildcards.sample]['name'] + ("-asm" if "_assembly" == wildcards.asm else ""),
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
     log:
-        "logs/sga_preqc_plot_summary/{sample}{asm}{cov}.log"
+        "logs/sga_preqc_plot_summary/{sample}{asm}{cov}{legend}.log"
     shell:
-        "./bin/sga-preqc-report.py -p -o $(dirname {output})/$(basename {output} .pdf) {input} 1>{log} 2>&1"
+        "./bin/sga-preqc-report.py -p -t {params.title} {params.legend} -o $(dirname {output})/$(basename {output} .pdf) {input} 1>{log} 2>&1"
 
 rule sga_preqc_plot_summary_prep:
     input:
@@ -1070,17 +1337,43 @@ rule sga_preqc_plot_summary_prep:
     shell:
         "ln -srf {input} {output}"
 
+rule plot_eval_with_reseq_summary_bowtie2bwa:
+    input:
+        expand("work/summary/reseq-plots/{{sample}}{{asm}}/ReSeq-{mapper}.reseq", mapper=["bowtie2","bwa"])
+    output:
+        "storage/summary/reseq-plots/{sample,[0-9A-Za-z]*}{asm,|_assembly}_bowtie2bwa{legend,|_nolegend}.pdf"
+    params:
+        title=lambda wildcards: SAMPLES[wildcards.sample]['name'] + ("-asm" if "_assembly" == wildcards.asm else ""),
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
+    log:
+        "logs/summary/{sample}{asm}_bowtie2bwa{legend}.log"
+    shell:
+        """
+        plotDataStats.py -o {output} -t {params.title} {params.legend} {input} >{log} 2>&1
+        """
+
+rule plot_eval_with_reseq_summary_bowtie2bwa_prep:
+    input:
+        lambda wildcards: "storage/{0}/{1}/ReSeq{2}/original.reseq".format(SAMPLES[wildcards.sample]['species'],wildcards.sample, "_bwa" if "bwa" == wildcards.mapper else "")
+    output:
+        "work/summary/reseq-plots/{sample}/ReSeq-{mapper}.reseq"
+    shell:
+        "ln -srf {input} {output}"
+
 rule plot_eval_with_reseq_summary:
     input:
         "work/summary/reseq-plots/{sample}/real.reseq",
-        expand("work/summary/reseq-plots/{{sample}}/{simulator}.reseq", simulator=SIMULATORS)
+        expand("work/summary/reseq-plots/{{sample}}{{asm}}/{simulator}.reseq", simulator=SIMULATORS)
     output:
-        "storage/summary/reseq-plots/{sample}.pdf"
+        "storage/summary/reseq-plots/{sample,[0-9A-Za-z]*}{asm,|_assembly}{legend,|_nolegend}.pdf"
+    params:
+        title=lambda wildcards: SAMPLES[wildcards.sample]['name'] + ("-asm" if "_assembly" == wildcards.asm else ""),
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
     log:
-        "logs/summary/{sample}.log"
+        "logs/summary/{sample}{asm}{legend}.log"
     shell:
         """
-        plotDataStats.py -o {output} {input} >{log} 2>&1
+        plotDataStats.py -o {output} -t {params.title} {params.legend} {input} >{log} 2>&1
         """
         
 rule plot_eval_with_reseq_summary_prep:
@@ -1095,7 +1388,7 @@ rule plot_eval_with_reseq_summary_prep2:
     input:
         lambda wildcards: "storage/{0}/{1}/{2}/eval/mapping-bowtie2-s.bam.reseq".format(SAMPLES[wildcards.sample]['species'],wildcards.sample,wildcards.simulator)
     output:
-        "work/summary/reseq-plots/{sample}/{simulator}.reseq"
+        "work/summary/reseq-plots/{sample}/{simulator,[A-Za-z]*}.reseq"
     shell:
         "ln -srf {input} {output}"
 
@@ -1109,7 +1402,7 @@ rule coverage_correlation_sim_real_plot:
     params:
         name1="Coverage original",
         name2="Coverage {simulation}",
-        legendpos=lambda wildcards: "lr" if wildcards.simulation == "ART" or wildcards.simulation == "NEAT" else "ul"
+        legendpos=lambda wildcards: "ul" if (wildcards.simulation == "pIRS" or wildcards.simulation == "BEAR") else "lr"
     shell:
         "Rscript bin/figure_covcorrelation.R {input.real} {input.sim} '{params.name1}' '{params.name2}' {output} {params.legendpos}"
 
@@ -1283,6 +1576,24 @@ rule bowtie2_map_replicates:
         " 2>{log} | samtools sort -m 10G -@ 4 -T {params.tmp} -o {output} -"
 
 ###-Evaluate simulators----------------------------------------------------------------------------------------------------------------------------------------------------------------
+rule bwa_map_lowerror:
+    input:
+        lambda wildcards: "work/{0}/reference/{1}/index_bwa/{2}.bwt".format(wildcards.species,wildcards.sample, "pilon-corrected" if "" == wildcards.asm else "sga-contigs"),
+        fq1=lambda wildcards: "storage/{0}/{1}/{2}/{4}{3}".format(wildcards.species,wildcards.sample+wildcards.asm,wildcards.simulator,simulatorOutputFile(1,wildcards),"nobias/" if wildcards.folder == "nobias" else ""),
+        fq2=lambda wildcards: "storage/{0}/{1}/{2}/{4}{3}".format(wildcards.species,wildcards.sample+wildcards.asm,wildcards.simulator,simulatorOutputFile(2,wildcards),"nobias/" if wildcards.folder == "nobias" else "")
+    output:
+        "storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/{simulator}/{folder}/mapping-bwa-lowerror.bam"
+    params:
+        refind=lambda wildcards: "work/{0}/reference/{1}/index_bwa/{2}".format(wildcards.species,wildcards.sample, "pilon-corrected" if "" == wildcards.asm else "sga-contigs")
+    log:
+        "logs/bwa_map/{species}/{sample}{asm}/{folder}_{simulator}_lowerror.log"
+    threads: max_threads
+    shell:
+        "bwa mem -t {threads} {params.refind}"
+        " <(paste -d '\\n' <(zcat {input.fq2}) <(zcat {input.fq1}) | awk 'BEGIN{{pri=1}}(1==NR%8){{pri=(10 > substr($3,2,length($3)))}}(2==NR%8){{pri = pri && (10 > substr($3,2,length($3)))}}(0==NR%2 && pri){{print $0}}')"
+        " <(paste -d '\\n' <(zcat {input.fq1}) <(zcat {input.fq2}) | awk 'BEGIN{{pri=1}}(1==NR%8){{pri=(10 > substr($3,2,length($3)))}}(2==NR%8){{pri = pri && (10 > substr($3,2,length($3)))}}(0==NR%2 && pri){{print $0}}')"
+        " 2>{log} | samtools view -o {output}"
+
 rule bwa_map:
     input:
         lambda wildcards: "work/{0}/reference/{1}/index_bwa/{2}.bwt".format(wildcards.species,wildcards.sample, "pilon-corrected" if "" == wildcards.asm else "sga-contigs"),
@@ -1306,11 +1617,14 @@ rule plot_eval_with_reseq_nobias:
         "storage/{species}/{sample}/ReSeq/original.reseq",
         "storage/{species}/{sample}/{simulator}/nobias/nobias.reseq"
     output:
-        "storage/{species}/{sample}/{simulator}/nobias/stats.pdf"
+        "storage/{species}/{sample}/{simulator}/nobias/stats{legend,|_nolegend}.pdf"
+    params:
+        title=lambda wildcards: SAMPLES[wildcards.sample]['name'],
+        legend=lambda wildcards: "--nolegend" if "_nolegend" == wildcards.legend else ""
     log:
         "logs/eval_with_reseq/{species}/{sample}/plot_nobias_{simulator}.log"
     shell:
-        "plotDataStats.py -o {output} {input} >{log} 2>&1"
+        "plotDataStats.py -o {output} -t {params.title} {params.legend} {input} >{log} 2>&1"
         
 rule plot_eval_with_reseq:
     input:
@@ -1338,16 +1652,34 @@ rule eval_with_reseq_nobias:
 rule eval_with_reseq:
     input:
         ref=lambda wildcards: "storage/{0}/reference/{1}/{2}".format(wildcards.species, wildcards.sample, "sga-contigs.fa" if wildcards.asm != "" else "pilon-corrected.fa"),
-        bam="storage/{species}/{sample}{asm}/{simulator}/eval/mapping-bowtie2-s.bam"
+        bam="storage/{species}/{sample}{asm}/{simulator}/eval/mapping-{mapper}-s.bam"
     output:
-        "storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/{simulator}/eval/mapping-bowtie2-s.bam.reseq"
+        "storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/{simulator}/eval/mapping-{mapper}-s.bam.reseq"
     params:
         adapter=lambda wildcards: "" if wildcards.simulator == "ReSeq" else "--adapterFile TruSeq_single"
     log:
-        "logs/eval_with_reseq/{species}/{sample}{asm}/{simulator}.log"
+        "logs/eval_with_reseq/{species}/{sample}{asm}/{simulator}-{mapper}.log"
     threads: max_threads
     shell:
         "reseq illuminaPE -j {threads} -r {input.ref} -b {input.bam} -S {output} {params.adapter} --statsOnly >{log} 2>&1"
+
+rule bowtie2_map_lowerror:
+    input:
+        lambda wildcards: "work/{0}/reference/{1}/index_bowtie2/{2}.1.bt2".format(wildcards.species,wildcards.sample, "pilon-corrected" if "" == wildcards.asm else "sga-contigs"),
+        fq1=lambda wildcards: "storage/{0}/{1}/{2}/{4}{3}".format(wildcards.species,wildcards.sample+wildcards.asm,wildcards.simulator,simulatorOutputFile(1,wildcards),"nobias/" if wildcards.folder == "nobias" else ""),
+        fq2=lambda wildcards: "storage/{0}/{1}/{2}/{4}{3}".format(wildcards.species,wildcards.sample+wildcards.asm,wildcards.simulator,simulatorOutputFile(2,wildcards),"nobias/" if wildcards.folder == "nobias" else "")
+    output:
+        "storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/{simulator}/{folder}/mapping-bowtie2-lowerror.bam"
+    params:
+        refind=lambda wildcards: "work/{0}/reference/{1}/index_bowtie2/{2}".format(wildcards.species,wildcards.sample, "pilon-corrected" if "" == wildcards.asm else "sga-contigs")
+    log:
+        "logs/bowtie2_map/{species}/{sample}{asm}/{folder}_{simulator}_lowerror.log"
+    threads: max_threads
+    shell:
+        "bowtie2 -p {threads} -X 2000 -x {params.refind}"
+        " -1 <(paste -d '\\n' <(zcat {input.fq2}) <(zcat {input.fq1}) | awk 'BEGIN{{pri=1}}(1==NR%8){{pri=(10 > substr($3,2,length($3)))}}(2==NR%8){{pri = pri && (10 > substr($3,2,length($3)))}}(0==NR%2 && pri){{print $0}}')"
+        " -2 <(paste -d '\\n' <(zcat {input.fq1}) <(zcat {input.fq2}) | awk 'BEGIN{{pri=1}}(1==NR%8){{pri=(10 > substr($3,2,length($3)))}}(2==NR%8){{pri = pri && (10 > substr($3,2,length($3)))}}(0==NR%2 && pri){{print $0}}')"
+        " 2>{log} | samtools view -o {output}"
 
 rule bowtie2_map:
     input:
@@ -1772,7 +2104,7 @@ rule pirs_cross_simulate:
         "logs/pIRS/{species}/{sample}_pirs_{crossspecies}_{crosssample}_simulate.log"
     threads: max_threads
     shell:
-        "env time -v -o {output.timelog} pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs {params.diploid} {input.ref} {input.ref2} >{log} 2>&1"
+        "env time -v -o {output.timelog} pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs {params.diploid} {input.ref} {input.ref2} >{log} 2>&1; rm -f {params.outdir}/pirs.read.info"
 
 rule pirs_simulate_replicate:
     input:
@@ -1795,7 +2127,7 @@ rule pirs_simulate_replicate:
         "logs/pIRS/{species}/{sample}_pirs_simulate_rep{simnum}.log"
     threads: max_threads
     shell:
-        "pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs {params.diploid} {input.ref} {input.ref2} >{log} 2>&1"
+        "pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs {params.diploid} {input.ref} {input.ref2} >{log} 2>&1; rm -f {params.outdir}/pirs.read.info"
 
 rule pirs_simulate:
     input:
@@ -1819,7 +2151,7 @@ rule pirs_simulate:
         "logs/pIRS/{species}/{sample}{asm}{cov}_pirs_simulate.log"
     threads: max_threads
     shell:
-        "env time -v -o {output.timelog} pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs{wildcards.cov} {params.diploid} {input.ref} {input.ref2} >{log} 2>&1"
+        "env time -v -o {output.timelog} pirs simulate -t {threads} -B {input.basecall} -G {input.gcbias} -I {input.indel} -l {params.readlength} -x {params.coverage} -m {params.insertlength} -v {params.insertsd} -o {params.outdir} -s pirs{wildcards.cov} {params.diploid} {input.ref} {input.ref2} >{log} 2>&1; rm -f {params.outdir}/pirs.read.info"
 
 rule pirs_profile_gc_bias:
     input:
@@ -1900,7 +2232,8 @@ rule art_cross_simulate:
         "logs/ART/{species}/{sample}_art_{crossspecies}_{crosssample}_simulate.log"
     shell:
         "env time -v -o {output.timelog} art_illumina -1 {input.q1} -2 {input.q2} -f {params.coverage} -i {input.ref} -ir {params.ins1} -ir2 {params.ins2} -dr {params.del1} -dr2 {params.del2} "
-        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1"
+        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1; "
+        "rm -f {params.outprefix}?.aln"
 
 rule art_simulate_replicate:
     input:
@@ -1924,7 +2257,36 @@ rule art_simulate_replicate:
         "logs/ART/{species}/{sample}_art_simulate_rep{simnum}.log"
     shell:
         "art_illumina -1 {input.q1} -2 {input.q2} -f {params.coverage} -i {input.ref} -ir {params.ins1} -ir2 {params.ins2} -dr {params.del1} -dr2 {params.del2} "
-        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1"
+        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1; "
+        "rm -f {params.outprefix}?.aln"
+
+rule art_simulate_S5L001:
+    input:
+        q1="work/ecoli/S5L001/ART/profiles/qualityR1.txt",
+        q2="work/ecoli/S5L001/ART/profiles/qualityR2.txt",
+        ref="storage/ecoli/reference/S5L001/pilon-corrected.fa"
+    output:
+        "storage/ecoli/S5L001/ART/art1.fq",
+        "storage/ecoli/S5L001/ART/art2.fq",
+        "storage/ecoli/S5L001/ART/art1.aln.gz",
+        "storage/ecoli/S5L001/ART/art2.aln.gz",
+        timelog="storage/ecoli/S5L001/ART/art-simulate-time.log"
+    params:
+        coverage=lambda wildcards: SAMPLES['S5L001']['coverage'],
+        ins1= SAMPLES['S5L001']['insertion_rate1'],
+        ins2= SAMPLES['S5L001']['insertion_rate2'],
+        del1= SAMPLES['S5L001']['deletion_rate1'],
+        del2= SAMPLES['S5L001']['deletion_rate2'],
+        readlength= SAMPLES['S5L001']['readlength'],
+        insertlength= SAMPLES['S5L001']['insertlength'],
+        outprefix="storage/ecoli/S5L001/ART/art",
+        insertsd= SAMPLES['S5L001']['insertsd'],
+    log:
+        "logs/ART/ecoli/S5L001_art_simulate.log"
+    shell:
+        "env time -v -o {output.timelog} art_illumina -1 {input.q1} -2 {input.q2} -f {params.coverage} -i {input.ref} -ir {params.ins1} -ir2 {params.ins2} -dr {params.del1} -dr2 {params.del2} "
+        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1; "
+        "gzip -f {params.outprefix}1.aln; gzip -f {params.outprefix}2.aln"
 
 rule art_simulate:
     input:
@@ -1944,12 +2306,13 @@ rule art_simulate:
         readlength=lambda wildcards: SAMPLES[wildcards.sample]['readlength'],
         insertlength=lambda wildcards: SAMPLES[wildcards.sample]['insertlength'] if "" == wildcards.asm else SAMPLES[wildcards.sample]['insertlength_asm'],
         outprefix="storage/{species}/{sample}{asm}/ART/art{cov}",
-        insertsd=lambda wildcards: SAMPLES[wildcards.sample]['insertsd'] if "" == wildcards.asm else SAMPLES[wildcards.sample]['insertsd_asm']
+        insertsd=lambda wildcards: SAMPLES[wildcards.sample]['insertsd'] if "" == wildcards.asm else SAMPLES[wildcards.sample]['insertsd_asm'],
     log:
         "logs/ART/{species}/{sample}{asm}{cov}_art_simulate.log"
     shell:
         "env time -v -o {output.timelog} art_illumina -1 {input.q1} -2 {input.q2} -f {params.coverage} -i {input.ref} -ir {params.ins1} -ir2 {params.ins2} -dr {params.del1} -dr2 {params.del2} "
-        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1"
+        "-l {params.readlength} -m {params.insertlength} -o {params.outprefix} -p -s {params.insertsd} -sp >{log} 2>&1; "
+        "rm -f {params.outprefix}?.aln"
 
 rule art_profile:
     input:
@@ -1976,6 +2339,76 @@ rule art_profile:
         """
 
 ###-BEAR-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+rule bear_cross_simulate:
+    input:
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        fq1=lambda wildcards: "work/baseSpace/{0}/{1}".format(SAMPLES[wildcards.crosssample]['basespace'],SAMPLES[wildcards.crosssample]['fq1']) if 'basespace' in SAMPLES[wildcards.crosssample] else "input/{0}/{1}/{2}".format(wildcards.crossspecies,wildcards.crosssample,SAMPLES[wildcards.crosssample]['fq1']),
+        fq2=lambda wildcards: "work/baseSpace/{0}/{1}".format(SAMPLES[wildcards.crosssample]['basespace'],SAMPLES[wildcards.crosssample]['fq2']) if 'basespace' in SAMPLES[wildcards.crosssample] else "input/{0}/{1}/{2}".format(wildcards.crossspecies,wildcards.crosssample,SAMPLES[wildcards.crosssample]['fq2']),
+        covfq=lambda wildcards: "work/baseSpace/{0}/{1}".format(SAMPLES[wildcards.sample]['basespace'],SAMPLES[wildcards.sample]['fq1']) if 'basespace' in SAMPLES[wildcards.sample] else "input/{0}/{1}/{2}".format(wildcards.species,wildcards.sample,SAMPLES[wildcards.sample]['fq1']),
+        abundance="work/{species}/{sample}/BEAR/profiles/abundance.txt",
+        per1="work/{crossspecies}/{crosssample}/BEAR/profiles/dri_read1.txt.per",
+        per2="work/{crossspecies}/{crosssample}/BEAR/profiles/dri_read2.txt.per",
+        errqual1="work/{crossspecies}/{crosssample}/BEAR/profiles/reads1.fastq.err.qual",
+        errqual2="work/{crossspecies}/{crosssample}/BEAR/profiles/reads2.fastq.err.qual",
+        errmat1="work/{crossspecies}/{crosssample}/BEAR/profiles/reads1.fastq.err.matr",
+        errmat2="work/{crossspecies}/{crosssample}/BEAR/profiles/reads2.fastq.err.matr"
+    output:
+        fq1="storage/{species}/{sample}/BEAR_{crossspecies}_{crosssample}/bear-R1.fq",
+        fq2="storage/{species}/{sample}/BEAR_{crossspecies}_{crosssample}/bear-R2.fq"
+    params:
+        workdir="work/{species}/{sample}/BEAR_{crossspecies}_{crosssample}/",
+        readlength=lambda wildcards: SAMPLES[wildcards.crosssample]['readlength'],
+        insertlength=lambda wildcards: SAMPLES[wildcards.crosssample]['insertlength'],
+        insertsd=lambda wildcards: SAMPLES[wildcards.crosssample]['insertsd']
+    shell:
+        """
+        mkdir -p {params.workdir}
+        cd bin/BEAR/
+        gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
+        gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
+        ./generate_reads.py -d -r ../../{input.ref} -a ../../{input.abundance} -o ../../{params.workdir}/uniform-reads -t $(($(zcat ../../{input.covfq} | wc -l | awk '{{print $1}}')/4)) -l {params.readlength} -i {params.insertlength} -s {params.insertsd}
+        ./trim_reads.pl -i ../../{params.workdir}/reads1.fastq -f ../../{params.workdir}/uniform-reads.1.fasta -o ../../{params.workdir}/tmp_bear1.fq -r ../../{input.per1} -q ../../{input.errqual1} -m ../../{input.errmat1} 1>/dev/null 2>&1
+        ./trim_reads.pl -i ../../{params.workdir}/reads2.fastq -f ../../{params.workdir}/uniform-reads.2.fasta -o ../../{params.workdir}/tmp_bear2.fq -r ../../{input.per2} -q ../../{input.errqual2} -m ../../{input.errmat2} 1>/dev/null 2>&1
+        paste -d '\\n' <(cat ../../{params.workdir}/tmp_bear1.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') <(cat ../../{params.workdir}/tmp_bear2.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') | awk 'BEGIN{{OFS="\\n"}}{{header1=$0; getline header2; getline seq1; getline seq2; getline plus1; getline plus2; getline qual1; getline qual2; if(1 < length(seq1) && 1 < length(seq2)){{print header1, seq1, plus1, qual1 > "../../{output.fq1}"; print header2, seq2, plus2, qual2 > "../../{output.fq2}"}}}}'
+        rm -f ../../{params.workdir}/reads{{1,2}}.fastq ../../{params.workdir}/tmp_bear{{1,2}}.fq ../../{params.workdir}/uniform-reads.{{1,2}}.fasta
+        cd -
+        """
+
+rule bear_simulate_replicate:
+    input:
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        fq1=lambda wildcards: "work/baseSpace/{0}/{1}".format(SAMPLES[wildcards.sample]['basespace'],SAMPLES[wildcards.sample]['fq1']) if 'basespace' in SAMPLES[wildcards.sample] else "input/{0}/{1}/{2}".format(wildcards.species,wildcards.sample,SAMPLES[wildcards.sample]['fq1']),
+        fq2=lambda wildcards: "work/baseSpace/{0}/{1}".format(SAMPLES[wildcards.sample]['basespace'],SAMPLES[wildcards.sample]['fq2']) if 'basespace' in SAMPLES[wildcards.sample] else "input/{0}/{1}/{2}".format(wildcards.species,wildcards.sample,SAMPLES[wildcards.sample]['fq2']),
+        abundance="work/{species}/{sample}/BEAR/profiles/abundance.txt",
+        per1="work/{species}/{sample}/BEAR/profiles/dri_read1.txt.per",
+        per2="work/{species}/{sample}/BEAR/profiles/dri_read2.txt.per",
+        errqual1="work/{species}/{sample}/BEAR/profiles/reads1.fastq.err.qual",
+        errqual2="work/{species}/{sample}/BEAR/profiles/reads2.fastq.err.qual",
+        errmat1="work/{species}/{sample}/BEAR/profiles/reads1.fastq.err.matr",
+        errmat2="work/{species}/{sample}/BEAR/profiles/reads2.fastq.err.matr"
+    output:
+        fq1="storage/{species}/{sample}/BEAR/replicates/sim{simnum}/bear-R1.fq",
+        fq2="storage/{species}/{sample}/BEAR/replicates/sim{simnum}/bear-R2.fq",
+    params:
+        workdir="work/{species}/{sample}/BEAR/rep{simnum}/",
+        readlength=lambda wildcards: SAMPLES[wildcards.sample]['readlength'],
+        insertlength=lambda wildcards: SAMPLES[wildcards.sample]['insertlength'],
+        insertsd=lambda wildcards: SAMPLES[wildcards.sample]['insertsd']
+    shell:
+        """
+        mkdir -p {params.workdir}
+        cd bin/BEAR/
+        gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
+        gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
+        ./generate_reads.py -d -r ../../{input.ref} -a ../../{input.abundance} -o ../../{params.workdir}/uniform-reads -t $(($(wc -l ../../{params.workdir}/reads1.fastq | awk '{{print $1}}')/4)) -l {params.readlength} -i {params.insertlength} -s {params.insertsd}
+        ./trim_reads.pl -i ../../{params.workdir}/reads1.fastq -f ../../{params.workdir}/uniform-reads.1.fasta -o ../../{params.workdir}/tmp_bear1.fq -r ../../{input.per1} -q ../../{input.errqual1} -m ../../{input.errmat1} 1>/dev/null 2>&1
+        ./trim_reads.pl -i ../../{params.workdir}/reads2.fastq -f ../../{params.workdir}/uniform-reads.2.fasta -o ../../{params.workdir}/tmp_bear2.fq -r ../../{input.per2} -q ../../{input.errqual2} -m ../../{input.errmat2} 1>/dev/null 2>&1
+        paste -d '\\n' <(cat ../../{params.workdir}/tmp_bear1.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') <(cat ../../{params.workdir}/tmp_bear2.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') | awk 'BEGIN{{OFS="\\n"}}{{header1=$0; getline header2; getline seq1; getline seq2; getline plus1; getline plus2; getline qual1; getline qual2; if(1 < length(seq1) && 1 < length(seq2)){{print header1, seq1, plus1, qual1 > "../../{output.fq1}"; print header2, seq2, plus2, qual2 > "../../{output.fq2}"}}}}'
+        rm -f ../../{params.workdir}/reads{{1,2}}.fastq ../../{params.workdir}/tmp_bear{{1,2}}.fq ../../{params.workdir}/uniform-reads.{{1,2}}.fasta
+        cd -
+        """
+
+# We cannot store the logs of BEAR because they are full of warnings and result in files larger than 1Tb
 rule bear_simulate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
@@ -1989,19 +2422,16 @@ rule bear_simulate:
         errmat1="work/{species}/{sample}/BEAR/profiles/reads1.fastq.err.matr",
         errmat2="work/{species}/{sample}/BEAR/profiles/reads2.fastq.err.matr"
     output:
-        fq1="storage/{species}/{sample}/BEAR/bear-R1.fq",
-        fq2="storage/{species}/{sample}/BEAR/bear-R2.fq",
-        uniformtl="storage/{species}/{sample}/BEAR/benchmark/uniform-time.log",
-        trim1tl="storage/{species}/{sample}/BEAR/benchmark/trimming1-time.log",
-        trim2tl="storage/{species}/{sample}/BEAR/benchmark/trimming2-time.log"
-    log:
-        r1="logs/BEAR/{species}/{sample}_trim1.log",
-        r2="logs/BEAR/{species}/{sample}_trim2.log"
+        fq1="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/BEAR/bear-R1.fq",
+        fq2="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/BEAR/bear-R2.fq",
+        uniformtl="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/BEAR/benchmark/uniform-time.log",
+        trim1tl="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/BEAR/benchmark/trimming1-time.log",
+        trim2tl="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/BEAR/benchmark/trimming2-time.log"
     params:
         workdir="work/{species}/{sample}/BEAR/",
         readlength=lambda wildcards: SAMPLES[wildcards.sample]['readlength'],
-        insertlength=lambda wildcards: SAMPLES[wildcards.sample]['insertlength'],
-        insertsd=lambda wildcards: SAMPLES[wildcards.sample]['insertsd']
+        insertlength=lambda wildcards: SAMPLES[wildcards.sample]['insertlength'] if "" == wildcards.asm else SAMPLES[wildcards.sample]['insertlength_asm'],
+        insertsd=lambda wildcards: SAMPLES[wildcards.sample]['insertsd'] if "" == wildcards.asm else SAMPLES[wildcards.sample]['insertsd_asm']
     shell:
         """
         mkdir -p {params.workdir}
@@ -2009,11 +2439,10 @@ rule bear_simulate:
         gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
         gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
         env time -v -o ../../{output.uniformtl} ./generate_reads.py -d -r ../../{input.ref} -a ../../{input.abundance} -o ../../{params.workdir}/uniform-reads -t $(($(wc -l ../../{params.workdir}/reads1.fastq | awk '{{print $1}}')/4)) -l {params.readlength} -i {params.insertlength} -s {params.insertsd}
-        env time -v -o ../../{output.trim1tl} ./trim_reads.pl -i ../../{params.workdir}/reads1.fastq -f ../../{params.workdir}/uniform-reads.1.fasta -o ../../{params.workdir}/tmp_bear1.fq -r ../../{input.per1} -q ../../{input.errqual1} -m ../../{input.errmat1} 1>../../{log.r1} 2>&1
-        env time -v -o ../../{output.trim2tl} ./trim_reads.pl -i ../../{params.workdir}/reads2.fastq -f ../../{params.workdir}/uniform-reads.2.fasta -o ../../{params.workdir}/tmp_bear2.fq -r ../../{input.per2} -q ../../{input.errqual2} -m ../../{input.errmat2} 1>../../{log.r2} 2>&1
-        cat ../../{params.workdir}/tmp_bear1.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}' > ../../{output.fq1}
-        cat ../../{params.workdir}/tmp_bear2.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}' > ../../{output.fq2}
-        rm -f ../../{params.workdir}/reads{{1,2}}.fastq ../../{params.workdir}/tmp_bear{{1,2}}.fq
+        env time -v -o ../../{output.trim1tl} ./trim_reads.pl -i ../../{params.workdir}/reads1.fastq -f ../../{params.workdir}/uniform-reads.1.fasta -o ../../{params.workdir}/tmp_bear1.fq -r ../../{input.per1} -q ../../{input.errqual1} -m ../../{input.errmat1} 1>/dev/null 2>&1
+        env time -v -o ../../{output.trim2tl} ./trim_reads.pl -i ../../{params.workdir}/reads2.fastq -f ../../{params.workdir}/uniform-reads.2.fasta -o ../../{params.workdir}/tmp_bear2.fq -r ../../{input.per2} -q ../../{input.errqual2} -m ../../{input.errmat2} 1>/dev/null 2>&1
+        paste -d '\\n' <(cat ../../{params.workdir}/tmp_bear1.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') <(cat ../../{params.workdir}/tmp_bear2.fq | awk '{{if(1==NR%4){{print "@bear_" (NR-1)/4+1, substr($0, 2, length($0)-1)}}else{{print}}}}') | awk 'BEGIN{{OFS="\\n"}}{{header1=$0; getline header2; getline seq1; getline seq2; getline plus1; getline plus2; getline qual1; getline qual2; if(1 < length(seq1) && 1 < length(seq2)){{print header1, seq1, plus1, qual1 > "../../{output.fq1}"; print header2, seq2, plus2, qual2 > "../../{output.fq2}"}}}}'
+        rm -f ../../{params.workdir}/reads{{1,2}}.fastq ../../{params.workdir}/tmp_bear{{1,2}}.fq ../../{params.workdir}/uniform-reads.{{1,2}}.fasta
         cd -
         """
 
@@ -2046,7 +2475,7 @@ rule bear_profile:
     shell:
         """
         cd bin/BEAR/
-        env time -v -o ../../{output.abundancetl} ./parametric_abundance.pl ../../{input.ref} low > ../../{output.abundance}
+        env time -v -o ../../{output.abundancetl} ./parametric_abundance.pl ../../{input.ref} high > ../../{output.abundance}
         gzip -cd ../../{input.fq1} > ../../{params.workdir}/reads1.fastq
         gzip -cd ../../{input.fq2} > ../../{params.workdir}/reads2.fastq
         env time -v -o ../../{output.drisee1tl} python2 drisee.py -p {threads} -t fastq -l ../../{log.drisee1} --percent ../../{params.workdir}/reads1.fastq ../../{params.workdir}/dri_read1.txt
@@ -2111,6 +2540,28 @@ rule sinc_profile:
         """
 
 ###-NEAT-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+rule neat_simulate_golden_bam:
+    input:
+        ref="storage/{species}/reference/{sample}/pilon-corrected.fa",
+        vcf=lambda wildcards: "storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else [],
+        cp="work/{species}/{sample}{asm}/NEAT/profiles/gc_bias.p",
+        fp="work/{species}/{sample}{asm}/NEAT/profiles/fraglen.p",
+        ep="work/{species}/{sample}/NEAT/profiles/errors.p"
+    output:
+        fq1="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/NEAT/golden/neat{cov,|_cov}_read1.fq",
+        fq2="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/NEAT/golden/neat{cov,|_cov}_read2.fq",
+        gbam="storage/{species}/{sample,[0-9A-Za-z]*}{asm,|_assembly}/NEAT/golden/neat{cov,|_cov}_golden.bam"
+    params:
+        prefix="storage/{species}/{sample}{asm}/NEAT/golden/neat{cov}",
+        readlength=lambda wildcards: SAMPLES[wildcards.sample]['readlength'],
+        coverage=lambda wildcards: SAMPLES[wildcards.sample]['coverage'] if "" == wildcards.asm or "_cov" == wildcards.cov else SAMPLES[wildcards.sample]['coverage_asm'],
+        diploid=lambda wildcards: "-p 2 -v storage/{0}/reference/{1}/pilon-corrected.vcf".format(wildcards.species, wildcards.sample) if REFERENCES[wildcards.species]['diploid'] else "-p 1"
+    log:
+        "logs/NEAT/{species}/{sample}{asm}{cov}_simulate_goldenbam.log"
+    shell:
+        "python2 bin/neat-genReads.py -r {input.ref} -R {params.readlength} -o {params.prefix} -c {params.coverage} -e {input.ep} -M 0 "
+        "--pe-model {input.fp} --gc-model {input.cp} {params.diploid} --bam 1>{log} 2>&1"
+
 rule neat_cross_simulate:
     input:
         ref="storage/{species}/reference/{sample}/pilon-corrected.fa",

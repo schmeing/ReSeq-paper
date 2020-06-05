@@ -15,32 +15,35 @@ comp_res_csv <- read_csv(args[1], col_types = cols())
 
 comp_res <- comp_res_csv %>%
   mutate(dataset = ordered(dataset, levels=c("SRR490124","SRR3191692","S5L001","S1L001","S9L001","ERR2017816","ERR3085830","ERR1955542"))) %>%
-  mutate(dataset = recode(dataset, "SRR490124"="SRR490124\n(4.6Mb, 449x)", "SRR3191692"="SRR3191692\n(4.6Mb, 1011x)",
-                          "S5L001"="S5L001\n(4.6Mb, 508x)", "S1L001"="S1L001\n(5.2Mb, 1528x)", "S9L001"="S9L001\n(4.6Mb, 2901x)",
-                          "ERR2017816"="ERR2017816\n(120Mb, 31x)", "ERR3085830"="ERR3085830\n(2.8Gb, 43x)", "ERR1955542"="ERR1955542\n(3.3Gb, 40x)")) %>%
+  mutate(dataset = reorder(dataset, desc(dataset))) %>%
+  mutate(dataset = recode(dataset, "SRR490124"="Ec-Hi2000-TruSeq\n(4.6Mb, 449x)", "SRR3191692"="Ec-Hi2500-TruSeq\n(4.6Mb, 1011x)",
+                          "S5L001"="Ec-Hi4000-Nextera\n(4.6Mb, 508x)", "S1L001"="Bc-Hi4000-Nextera\n(5.2Mb, 1528x)", "S9L001"="Rs-Hi4000-Nextera\n(4.6Mb, 2901x)",
+                          "ERR2017816"="At-HiX-TruSeq\n(120Mb, 31x)", "ERR3085830"="Mm-HiX-Unknown\n(2.8Gb, 43x)", "ERR1955542"="Hs-HiX-TruSeq\n(3.3Gb, 40x)")) %>%
   mutate(simulator = ordered(simulator, levels=c("ReSeq","ART","pIRS","NEAT"))) %>%
+  mutate(sim_part = recode(sim_part, "training"="Training", "simulation"="Simulation")) %>%
   rename("Simulator" = "simulator")
 
 training_prep <- function(df){
   df %>%
-    filter(sim_part == "training") %>%
+    filter(sim_part == "Training") %>%
     mutate(Simulator = recode(Simulator, "pIRS"="pIRS*", "NEAT"="NEAT*"))
 }
 
 simulation_prep <- function(df){
   df %>%
-    filter(sim_part == "simulation") %>%
+    filter(sim_part == "Simulation") %>%
     mutate(Simulator = recode(Simulator, "ART"="ART*", "NEAT"="NEAT*"))
 }
 
-text_size <- 20
-tick_text_size <- 16
+text_size <- 28
+tick_text_size <- 24
 time_ticks <- c(10,20,35,60,2*60,5*60,10*60,20*60,35*60,60*60,2*60*60,4*60*60,7*60*60,12*60*60,24*60*60,2*24*60*60,4*24*60*60,7*24*60*60,14*24*60*60,28*24*60*60,8*7*24*60*60,14*7*24*60*60)
 time_labels <- c("10s","20s","35s","1m","2m","5m","10m","20m","35m","1h","2h","4h","7h","12h","1d","2d","4d","1w","2w","4w","8w","14w")
 
 finish_plot <- list(
-  scale_color_manual(values=c("#D92120","#488BC2","#7FB972","#E6642C")),
-  xlab("Dataset"),
+  scale_color_manual(values=c("#488BC2","#7FB972","#E6642C","#781C81")),
+  facet_wrap( . ~ sim_part),
+  ylab("Dataset"),
   theme_bw(),
   theme(axis.text.x = element_text( size = tick_text_size, angle = 90, vjust=0.5),
         axis.text.y = element_text( size = tick_text_size),
@@ -50,47 +53,49 @@ finish_plot <- list(
         strip.text.y = element_text( size = text_size),
         legend.title=element_text(size=text_size), 
         legend.text=element_text(size=tick_text_size),
-        legend.position = c(0.01, 0.99),
-        legend.justification = c(0, 1),
+        legend.justification = c(1, 1),
+        legend.position = c(0.99, 0.99),
         panel.grid.minor = element_blank()))
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(x=dataset, y=cpu_time, color=Simulator)) +
-    geom_point(na.rm=TRUE, size=4) +
-    scale_y_log10(breaks=time_ticks, labels=time_labels) +
-    ylab("CPU time (training)") +
+  ggplot(aes(y=dataset, x=cpu_time, color=Simulator)) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_x_log10(breaks=time_ticks, labels=time_labels) +
+    xlab("CPU time") +
     finish_plot
 
 ggsave(paste0(args[2],"/cpu_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(x=dataset, y=cpu_time, color=Simulator)) +
-    geom_point(na.rm=TRUE, size=4) +
-    scale_y_log10(breaks=time_ticks, labels=time_labels) +
-    ylab("CPU time (simulation)") +
+  ggplot(aes(y=dataset, x=cpu_time, color=Simulator)) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_x_log10(breaks=time_ticks, labels=time_labels) +
+    xlab("CPU time") +
     finish_plot
 
 ggsave(paste0(args[2],"/cpu_simulation.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(x=dataset, y=elapsed_time, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=4) +
-  scale_y_log10(breaks=time_ticks, labels=time_labels) +
-  ylab("Elapsed time (training)") +
-  finish_plot
+  ggplot(aes(y=dataset, x=elapsed_time, color=Simulator)) +
+  geom_point(na.rm=TRUE, size=8) +
+  scale_x_log10(breaks=time_ticks, labels=time_labels) +
+  xlab("Elapsed time") +
+  finish_plot +
+  theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/elapsed_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(x=dataset, y=elapsed_time, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=4) +
-  scale_y_log10(breaks=time_ticks, labels=time_labels) +
-  ylab("Elapsed time (simulation)") +
-  finish_plot
+  ggplot(aes(y=dataset, x=elapsed_time, color=Simulator)) +
+  geom_point(na.rm=TRUE, size=8) +
+  scale_x_log10(breaks=time_ticks, labels=time_labels) +
+  xlab("Elapsed time") +
+  finish_plot +
+  theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/elapsed_simulation.pdf"), width=297, height=210, units="mm")
 
@@ -99,20 +104,22 @@ memory_labels = c("1MB","2MB","4MB","10MB","20MB","40MB","100MB","200MB","400MB"
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(x=dataset, y=max_memory, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=4) +
-  scale_y_log10(breaks=memory_ticks, labels=memory_labels) +
-  ylab("Max. memory (training)") +
-  finish_plot
+  ggplot(aes(y=dataset, x=max_memory, color=Simulator)) +
+  geom_point(na.rm=TRUE, size=8) +
+  scale_x_log10(breaks=memory_ticks, labels=memory_labels) +
+  xlab("Max. memory") +
+  finish_plot +
+  theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/memory_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(x=dataset, y=max_memory, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=4) +
-  scale_y_log10(breaks=memory_ticks, labels=memory_labels) +
-  ylab("Max. memory (simulation)") +
-  finish_plot
+  ggplot(aes(y=dataset, x=max_memory, color=Simulator)) +
+  geom_point(na.rm=TRUE, size=8) +
+  scale_x_log10(breaks=memory_ticks, labels=memory_labels) +
+  xlab("Max. memory") +
+  finish_plot +
+  theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/memory_simulation.pdf"), width=297, height=210, units="mm")

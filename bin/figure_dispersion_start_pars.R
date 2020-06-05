@@ -44,8 +44,8 @@ tick_text_size <- 16
 color_pallete <- c("#7FB972","#488BC2","#D92120","#781C81",'#B15928','#B5BD4C',"#4065B1",'#664CFF',"#E6642C","#D9AD3C","#BBBBBB",'black')
 disps %>%
   ggplot(aes(x=DispersionA, y=DispersionB, color=Start)) +
-    geom_point(size=2) +
-    geom_point(data=medians, size=6, shape=1) +
+    geom_point(size=4) +
+    geom_point(data=medians, size=8, shape=1) +
     scale_color_manual(values=color_pallete[c(1,2,4,9,10,11)]) +
     xlab("Parameter A") +
     ylab("Parameter B") +
@@ -77,7 +77,7 @@ maxlike_fit_csv %>%
   select(-Fits2) %>%
   filter(Fits == "All") %>%
   ggplot(aes(x=LogLikelihood, y=FunctionCalls, color=Start)) +
-    geom_point(size=2) +
+    geom_point(size=4) +
     geom_text_repel(aes(label=Start), size=6) +
     scale_color_manual(values=color_pallete) +
     xlab("Mean log(likelihood)") +
@@ -105,8 +105,8 @@ mean_values <- likes %>%
 
 likes %>%
   ggplot(aes(x=LogLikelihood, y=FunctionCalls, color=Start)) +
-    geom_point(size=2) +
-    geom_point(data=mean_values, size=6, shape=1) +
+    geom_point(size=4) +
+    geom_point(data=mean_values, size=8, shape=1) +
     geom_text(data=mean_values, aes(label=Start), vjust=-0.7, size=6) +
     scale_color_manual(values=color_pallete[c(5,9,10,11)]) +
     xlab("log(likelihood)") +

@@ -58,6 +58,10 @@ def main(argv=None):
                         help='Report output prefix. (Default: preqc_report)')
     parser.add_argument('--png', help="Output a png file per figure",
                         action="store_true")
+    parser.add_argument('-t', '--title', metavar='OUTPUT_TITLE', default='',
+                        help='Title to add to each plot')
+    parser.add_argument('--nolegend', help='Title to add to each plot',
+                        action="store_true")
     # @TCC '--show' option causes difficulties with non-graphical terminals
     parser.add_argument('--show', help="Probably won't work; Show (interactive) figures using pylab",
                         action="store_true")
@@ -91,11 +95,12 @@ def main(argv=None):
     data = load_preqc_datafiles(preqc_files)
     # make the report
     if( args.plot ):
-        make_report_plot_per_page(args.plot, output_pfx, data,
+        make_report_plot_per_page(args.plot, output_pfx, data, title=args.title, nolegend=args.nolegend,
                                   save_png=args.png, pylab_show=args.show)
+                                  
     else:
         if( args.page_per_plot ):
-            make_report_plot_per_page('all', output_pfx, data,
+            make_report_plot_per_page('all', output_pfx, data, title=args.title, nolegend=args.nolegend,
                                       save_png=args.png, pylab_show=args.show)
         else:
             make_report_with_subplots(output_pfx, data,
@@ -805,7 +810,7 @@ def make_report_with_subplots(output_pfx, data, save_png=False, pylab_show=False
     pl.close() # cleanup
 
 
-def make_report_plot_per_page(plots, output_pfx, data, save_png=False, pylab_show=False):
+def make_report_plot_per_page(plots, output_pfx, data, title="", nolegend=False, save_png=False, pylab_show=False):
     """outputs a plot per page
         :param plots: can either be 'all' or a list of plot names
     """
@@ -853,7 +858,11 @@ def make_report_plot_per_page(plots, output_pfx, data, save_png=False, pylab_sho
             print('plotting:',figname)
             fig, subplots = _create_fig_and_subplots(figname, 1, 1)
             # plot
-            rv = func(subplots[0], d)
+            if nolegend and func != plotsample_gc_distribution:
+                rv = func(subplots[0], d, None)
+            else:
+                rv = func(subplots[0], d)
+            subplots[0].set_title( title + ' ' + subplots[0].get_title() )
             # finalize and save the fig
             if( rv ): # only save if data plotted
                 _final_fig_layout(fig)

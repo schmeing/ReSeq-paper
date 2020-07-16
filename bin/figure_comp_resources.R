@@ -19,20 +19,20 @@ comp_res <- comp_res_csv %>%
   mutate(dataset = recode(dataset, "SRR490124"="Ec-Hi2000-TruSeq\n(4.6Mb, 449x)", "SRR3191692"="Ec-Hi2500-TruSeq\n(4.6Mb, 1011x)",
                           "S5L001"="Ec-Hi4000-Nextera\n(4.6Mb, 508x)", "S1L001"="Bc-Hi4000-Nextera\n(5.2Mb, 1528x)", "S9L001"="Rs-Hi4000-Nextera\n(4.6Mb, 2901x)",
                           "ERR2017816"="At-HiX-TruSeq\n(120Mb, 31x)", "ERR3085830"="Mm-HiX-Unknown\n(2.8Gb, 43x)", "ERR1955542"="Hs-HiX-TruSeq\n(3.3Gb, 40x)")) %>%
-  mutate(simulator = ordered(simulator, levels=c("ReSeq","ART","pIRS","NEAT"))) %>%
+  mutate(simulator = ordered(simulator, levels=c("ReSeq","ART","pIRS","NEAT","BEAR"))) %>%
   mutate(sim_part = recode(sim_part, "training"="Training", "simulation"="Simulation")) %>%
   rename("Simulator" = "simulator")
 
 training_prep <- function(df){
   df %>%
     filter(sim_part == "Training") %>%
-    mutate(Simulator = recode(Simulator, "pIRS"="pIRS*", "NEAT"="NEAT*"))
+    mutate(Simulator = recode(Simulator, "pIRS"="pIRS*", "NEAT"="NEAT*", "BEAR"="BEAR*"))
 }
 
 simulation_prep <- function(df){
   df %>%
     filter(sim_part == "Simulation") %>%
-    mutate(Simulator = recode(Simulator, "ART"="ART*", "NEAT"="NEAT*"))
+    mutate(Simulator = recode(Simulator, "ART"="ART*", "NEAT"="NEAT*", "BEAR"="BEAR*"))
 }
 
 text_size <- 28
@@ -41,9 +41,10 @@ time_ticks <- c(10,20,35,60,2*60,5*60,10*60,20*60,35*60,60*60,2*60*60,4*60*60,7*
 time_labels <- c("10s","20s","35s","1m","2m","5m","10m","20m","35m","1h","2h","4h","7h","12h","1d","2d","4d","1w","2w","4w","8w","14w")
 
 finish_plot <- list(
-  scale_color_manual(values=c("#488BC2","#7FB972","#E6642C","#781C81")),
+  scale_color_manual(values=c("#488BC2","#7FB972","#E6642C","#781C81","#D9AD3C")),
   facet_wrap( . ~ sim_part),
-  ylab("Dataset"),
+  xlab("Dataset"),
+  coord_flip(),
   theme_bw(),
   theme(axis.text.x = element_text( size = tick_text_size, angle = 90, vjust=0.5),
         axis.text.y = element_text( size = tick_text_size),
@@ -59,43 +60,47 @@ finish_plot <- list(
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(y=dataset, x=cpu_time, color=Simulator)) +
+  ggplot(aes(x=dataset, y=cpu_time, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
     geom_point(na.rm=TRUE, size=8) +
-    scale_x_log10(breaks=time_ticks, labels=time_labels) +
-    xlab("CPU time") +
+    scale_y_log10(breaks=time_ticks, labels=time_labels) +
+    ylab("CPU time") +
     finish_plot
 
 ggsave(paste0(args[2],"/cpu_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(y=dataset, x=cpu_time, color=Simulator)) +
+  ggplot(aes(x=dataset, y=cpu_time, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
     geom_point(na.rm=TRUE, size=8) +
-    scale_x_log10(breaks=time_ticks, labels=time_labels) +
-    xlab("CPU time") +
+    scale_y_log10(breaks=time_ticks, labels=time_labels) +
+    ylab("CPU time") +
     finish_plot
 
 ggsave(paste0(args[2],"/cpu_simulation.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(y=dataset, x=elapsed_time, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=8) +
-  scale_x_log10(breaks=time_ticks, labels=time_labels) +
-  xlab("Elapsed time") +
-  finish_plot +
-  theme(legend.position = "none")
+  ggplot(aes(x=dataset, y=elapsed_time, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_y_log10(breaks=time_ticks, labels=time_labels) +
+    ylab("Elapsed time") +
+    finish_plot +
+    theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/elapsed_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(y=dataset, x=elapsed_time, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=8) +
-  scale_x_log10(breaks=time_ticks, labels=time_labels) +
-  xlab("Elapsed time") +
-  finish_plot +
-  theme(legend.position = "none")
+  ggplot(aes(x=dataset, y=elapsed_time, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_y_log10(breaks=time_ticks, labels=time_labels) +
+    ylab("Elapsed time") +
+    finish_plot +
+    theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/elapsed_simulation.pdf"), width=297, height=210, units="mm")
 
@@ -104,22 +109,24 @@ memory_labels = c("1MB","2MB","4MB","10MB","20MB","40MB","100MB","200MB","400MB"
 
 comp_res %>%
   training_prep %>%
-  ggplot(aes(y=dataset, x=max_memory, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=8) +
-  scale_x_log10(breaks=memory_ticks, labels=memory_labels) +
-  xlab("Max. memory") +
-  finish_plot +
-  theme(legend.position = "none")
+  ggplot(aes(x=dataset, y=max_memory, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_y_log10(breaks=memory_ticks, labels=memory_labels) +
+    ylab("Max. memory") +
+    finish_plot +
+    theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/memory_training.pdf"), width=297, height=210, units="mm")
 
 comp_res %>%
   simulation_prep %>%
-  ggplot(aes(y=dataset, x=max_memory, color=Simulator)) +
-  geom_point(na.rm=TRUE, size=8) +
-  scale_x_log10(breaks=memory_ticks, labels=memory_labels) +
-  xlab("Max. memory") +
-  finish_plot +
-  theme(legend.position = "none")
+  ggplot(aes(x=dataset, y=max_memory, color=Simulator, group=Simulator)) +
+    stat_summary(fun.y=sum, geom="line", na.rm=TRUE, size=4) +
+    geom_point(na.rm=TRUE, size=8) +
+    scale_y_log10(breaks=memory_ticks, labels=memory_labels) +
+    ylab("Max. memory") +
+    finish_plot +
+    theme(legend.position = "none")
 
 ggsave(paste0(args[2],"/memory_simulation.pdf"), width=297, height=210, units="mm")

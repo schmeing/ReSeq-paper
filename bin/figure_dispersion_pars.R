@@ -33,16 +33,17 @@ medians <- disps %>%
   summarize(DispersionA=median(DispersionA), DispersionB=median(DispersionB)) %>%
   ungroup()
 
-text_size <- 20
-tick_text_size <- 16
+text_size <- 24
+tick_text_size <- 20
 disps %>%
   mutate(Data = factor(Data, levels=unique(Data))) %>%
   ggplot(aes(x=DispersionA, y=DispersionB, color=Data)) +
-    geom_point(size=4) +
-    geom_point(data=medians, size=8, shape=1) +
+    geom_point(size=4, shape=1, stroke=2) +
+    geom_point(data=medians, size=8, shape=4, stroke=3, color="white") +
+    geom_point(data=medians, size=8, shape=4, stroke=2) +
     scale_color_manual(values=c("#D92120","#488BC2","#7FB972","#E6642C","#781C81","#D9AD3C","#BBBBBB","#4065B1")) +
-    xlab("Parameter A") +
-    ylab("Parameter B") +
+    xlab(paste("Parameter",intToUtf8(0x1D6FCL))) +
+    ylab(paste("Parameter",intToUtf8(0x1D6FDL))) +
     theme_bw() +
     theme(axis.text.x = element_text( size = tick_text_size),
           axis.text.y = element_text( size = tick_text_size),
@@ -53,4 +54,4 @@ disps %>%
           legend.position = c(0.99, 0.01),
           legend.justification = c(1, 0))
 
-ggsave(args[2], width=297, height=210, units="mm")
+ggsave(args[2], width=297, height=210, units="mm", device=cairo_pdf)

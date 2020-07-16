@@ -46,7 +46,8 @@ maxlike %>%
   mutate(Data = ordered(Data, levels=c("At-HiX-TruSeq","Mm-HiX-Unknown","Hs-HiX-TruSeq","Ec-Hi4000-Nextera","Bc-Hi4000-Nextera","Rs-Hi4000-Nextera","Ec-Hi2000-TruSeq","Ec-Hi2500-TruSeq"))) %>%
   ggplot(aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type, shape=Converged)) +
     geom_point(size=3) +
-    geom_point(data=means, mapping=aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type), size=6, shape=1) +
+    geom_point(data=means, mapping=aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type), size=6, shape=4, stroke=3, color="white") +
+    geom_point(data=means, mapping=aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type), size=6, shape=4, stroke=2) +
     scale_color_manual(values=c("#488BC2","#E6642C")) +
     xlab("log(likelihood)/1000") +
     ylab("Function calls") +

@@ -26,17 +26,19 @@ map_stats %>%
   mutate(total = sum(Value), percent=Value/total*100) %>%
   ungroup() %>%
   filter(!(Variable %in% c("Mapped pairs","Matches")), Dataset == args[2], percent != 0.0) %>%
+  mutate(Variable = factor(Variable, levels=c("Insertions", "Deletions", "Soft trimmed", "Unmapped pairs", "Single reads"))) %>%
+  mutate(Variable = recode(Variable, "Unmapped pairs"="Unmapped\npairs", "Single reads"="Single\nreads")) %>%
   ggplot(aes(x=Variable, y=percent, color=Mapper, shape=Simulator)) +
     geom_point(na.rm=TRUE, size=8, position=position_dodge(width = 0.6)) +
     scale_y_log10() +
     scale_shape_manual(values=c(17, 19, 15)) +
     scale_color_manual(values=c("#009E73","#0072B2")) +
-    facet_grid(. ~ group, scales = "free") +
+    facet_grid(. ~ group, scales = "free", space='free') +
     xlab("") +
     ylab("Percent of total") +
     ggtitle(sample) +
     theme_bw() +
-    theme(axis.text.x = element_text( size = tick_text_size, angle = 20, vjust=0.5),
+    theme(axis.text.x = element_text( size = tick_text_size),
           axis.text.y = element_text( size = tick_text_size),
           axis.title.x = element_text( size = text_size),
           axis.title.y = element_text( size = text_size),

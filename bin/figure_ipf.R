@@ -81,22 +81,25 @@ ipf_comp_plot2 <- ipf_comp %>%
   mutate(total_likelihood = sum(likelihood)) %>%
   ungroup %>%
   mutate(prob=count/total_counts, est_prob=likelihood/total_likelihood) %>%
-  mutate(diff=est_prob-prob, rel_diff=diff/prob)
+  mutate(diff=est_prob-prob, rel_diff=diff/est_prob)
 
-text_size <- 20
-tick_text_size <- 18
+text_size <- 24
+tick_text_size <- 20
 
 ipf_comp_plot2 %>%
   filter(0 < count) %>%
   mutate( Group = ifelse(count < 10, "[1,10[", ifelse(count < 100, "[10,10^2[", ifelse(count < 1000, "[10^2,10^3[", ifelse(count < 10000, "[10^3,10^4[", ifelse(count < 100000, "[10^4,10^5[", ">= 10^5"))))) ) %>%
   group_by(Group) %>% mutate(num_rows = n(), group_counts=sum(count)) %>% ungroup() %>%
   mutate( Group = sprintf("%s\nN=%d\n%.2f%%", Group, num_rows, group_counts/sum(count)*100) ) %>%
-  ggplot( aes(x=Group, y=abs(rel_diff)) ) +
-    geom_boxplot() +
+  mutate( type = ifelse( 0 <= rel_diff, "Overestimated", "Underestimated") ) %>%
+  ggplot( aes(x=Group, y=abs(rel_diff), fill=Group) ) +
+    geom_boxplot(na.rm = TRUE) +
     scale_y_log10(limits=c(10e-8,100), breaks = trans_breaks("log10", function(x) 10^x)) +
-    labs(y=expression(frac(paste("|",Estimated-Observed,"|"),Observed)),x="") +
+    scale_fill_viridis(discrete = TRUE) +
+    labs(y=expression(frac(paste("|",Estimated-Observed,"|"),Estimated)),x="Group") +
+    facet_grid(. ~ type) +
     theme_bw() +
-    theme(axis.text.x = element_text( size = tick_text_size),
+    theme(axis.text.x = element_blank(),
           axis.text.y = element_text( size = tick_text_size),
           axis.title.x = element_text( size = text_size),
           axis.title.y = element_text( size = text_size),
@@ -104,8 +107,8 @@ ipf_comp_plot2 %>%
           strip.text.y = element_text( size = text_size),
           legend.title=element_text(size=text_size), 
           legend.text=element_text(size=tick_text_size),
-          legend.position = c(0.01, 0.99),
-          legend.justification = c(0, 1))
+          legend.key.size = unit(1, "cm"),
+          legend.key.height=unit(3,"cm"))
 
 ggsave(args[3], width=297, height=210, units="mm")
 
@@ -113,7 +116,8 @@ ipf_comp_plot2 %>%
   arrange(abs(diff)) %>%
   mutate(cumcount=round(cumsum(count)/sum(count)*200)/2) %>%
   mutate( Group = ifelse(count < 10, "[0,10[", ifelse(count < 100, "[10,10^2[", ifelse(count < 1000, "[10^2,10^3[", ifelse(count < 10000, "[10^3,10^4[", ifelse(count < 100000, "[10^4,10^5[", ">= 10^5"))))) ) %>%
-  group_by(Group,cumcount) %>%
+  mutate( type = ifelse( 0 <= diff, "Overestimated", "Underestimated") ) %>%
+  group_by(type,Group,cumcount) %>%
   summarize(diff=max(abs(diff))) %>%
   ungroup() %>%
   ggplot( aes(x=diff, y=cumcount, colour=Group) ) +
@@ -121,11 +125,14 @@ ipf_comp_plot2 %>%
     scale_x_continuous(breaks=1:10/10) +
     scale_color_viridis(discrete = TRUE) +
     labs(x=expression("|estimated probability - observed fraction|") , y="% observed counts") +
+    facet_grid(type ~ .) +
     theme_bw() +
     theme(axis.text.x = element_text( size = tick_text_size),
           axis.text.y = element_text( size = tick_text_size),
           axis.title.x = element_text( size = text_size),
           axis.title.y = element_text( size = text_size),
+          strip.text.x = element_text( size = text_size),
+          strip.text.y = element_text( size = text_size),
           legend.title=element_text(size=text_size), 
           legend.text=element_text(size=text_size),
           legend.position = c(0.99, 0.01),

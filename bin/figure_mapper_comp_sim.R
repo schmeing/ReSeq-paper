@@ -16,11 +16,13 @@ input_path = args[1]
 sample = args[2]
 
 input_csv <- read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bowtie2-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq", mapper="bowtie2")
-#input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ReSeq_eval_mapping-bwa-s_mapping_correctness.csv"), col_types = cols()) %>% mutate(simulator="ReSeq", mapper="bwa"))
 input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_ART_eval_bowtie2_correctness.csv"), col_types = cols()) %>% mutate(simulator="ART", mapper="bowtie2"))
 input_csv <- rbind(input_csv, read_csv(paste0(input_path,"/storage_ecoli_",sample,"_NEAT_eval_bowtie2_correctness.csv"), col_types = cols()) %>% mutate(simulator="NEAT", mapper="bowtie2"))
 
 nolegend <- grepl("nolegend", args[3], fixed=TRUE)
+
+real_mapq_points <- c(0,2,30,42)
+sim_mapq_points <- c(1,6,30,42)
 
 text_size <- 24
 tick_text_size <- 20
@@ -44,13 +46,13 @@ input_csv %>%
   mutate(TP=cumsum(TP)*100/maxTP, FP=cumsum(FP)*100/maxTP) %>%
   ungroup() %>%
   rename(Simulator=simulator, Mapper=mapper, Correctness=correctness) %>%
-  arrange(desc(TP), desc(Correctness), desc(mapq), Mapper) %>%
+  mutate(Correctness = factor(Correctness, levels = c("overlapping", "correct_start", "correct"))) %>%
   mutate(Simulator=factor(Simulator, levels=c('real','ReSeq','ART','NEAT'))) %>%
-  ggplot(aes(x=FP, y=TP, color=Simulator, fill=Correctness)) +
+  ggplot(aes(x=FP, y=TP, color=Simulator)) +
+    geom_point(aes(x=if_else(Simulator=="ReSeq", if_else(mapq %in% real_mapq_points,FP,NA_real_), if_else(mapq %in% sim_mapq_points,FP,NA_real_))), na.rm=TRUE, size=8, shape=19) +
     geom_line(size=4) +
-    geom_point(size=8, stroke=8, shape=21) +
     scale_color_manual(values=c("#488BC2","#7FB972","#781C81")) +
-    scale_fill_manual(values=c("#000000","#888888","#FFFFFF")) +
+    facet_grid(. ~ Correctness) +
     xlab("FP [% of simulated positives]") +
     ylab("TP [% of simulated positives]") +
     theme_bw() +
@@ -66,6 +68,7 @@ input_csv %>%
           legend.justification = c(1, 1),
           legend.box = "horizontal",
           legend.key.size = unit(1.5, "cm"),
+          panel.spacing = unit(1, "lines"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank()) +
     guides(fill = guide_legend(override.aes = list(shape = 21))) +
@@ -101,7 +104,7 @@ input_csv %>%
   mutate(Simulator=factor(Simulator, levels=c('real','ReSeq','ART','NEAT'))) %>%
   ggplot(aes(x=mapq, y=count*100/total, color=Simulator)) +
     geom_line(size=4) +
-    geom_point(size=8) +
+    geom_point(aes(x=if_else(Simulator=="real" | Simulator == "ReSeq", if_else(mapq %in% real_mapq_points,mapq,NA_real_), if_else(mapq %in% sim_mapq_points,mapq,NA_real_))), na.rm=TRUE, size=8) +
     scale_shape_manual(values=c(17, 19, 15)) +
     scale_color_manual(values=c("#D92120","#488BC2","#7FB972","#781C81")) +
     scale_x_reverse() +

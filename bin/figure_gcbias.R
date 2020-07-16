@@ -24,6 +24,7 @@ maxlike_fit <- maxlike_fit_csv %>%
   filter(Bias!=0) %>%
   mutate(GC=as.integer(substr(GC,7,10))) %>%
   mutate(Fit = ordered(Fit, levels=c("poisson","gcspline","nbinom","normalized"))) %>%
+  mutate(Fit = recode(Fit, "poisson"="Poisson", "gcspline"="GC spline", "nbinom"="Neg. Binomial", "normalized"="Normalized" )) %>%
   arrange(desc(FragmentLength))
 
 Untermedian <- function(x){
@@ -32,7 +33,7 @@ Untermedian <- function(x){
 
 # In the real method the medians are weighted, this is an approximation for the plot here, but with the values all from the same reference sequence this should be a very good one
 medians <-  maxlike_fit %>%
-  filter(Fit == "normalized") %>%
+  filter(Fit == "Normalized") %>%
   group_by(Fit, GC) %>%
   summarize(Bias=Untermedian(Bias))
 
@@ -43,7 +44,8 @@ knots <- maxlike_fit_csv %>%
   select(Fit, FragmentLength, matches("GCknots*")) %>%
   gather(Knot,GC,-FragmentLength,-Fit) %>%
   mutate(Knot=as.integer(substr(Knot,7,8))) %>%
-  mutate(Fit = ordered(Fit, levels=c("poisson","gcspline","nbinom","normalized")))
+  mutate(Fit = ordered(Fit, levels=c("poisson","gcspline","nbinom","normalized"))) %>%
+  mutate(Fit = recode(Fit, "poisson"="Poisson", "gcspline"="GC spline", "nbinom"="Neg. Binomial", "normalized"="Normalized" ))
 
 text_size <- 20
 tick_text_size <- 16

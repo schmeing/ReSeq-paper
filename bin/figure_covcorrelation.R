@@ -41,8 +41,8 @@ show_correlation <- function(file1, file2, name1, name2, legend_position){
   pear_corr <- calc_correlation(sample1, sample2)
   spear_corr <- cor(sample1, sample2, method="spearman")
   
-  text_size = 32
-  tick_text_size <- 28
+  text_size = 36
+  tick_text_size <- 32
   data.frame(sample1, sample2) %>%
     ggplot(aes(x=sample1, y=sample2)) +
       geom_bin2d(bins=100) +

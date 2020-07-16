@@ -27,4 +27,5 @@ input/rsphaeroides/reference/GCF_000012905.2_ASM1290v2_genomic.fa
 bin/pilon-1.21.jar
 bin/neat-genReads.py (genReads.py in the NEAT git repository)
 bin/neat/* (utilities/* in the NEAT git repository)
+bin/quast/* (quast program folder)
 ```

@@ -19,8 +19,8 @@ sur_csv <- rbind(sur_csv, read_csv("surrounding_forward_second.csv", col_types =
 sur_csv <- rbind(sur_csv, read_csv("surrounding_reverse_first.csv", col_types = cols()) %>% mutate(Type="End-Reverse-First"))
 sur_csv <- rbind(sur_csv, read_csv("surrounding_reverse_second.csv", col_types = cols()) %>% mutate(Type="End-Forward-Second"))
 
-text_size = 20
-tick_text_size <- 16
+text_size = 24
+tick_text_size <- 20
 sur_csv %>% 
   filter(base != "N") %>%
   group_by(Type, pos) %>%

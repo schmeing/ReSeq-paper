@@ -143,7 +143,7 @@ def plotKmerSpec(specFiles, oFile, k, xlim, title, log, legend):
                 y_max = max(y_max, max(y[:max_id]))
             else:
                 y_min = min(y_min, min(y[:max_id]))
-                y_max = max(y_max, max(y[findIdOfMinimum(y,max_id=max_id):max_id]))
+                y_max = max(y_max, max(y[findIdOfMinimum(y, interval=5,max_id=max_id):max_id]))
             
             specs.append((x,y))
 

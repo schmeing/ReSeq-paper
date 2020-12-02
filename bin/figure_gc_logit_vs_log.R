@@ -29,6 +29,12 @@ maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_logit_m
 maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Mm-HiX-Unknown") )
 maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Hs-HiX-TruSeq") )
 maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Hs-HiX-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"PRJEB33197_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Hs-Nova-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"PRJEB33197_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Hs-Nova-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"DRR058060_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="Ec-Mi-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"DRR058060_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="Ec-Mi-TruSeq") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"PRJNA562949_logit_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Logit", Data="At-BGI") )
+maxlike_csv <- rbind(maxlike_csv, read_csv(paste0(input_path,"PRJNA562949_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Type="Log", Data="At-BGI") )
 
 maxlike <- maxlike_csv %>%
   select(Fit, Type, Data, RefSeqBin, InsertLength, FunctionCalls, LogLikelihood) %>%
@@ -43,7 +49,7 @@ means <- maxlike %>%
 text_size <- 22
 tick_text_size <- 16
 maxlike %>%
-  mutate(Data = ordered(Data, levels=c("At-HiX-TruSeq","Mm-HiX-Unknown","Hs-HiX-TruSeq","Ec-Hi4000-Nextera","Bc-Hi4000-Nextera","Rs-Hi4000-Nextera","Ec-Hi2000-TruSeq","Ec-Hi2500-TruSeq"))) %>%
+  mutate(Data = ordered(Data, levels=c("Hs-Nova-TruSeq","Ec-Mi-TruSeq","At-BGI","At-HiX-TruSeq","Mm-HiX-Unknown","Hs-HiX-TruSeq","Ec-Hi4000-Nextera","Bc-Hi4000-Nextera","Rs-Hi4000-Nextera","Ec-Hi2000-TruSeq","Ec-Hi2500-TruSeq"))) %>%
   ggplot(aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type, shape=Converged)) +
     geom_point(size=3) +
     geom_point(data=means, mapping=aes(x=LogLikelihood/1000, y=FunctionCalls, color=Type), size=6, shape=4, stroke=3, color="white") +
@@ -51,7 +57,7 @@ maxlike %>%
     scale_color_manual(values=c("#488BC2","#E6642C")) +
     xlab("log(likelihood)/1000") +
     ylab("Function calls") +
-    facet_wrap(Data ~ ., scales = "free_x", as.table=FALSE) +
+    facet_wrap(Data ~ ., scales = "free_x", as.table=FALSE, ncol = 3) +
     theme_bw() +
     theme(axis.text.x = element_text( size = tick_text_size),
           axis.text.y = element_text( size = tick_text_size),
@@ -66,4 +72,4 @@ maxlike %>%
           panel.spacing.x = unit(1, "lines"),
           panel.grid.minor = element_blank())
 
-ggsave(args[2], width=297, height=210, units="mm")
+ggsave(args[2], width=297, height=280, units="mm")

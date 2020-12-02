@@ -22,6 +22,9 @@ maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"S9L001_sum
 maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR2017816_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="At-HiX-TruSeq"))
 maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR3085830_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Mm-HiX-Unknown"))
 maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"ERR1955542_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Hs-HiX-TruSeq"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"PRJEB33197_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="Hs-Nova-TruSeq"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"DRR058060_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="EC-Mi-TruSeq"))
+maxlike_fit_csv <- rbind(maxlike_fit_csv, read_csv(paste0(input_path,"PRJNA562949_sum_maxlike_fit.csv"), col_types = cols()) %>% mutate(Data="At-BGI"))
 
 disps <- maxlike_fit_csv %>%
   select(Fit, Data, RefSeqBin, InsertLength, DispersionA, DispersionB, FunctionCalls) %>%
@@ -41,7 +44,7 @@ disps %>%
     geom_point(size=4, shape=1, stroke=2) +
     geom_point(data=medians, size=8, shape=4, stroke=3, color="white") +
     geom_point(data=medians, size=8, shape=4, stroke=2) +
-    scale_color_manual(values=c("#D92120","#488BC2","#7FB972","#E6642C","#781C81","#D9AD3C","#BBBBBB","#4065B1")) +
+    scale_color_manual(values=c("#7FB972","#488BC2","#D92120","#781C81",'#B15928','#B5BD4C',"#4065B1",'#664CFF',"#E6642C","#D9AD3C","#BBBBBB",'black')) +
     xlab(paste("Parameter",intToUtf8(0x1D6FCL))) +
     ylab(paste("Parameter",intToUtf8(0x1D6FDL))) +
     theme_bw() +

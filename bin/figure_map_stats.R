@@ -26,7 +26,7 @@ map_stats %>%
   mutate(total = sum(Value), percent=Value/total*100) %>%
   ungroup() %>%
   filter(!(Variable %in% c("Mapped pairs","Matches")), Dataset == args[2], percent != 0.0) %>%
-  mutate(Variable = factor(Variable, levels=c("Insertions", "Deletions", "Soft trimmed", "Unmapped pairs", "Single reads"))) %>%
+  mutate(Variable = factor(Variable, levels=c("Insertions", "Deletions", "Soft-clipped", "Unmapped pairs", "Single reads"))) %>%
   mutate(Variable = recode(Variable, "Unmapped pairs"="Unmapped\npairs", "Single reads"="Single\nreads")) %>%
   ggplot(aes(x=Variable, y=percent, color=Mapper, shape=Simulator)) +
     geom_point(na.rm=TRUE, size=8, position=position_dodge(width = 0.6)) +

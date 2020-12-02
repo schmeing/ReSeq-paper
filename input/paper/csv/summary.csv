@@ -1,0 +1,199 @@
+Comparison,Dataset,Type,ReSeq,ART,pIRS,NEAT,BEAR
+Quality values,Ec-Hi2000-TruSeq,Dataset replication,3,3,5,1,4
+Quality values,Ec-Hi2500-TruSeq,Dataset replication,1,3,2,1,5
+Quality values,Ec-Hi2500-TruSeq-asm,Dataset replication,1,3,2,1,5
+Quality values,Ec-Hi4000-Nextera,Dataset replication,2,4,3,1,5
+Quality values,Bc-Hi4000-Nextera,Dataset replication,3,3,4,3,5
+Quality values,Rs-Hi4000-Nextera,Dataset replication,4,NA,NA,2,5
+Quality values,At-HiX-TruSeq,Dataset replication,3,4,5,2,5
+Quality values,Mm-HiX-Unknown,Dataset replication,1,4,3,3,5
+Quality values,Hs-HiX-TruSeq,Dataset replication,3,4,5,2,5
+Quality values,Hs-Nova-TruSeq,Dataset replication,3,4,5,3,NA
+Quality values,Ec-Mi-TruSeq,Dataset replication,4,4,5,1,5
+Quality values,At-BGI,Dataset replication,2,4,4,2,5
+Error rates,Ec-Hi2000-TruSeq,Dataset replication,3,5,4,5,5
+Error rates,Ec-Hi2500-TruSeq,Dataset replication,3,5,5,5,5
+Error rates,Ec-Hi2500-TruSeq-asm,Dataset replication,3,5,5,5,5
+Error rates,Ec-Hi4000-Nextera,Dataset replication,2,3,5,3,5
+Error rates,Bc-Hi4000-Nextera,Dataset replication,2,5,5,4,5
+Error rates,Rs-Hi4000-Nextera,Dataset replication,3,NA,NA,3,5
+Error rates,At-HiX-TruSeq,Dataset replication,1,2,2,3,5
+Error rates,Mm-HiX-Unknown,Dataset replication,2,2,3,3,5
+Error rates,Hs-HiX-TruSeq,Dataset replication,1,2,3,3,5
+Error rates,Hs-Nova-TruSeq,Dataset replication,3,3,4,4,NA
+Error rates,Ec-Mi-TruSeq,Dataset replication,2,4,5,4,5
+Error rates,At-BGI,Dataset replication,1,2,3,2,5
+Sysematic errors,Ec-Hi2000-TruSeq,Dataset replication,1,5,5,5,5
+Sysematic errors,Ec-Hi2500-TruSeq,Dataset replication,2,5,5,5,5
+Sysematic errors,Ec-Hi2500-TruSeq-asm,Dataset replication,4,5,5,5,5
+Sysematic errors,Ec-Hi4000-Nextera,Dataset replication,2,5,3,4,5
+Sysematic errors,Bc-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Sysematic errors,Rs-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Sysematic errors,At-HiX-TruSeq,Dataset replication,4,5,5,5,5
+Sysematic errors,Mm-HiX-Unknown,Dataset replication,2,5,5,5,5
+Sysematic errors,Hs-HiX-TruSeq,Dataset replication,3,5,5,5,3
+Sysematic errors,Hs-Nova-TruSeq,Dataset replication,3,5,5,5,NA
+Sysematic errors,Ec-Mi-TruSeq,Dataset replication,1,5,4,5,NA
+Sysematic errors,At-BGI,Dataset replication,4,5,5,5,5
+Coverage,Ec-Hi2000-TruSeq,Dataset replication,2,5,2,4,5
+Coverage,Ec-Hi2500-TruSeq,Dataset replication,2,5,3,3,5
+Coverage,Ec-Hi2500-TruSeq-asm,Dataset replication,3,5,5,5,5
+Coverage,Ec-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Coverage,Bc-Hi4000-Nextera,Dataset replication,4,5,5,4,5
+Coverage,Rs-Hi4000-Nextera,Dataset replication,2,5,5,4,5
+Coverage,At-HiX-TruSeq,Dataset replication,1,2,2,2,4
+Coverage,Mm-HiX-Unknown,Dataset replication,2,3,3,3,2
+Coverage,Hs-HiX-TruSeq,Dataset replication,1,2,2,2,2
+Coverage,Hs-Nova-TruSeq,Dataset replication,2,3,2,3,NA
+Coverage,Ec-Mi-TruSeq,Dataset replication,3,5,4,4,NA
+Coverage,At-BGI,Dataset replication,2,3,2,3,5
+Duplications,Ec-Hi2000-TruSeq,Dataset replication,1,2,2,2,2
+Duplications,Ec-Hi2500-TruSeq,Dataset replication,1,1,2,2,2
+Duplications,Ec-Hi2500-TruSeq-asm,Dataset replication,2,2,2,4,2
+Duplications,Ec-Hi4000-Nextera,Dataset replication,2,5,4,5,5
+Duplications,Bc-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Duplications,Rs-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Duplications,At-HiX-TruSeq,Dataset replication,2,5,5,5,5
+Duplications,Mm-HiX-Unknown,Dataset replication,3,5,5,5,5
+Duplications,Hs-HiX-TruSeq,Dataset replication,4,5,4,5,5
+Duplications,Hs-Nova-TruSeq,Dataset replication,4,5,5,5,NA
+Duplications,Ec-Mi-TruSeq,Dataset replication,3,1,2,3,NA
+Duplications,At-BGI,Dataset replication,3,5,5,5,4
+Fragment length,Ec-Hi2000-TruSeq,Dataset replication,1,3,3,2,4
+Fragment length,Ec-Hi2500-TruSeq,Dataset replication,1,3,3,1,4
+Fragment length,Ec-Hi2500-TruSeq-asm,Dataset replication,2,3,3,2,4
+Fragment length,Ec-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Fragment length,Bc-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Fragment length,Rs-Hi4000-Nextera,Dataset replication,3,5,5,5,5
+Fragment length,At-HiX-TruSeq,Dataset replication,1,3,3,3,4
+Fragment length,Mm-HiX-Unknown,Dataset replication,1,4,4,3,5
+Fragment length,Hs-HiX-TruSeq,Dataset replication,1,3,3,2,4
+Fragment length,Hs-Nova-TruSeq,Dataset replication,2,3,3,2,NA
+Fragment length,Ec-Mi-TruSeq,Dataset replication,3,5,5,5,NA
+Fragment length,At-BGI,Dataset replication,1,3,3,3,4
+K-mer spectrum,Ec-Hi2000-TruSeq,Dataset replication,1,5,4,5,5
+K-mer spectrum,Ec-Hi2500-TruSeq,Dataset replication,4,5,5,5,5
+K-mer spectrum,Ec-Hi2500-TruSeq-asm,Dataset replication,4,5,5,5,5
+K-mer spectrum,Ec-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+K-mer spectrum,Bc-Hi4000-Nextera,Dataset replication,3,5,5,5,5
+K-mer spectrum,Rs-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+K-mer spectrum,At-HiX-TruSeq,Dataset replication,3,4,4,4,5
+K-mer spectrum,Mm-HiX-Unknown,Dataset replication,1,4,3,3,4
+K-mer spectrum,Hs-HiX-TruSeq,Dataset replication,1,3,2,2,5
+K-mer spectrum,Hs-Nova-TruSeq,Dataset replication,3,4,3,4,NA
+K-mer spectrum,Ec-Mi-TruSeq,Dataset replication,3,5,4,4,5
+K-mer spectrum,At-BGI,Dataset replication,4,5,5,5,5
+Assembly N50,Ec-Hi2000-TruSeq,Dataset replication,2,5,5,5,5
+Assembly N50,Ec-Hi2500-TruSeq,Dataset replication,1,5,4,5,5
+Assembly N50,Ec-Hi2500-TruSeq-asm,Dataset replication,1,5,5,5,5
+Assembly N50,Ec-Hi4000-Nextera,Dataset replication,2,4,5,4,5
+Assembly N50,Bc-Hi4000-Nextera,Dataset replication,2,4,3,4,5
+Assembly N50,Rs-Hi4000-Nextera,Dataset replication,2,NA,NA,2,5
+Assembly N50,At-HiX-TruSeq,Dataset replication,4,4,4,4,5
+Assembly N50,Mm-HiX-Unknown,Dataset replication,3,3,3,3,3
+Assembly N50,Hs-HiX-TruSeq,Dataset replication,2,2,2,2,5
+Assembly N50,Hs-Nova-TruSeq,Dataset replication,2,2,2,2,NA
+Assembly N50,Ec-Mi-TruSeq,Dataset replication,3,3,5,2,5
+Assembly N50,At-BGI,Dataset replication,1,1,1,1,4
+Mapping qualities,Ec-Hi2000-TruSeq,Dataset replication,1,5,3,5,5
+Mapping qualities,Ec-Hi2500-TruSeq,Dataset replication,1,2,2,1,5
+Mapping qualities,Ec-Hi2500-TruSeq-asm,Dataset replication,1,2,2,2,5
+Mapping qualities,Ec-Hi4000-Nextera,Dataset replication,1,5,5,5,4
+Mapping qualities,Bc-Hi4000-Nextera,Dataset replication,3,5,5,5,5
+Mapping qualities,Rs-Hi4000-Nextera,Dataset replication,2,5,5,5,5
+Mapping qualities,At-HiX-TruSeq,Dataset replication,4,4,4,4,4
+Mapping qualities,Mm-HiX-Unknown,Dataset replication,3,3,3,3,3
+Mapping qualities,Hs-HiX-TruSeq,Dataset replication,3,3,3,3,5
+Mapping qualities,Hs-Nova-TruSeq,Dataset replication,2,3,3,3,NA
+Mapping qualities,Ec-Mi-TruSeq,Dataset replication,3,5,5,5,5
+Mapping qualities,At-BGI,Dataset replication,4,5,5,5,5
+Speed Training,Ec-Hi2000-TruSeq,Dataset replication,1,1,3,2,2
+Speed Training,Ec-Hi2500-TruSeq,Dataset replication,1,1,3,2,2
+Speed Training,Ec-Hi2500-TruSeq-asm,Dataset replication,NA,NA,NA,NA,NA
+Speed Training,Ec-Hi4000-Nextera,Dataset replication,1,1,3,2,2
+Speed Training,Bc-Hi4000-Nextera,Dataset replication,1,1,3,3,3
+Speed Training,Rs-Hi4000-Nextera,Dataset replication,1,1,4,3,3
+Speed Training,At-HiX-TruSeq,Dataset replication,1,1,3,2,2
+Speed Training,Mm-HiX-Unknown,Dataset replication,3,3,5,5,4
+Speed Training,Hs-HiX-TruSeq,Dataset replication,3,3,5,5,4
+Speed Training,Hs-Nova-TruSeq,Dataset replication,3,3,5,5,NA
+Speed Training,Ec-Mi-TruSeq,Dataset replication,1,1,1,2,1
+Speed Training,At-BGI,Dataset replication,2,2,4,4,3
+Speed Simulation,Ec-Hi2000-TruSeq,Dataset replication,1,1,1,1,3
+Speed Simulation,Ec-Hi2500-TruSeq,Dataset replication,1,1,1,2,4
+Speed Simulation,Ec-Hi2500-TruSeq-asm,Dataset replication,NA,NA,NA,NA,NA
+Speed Simulation,Ec-Hi4000-Nextera,Dataset replication,1,1,1,1,3
+Speed Simulation,Bc-Hi4000-Nextera,Dataset replication,1,1,1,2,4
+Speed Simulation,Rs-Hi4000-Nextera,Dataset replication,1,1,1,2,5
+Speed Simulation,At-HiX-TruSeq,Dataset replication,1,1,1,1,3
+Speed Simulation,Mm-HiX-Unknown,Dataset replication,2,2,1,3,5
+Speed Simulation,Hs-HiX-TruSeq,Dataset replication,2,2,1,3,5
+Speed Simulation,Hs-Nova-TruSeq,Dataset replication,3,2,2,3,NA
+Speed Simulation,Ec-Mi-TruSeq,Dataset replication,1,1,1,1,3
+Speed Simulation,At-BGI,Dataset replication,1,1,1,2,5
+Memory usage Training,Ec-Hi2000-TruSeq,Dataset replication,2,1,1,1,1
+Memory usage Training,Ec-Hi2500-TruSeq,Dataset replication,2,1,1,1,2
+Memory usage Training,Ec-Hi2500-TruSeq-asm,Dataset replication,NA,NA,NA,NA,NA
+Memory usage Training,Ec-Hi4000-Nextera,Dataset replication,2,1,1,1,1
+Memory usage Training,Bc-Hi4000-Nextera,Dataset replication,2,1,1,1,2
+Memory usage Training,Rs-Hi4000-Nextera,Dataset replication,2,1,1,1,2
+Memory usage Training,At-HiX-TruSeq,Dataset replication,4,1,1,1,2
+Memory usage Training,Mm-HiX-Unknown,Dataset replication,5,1,3,1,3
+Memory usage Training,Hs-HiX-TruSeq,Dataset replication,5,1,3,2,3
+Memory usage Training,Hs-Nova-TruSeq,Dataset replication,4,1,3,2,NA
+Memory usage Training,Ec-Mi-TruSeq,Dataset replication,2,1,1,1,1
+Memory usage Training,At-BGI,Dataset replication,4,1,1,1,2
+Memory usage Simulation,Ec-Hi2000-TruSeq,Dataset replication,1,1,1,2,2
+Memory usage Simulation,Ec-Hi2500-TruSeq,Dataset replication,1,1,1,2,2
+Memory usage Simulation,Ec-Hi2500-TruSeq-asm,Dataset replication,NA,NA,NA,NA,NA
+Memory usage Simulation,Ec-Hi4000-Nextera,Dataset replication,1,1,1,2,2
+Memory usage Simulation,Bc-Hi4000-Nextera,Dataset replication,1,1,1,2,3
+Memory usage Simulation,Rs-Hi4000-Nextera,Dataset replication,1,1,1,2,3
+Memory usage Simulation,At-HiX-TruSeq,Dataset replication,2,2,1,3,2
+Memory usage Simulation,Mm-HiX-Unknown,Dataset replication,2,4,1,4,4
+Memory usage Simulation,Hs-HiX-TruSeq,Dataset replication,2,4,1,4,4
+Memory usage Simulation,Hs-Nova-TruSeq,Dataset replication,2,4,1,5,NA
+Memory usage Simulation,Ec-Mi-TruSeq,Dataset replication,1,1,1,2,1
+Memory usage Simulation,At-BGI,Dataset replication,2,2,1,3,3
+Quality values,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,4,4,3,3,5
+Quality values,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,4,3,4,3,5
+Quality values,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,3,NA,3,NA,5
+Quality values,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,2,4,4,2,5
+Quality values,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,4,4,4,5
+Quality values,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,4,4,5,4,5
+Error rates,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,2,3,4,3,5
+Error rates,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,2,5,5,4,5
+Error rates,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,2,NA,5,NA,5
+Error rates,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,3,3,4,5,5
+Error rates,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,4,3,5,5,5
+Error rates,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,2,3,4,2,5
+Sysematic errors,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,3,5,4,4,5
+Sysematic errors,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,4,5,5,5,5
+Sysematic errors,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,3,5,5,5,5
+Sysematic errors,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,3,5,5,5,5
+Sysematic errors,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,5,5,5,4
+Sysematic errors,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,3,5,5,5,5
+Coverage,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,3,5,5,5,5
+Coverage,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,5,5,5,5,5
+Coverage,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,3,5,5,5,5
+Coverage,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,1,2,2,2,5
+Coverage,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,3,3,3,3
+Coverage,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,2,2,2,3,3
+K-mer spectrum,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,3,5,5,5,5
+K-mer spectrum,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,5,5,5,5,5
+K-mer spectrum,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,4,5,5,5,5
+K-mer spectrum,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,3,4,4,4,3
+K-mer spectrum,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,4,3,3,5
+K-mer spectrum,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,1,3,3,3,4
+Assembly N50,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,4,5,3,5,5
+Assembly N50,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,2,4,5,3,5
+Assembly N50,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,5,NA,3,NA,4
+Assembly N50,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,3,4,4,4,4
+Assembly N50,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,3,3,3,5
+Assembly N50,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,2,2,2,2,2
+Mapping qualities,Ec-Hi4000-Nextera <- Rs-Hi4000-Nextera,Cross species simulation,1,5,5,5,5
+Mapping qualities,Bc-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,4,5,5,5,5
+Mapping qualities,Rs-Hi4000-Nextera <- Ec-Hi4000-Nextera,Cross species simulation,1,5,5,5,4
+Mapping qualities,At-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,4,5,5,5,5
+Mapping qualities,Mm-HiX-Unknown <- Hs-HiX-TruSeq,Cross species simulation,3,4,3,3,5
+Mapping qualities,Hs-HiX-TruSeq <- Mm-HiX-Unknown,Cross species simulation,2,3,3,3,3

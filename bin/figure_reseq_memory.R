@@ -20,11 +20,11 @@ mem_csv %>%
   filter(Simulator == "ReSeq") %>%
   mutate(max_memory = max_memory/1024) %>%
   ggplot(aes(x=threads, y=max_memory, color=Simulator)) +
-    geom_line(na.rm=TRUE, size=4) +
+    geom_line(na.rm=TRUE, size=4, show.legend = FALSE) +
     geom_point(na.rm=TRUE, size=8) +
     scale_color_manual(values=c("#488BC2")) +
     scale_x_continuous(breaks=c(1,4,8,16,32,48,64)) +
-    scale_y_continuous(limits=c(0,256), breaks=c(0,16,32,64,128,192,256)) +
+    scale_y_continuous(limits=c(0,192), breaks=c(0,16,32,64,128,192)) +
     xlab("Threads") +
     ylab("Max. memory [GB]") +
     ggtitle("Training\nHs-HiX-TruSeq (3.3Gb, 40x)") +

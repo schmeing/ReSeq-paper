@@ -248,9 +248,9 @@ rule figure_covfit:
         pdfcrop {input.gcbias} {params.workdir}/gcbias.pdf 1>/dev/null
         pdfcrop {input.samplemean} {params.workdir}/samplemean.pdf 1>/dev/null
         pdfcrop {input.dispa} {params.workdir}/dispa.pdf 1>/dev/null
-        pdfcrop {input.dispb} {params.workdir}/dispb.pdf 1>/dev/null
-        Rscript bin/figure_covfit.R {params.workdir}
-        pdfcrop {params.workdir}/figure_covfit.pdf {output} 1>/dev/null
+        pdfcrop --margins '0 0 1 0' {input.dispb} {params.workdir}/dispb.pdf 1>/dev/null
+        ./bin/figure_covfit.sh {params.workdir}
+        mv -f {params.workdir}/scfinal.pdf {output}
         """
 
 rule figure_coverage:
@@ -269,8 +269,8 @@ rule figure_coverage:
             pdftk $fi cat 1 output {params.workdir}/figure${{i}}-full.pdf
             pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
         done
-        Rscript bin/figure_comp12.R {params.workdir}/figure_coverage.pdf {params.workdir}/figure[1-9].pdf {params.workdir}/figure1[0-2].pdf
-        pdfcrop {params.workdir}/figure_coverage.pdf {output} 1>/dev/null
+        ./bin/figure_comp12.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
 
 rule figure_coverage_cov:
@@ -323,8 +323,8 @@ rule figure_duplications:
             pdftk $fi cat 5 output {params.workdir}/figure${{i}}-full.pdf
             pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
         done
-        Rscript bin/figure_comp12.R {params.workdir}/figure_duplications.pdf {params.workdir}/figure[1-9].pdf {params.workdir}/figure1[0-2].pdf
-        pdfcrop {params.workdir}/figure_duplications.pdf {output} 1>/dev/null
+        ./bin/figure_comp12.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
         
 rule figure_fragment_length:
@@ -419,8 +419,8 @@ rule figure_syserror:
         ln -srf {input.SRR490124screen} {params.workdir}/SRR490124-screen.png
         ln -srf {input.S5L001screen} {params.workdir}/S5L001-screen.png
         ln -srf {input.repscreen} {params.workdir}/rep-screen.png
-        Rscript bin/figure_syserror.R {params.workdir}
-        pdfcrop {params.workdir}/figure_syserror.pdf {output} 1>/dev/null
+        ./bin/figure_syserror.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
       
 rule figure_syserror_full:
@@ -497,8 +497,8 @@ rule figure_kmer_linear:
             i=$(($i+1))
             pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
         done
-        Rscript bin/figure_comp12.R {params.workdir}/figure_kmer.pdf {params.workdir}/figure[1-9].pdf {params.workdir}/figure1[0-2].pdf
-        pdfcrop {params.workdir}/figure_kmer.pdf {output} 1>/dev/null
+        ./bin/figure_comp12.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
         
 rule figure_kmer_cross:
@@ -610,8 +610,8 @@ rule figure_preqc:
             pdftk $fi cat 4 output {params.workdir}/figure${{i}}-full.pdf
             pdfcrop {params.workdir}/figure${{i}}-full.pdf {params.workdir}/figure${{i}}.pdf 1>/dev/null
         done
-        Rscript bin/figure_comp12.R {params.workdir}/figure_preqc.pdf {params.workdir}/figure[1-9].pdf {params.workdir}/figure1[0-2].pdf
-        pdfcrop {params.workdir}/figure_preqc.pdf {output} 1>/dev/null
+        ./bin/figure_comp12.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
 
 rule figure_preqc_cov:
@@ -924,10 +924,10 @@ rule figure_mapper_comp_summary:
         i=0
         for fi in {input}; do
             i=$(($i+1))
-            pdfcrop $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
+            pdfcrop --margins '0 0 1 0' $fi {params.workdir}/figure${{i}}.pdf 1>/dev/null
         done
-        Rscript bin/figure_comp9.R {params.workdir}/figure_mapper_comp.pdf {params.workdir}/figure[1-9].pdf
-        pdfcrop {params.workdir}/figure_mapper_comp.pdf {output} 1>/dev/null
+        ./bin/figure_comp9.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
 
 rule figure_mapper_comp_sim:
@@ -1579,10 +1579,10 @@ rule figure_summary:
         """
         mkdir -p {params.workdir};
         Rscript bin/figure_summary.R {input} {params.workdir}/figure_summary_full.pdf {params.workdir}/figure_summary_cross_full.pdf
-        pdfcrop {params.workdir}/figure_summary_full.pdf {params.workdir}/figure_summary.pdf 1>/dev/null
-        pdfcrop {params.workdir}/figure_summary_cross_full.pdf {params.workdir}/figure_summary_cross.pdf 1>/dev/null
-        Rscript bin/figure_summary_combine.R {params.workdir}/figure_combined.pdf {params.workdir}/figure_summary.pdf {params.workdir}/figure_summary_cross.pdf
-        pdfcrop {params.workdir}/figure_combined.pdf {output} 1>/dev/null
+        pdfcrop --margins '0 0 0 1' {params.workdir}/figure_summary_full.pdf {params.workdir}/figure1.pdf 1>/dev/null
+        pdfcrop --margins '0 0 0 1' {params.workdir}/figure_summary_cross_full.pdf {params.workdir}/figure2.pdf 1>/dev/null
+        ./bin/figure_comp2.sh {params.workdir}
+        pdfcrop {params.workdir}/scfinal.pdf {output} 1>/dev/null
         """
 
 ###-Create summary plots---------------------------------------------------------------------------------------------------------------------------------------------------------------
